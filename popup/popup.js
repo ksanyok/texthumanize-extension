@@ -321,6 +321,11 @@ $('#open-options').addEventListener('click', () => {
 updateCount();
 if (input.value) { updateLang(); }
 const mode = params.get('mode');
-if (['humanize', 'check', 'tone', 'readability', 'paraphrase'].includes(mode) && input.value) runText(mode);
+if (['humanize', 'check', 'tone', 'readability', 'paraphrase'].includes(mode) && input.value) {
+  runText(mode);
+  if (params.get('shot')) {
+    setTimeout(() => document.querySelector('#result')?.scrollIntoView({ block: 'center' }), 1400);
+  }
+}
 if (params.get('imgsrc')) { /* image via context menu handled by media tab in future */ }
 input.focus();
