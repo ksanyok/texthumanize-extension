@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Very casual"
  },
+ "tone_academic": {
+  "message": "Academic"
+ },
+ "tone_professional": {
+  "message": "Professional"
+ },
+ "tone_friendly": {
+  "message": "Friendly"
+ },
+ "tone_casual": {
+  "message": "Casual"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
  "readingLevel": {
   "message": "Reading level"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Welcome to TextHumanize"
+ },
+ "tabText": {
+  "message": "Text"
+ },
+ "tabPage": {
+  "message": "Page"
+ },
+ "tabMedia": {
+  "message": "Media"
+ },
+ "inputPlaceholder2": {
+  "message": "Paste or type text — or select text on any page…"
+ },
+ "humanizeCta": {
+  "message": "✨ Humanize"
+ },
+ "pageLead": {
+  "message": "Scan the open tab: how much text looks AI-written, AI-generated images, and readability."
+ },
+ "scanPage": {
+  "message": "🔍 Scan this page"
+ },
+ "scanning": {
+  "message": "Scanning the page…"
+ },
+ "pageAiText": {
+  "message": "AI-like text · $COUNT$ blocks",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "AI images · of $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Most AI-like passages"
+ },
+ "pageScanUnavailable": {
+  "message": "Page scan needs the extension (open it on a normal web page)."
+ },
+ "heatTitle": {
+  "message": "AI heatmap by sentence"
+ },
+ "human": {
+  "message": "human"
+ },
+ "aiLike": {
+  "message": "AI"
+ },
+ "dropTitle": {
+  "message": "Drop an image or media file"
+ },
+ "dropHint": {
+  "message": "Check for AI markers and download it without hidden metadata"
+ },
+ "choose": {
+  "message": "Choose file"
+ },
+ "mediaCleaned": {
+  "message": "Cleaned · $COUNT$ metadata blocks removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "No removable metadata found — file is already clean"
+ },
+ "downloadClean": {
+  "message": "Download clean file"
+ },
+ "mediaHonest": {
+  "message": "Removes metadata/provenance only. In-content watermarks (e.g. SynthID) can't be stripped."
  }
 }

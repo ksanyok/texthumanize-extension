@@ -1,22 +1,33 @@
 /**
- * Bridge — routes engine calls to the extension service worker when
- * running as an extension page, or straight to the engine when the
- * popup is opened as a plain web page (dev preview / web demo).
+ * Bridge — the popup/workspace runs all *compute* tools locally (direct
+ * engine import, no message round-trips, works identically as an extension
+ * page or a plain web preview). Settings, telemetry and page scanning are
+ * routed to the service worker when running as an extension.
  * @module popup/bridge
  */
 
+import { FALLBACK_MESSAGES } from './messages.fallback.js';
+
 const IS_EXTENSION = typeof chrome !== 'undefined' && !!chrome.runtime?.id;
+
+// Ops computed locally in this page (fast, no serialization limits).
+const COMPUTE_OPS = new Set([
+  'humanize', 'analyze', 'clean', 'tone', 'tone-adjust', 'readability',
+  'paraphrase', 'stylometry', 'classify', 'heatmap', 'detect-language',
+  'detect-media', 'clean-media',
+]);
 
 let enginePromise = null;
 const packCache = new Map();
 let localSettings = {
-  intensity: 60,
-  profile: 'web',
+  intensity: 65,
   langMode: 'auto',
   cleanWatermarks: true,
   selectionBubble: true,
-  theme: 'auto',
-  maxChangeRatio: 0.4,
+  editorChip: true,
+  imageHover: false,
+  effects: true,
+  telemetry: true,
 };
 
 function loadEngine() {
@@ -24,137 +35,117 @@ function loadEngine() {
   return enginePromise;
 }
 
+function assetUrl(path) {
+  return IS_EXTENSION ? chrome.runtime.getURL(path) : `../${path}`;
+}
+
 async function loadPack(code) {
   if (packCache.has(code)) return packCache.get(code);
   try {
-    const res = await fetch(`../data/langs/${code}.json`);
-    if (!res.ok) throw new Error('no pack');
-    const pack = await res.json();
+    const res = await fetch(assetUrl(`data/langs/${code}.json`));
+    const pack = res.ok ? await res.json() : null;
     packCache.set(code, pack);
     return pack;
-  } catch {
-    packCache.set(code, null);
-    return null;
-  }
+  } catch { packCache.set(code, null); return null; }
 }
 
-async function localHandle(message) {
-  const engine = await loadEngine();
-  const overrides = message.overrides || {};
-  const merged = { ...localSettings, ...overrides };
+async function getSettings() {
+  if (IS_EXTENSION) {
+    return sendToWorker({ type: 'get-settings' }).catch(() => ({ ...localSettings }));
+  }
+  return { ...localSettings };
+}
 
+async function resolve(text, overrides) {
+  const engine = await loadEngine();
+  const s = await getSettings();
+  const merged = { ...s, ...overrides };
+  const lang = (merged.langMode && merged.langMode !== 'auto') ? merged.langMode : engine.detectLanguage(text);
+  const langPack = await loadPack(lang);
+  return { engine, merged, lang, langPack };
+}
+
+/** @param {object} message */
+async function computeLocally(message) {
+  const o = message.overrides || {};
   switch (message.type) {
+    case 'detect-language': {
+      const engine = await loadEngine();
+      return message.text ? engine.detectLanguage(message.text) : 'en';
+    }
     case 'humanize': {
-      const lang = merged.langMode === 'auto'
-        ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
+      const { engine, merged, lang, langPack } = await resolve(message.text, o);
       return engine.humanize(message.text, {
-        lang,
-        profile: merged.profile,
-        intensity: Number(merged.intensity),
-        seed: typeof overrides.seed === 'number' ? overrides.seed : (Date.now() & 0xffff),
-        cleanWatermarks: merged.cleanWatermarks,
-        maxChangeRatio: merged.maxChangeRatio,
-        langPack,
+        lang, intensity: Number(merged.intensity), profile: 'web',
+        seed: typeof o.seed === 'number' ? o.seed : (Date.now() & 0xffff),
+        cleanWatermarks: merged.cleanWatermarks, langPack,
       });
     }
     case 'analyze': {
-      const lang = merged.langMode === 'auto'
-        ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
-      const detector = new engine.AIDetector();
-      const detection = detector.detect(message.text, { lang, langPack });
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      const detection = new engine.AIDetector().detect(message.text, { lang, langPack });
       const wm = new engine.WatermarkDetector(lang).detect(message.text);
-      return {
-        lang,
-        detection,
-        watermark: {
-          hasWatermarks: wm.hasWatermarks,
-          types: wm.watermarkTypes,
-          removed: wm.charactersRemoved,
-          kirchenbauerScore: wm.kirchenbauerScore,
-        },
-      };
+      return { lang, detection, watermark: { hasWatermarks: wm.hasWatermarks, types: wm.watermarkTypes, removed: wm.charactersRemoved } };
+    }
+    case 'heatmap': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      const doc = new engine.AIDetector().detect(message.text, { lang, langPack });
+      const overallProb = doc.verdict === 'unknown' ? 0.5 : doc.aiProbability;
+      const hm = engine.sentenceScores(message.text, { lang, langPack, overall: overallProb });
+      return { lang, sentences: hm.sentences.slice(0, 120), overall: { aiProbability: doc.aiProbability, verdict: doc.verdict } };
     }
     case 'clean': {
-      const lang = merged.langMode === 'auto'
-        ? engine.detectLanguage(message.text) : merged.langMode;
-      const report = new engine.WatermarkDetector(lang).detect(message.text);
-      return {
-        lang,
-        text: report.cleanedText,
-        hasWatermarks: report.hasWatermarks,
-        types: report.watermarkTypes,
-        details: report.details,
-        removed: report.charactersRemoved,
-        homoglyphs: report.homoglyphsFound.length,
-        zeroWidth: report.zeroWidthCount,
-      };
+      const { engine, lang } = await resolve(message.text, o);
+      const r = new engine.WatermarkDetector(lang).detect(message.text);
+      return { lang, text: r.cleanedText, hasWatermarks: r.hasWatermarks, types: r.watermarkTypes, details: r.details, removed: r.charactersRemoved };
     }
     case 'tone': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
+      const { engine, lang, langPack } = await resolve(message.text, o);
       return { lang, ...engine.analyzeTone(message.text, { lang, langPack }) };
     }
     case 'tone-adjust': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
-      const r = engine.adjustTone(message.text, overrides.target || 'neutral', { lang, langPack, seed: overrides.seed || 0 });
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      const r = engine.adjustTone(message.text, o.target || 'neutral', { lang, langPack, seed: o.seed || 0 });
       return { lang, text: r.text, changes: r.changes || [] };
     }
     case 'readability': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const { engine, lang } = await resolve(message.text, o);
       return { lang, ...engine.analyzeReadability(message.text, lang) };
     }
     case 'paraphrase': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
-      const r = engine.paraphrase(message.text, { lang, langPack, intensity: Number(merged.intensity),
-        seed: typeof overrides.seed === 'number' ? overrides.seed : (Date.now() & 0xffff) });
+      const { engine, merged, lang, langPack } = await resolve(message.text, o);
+      const r = engine.paraphrase(message.text, { lang, langPack, intensity: Number(merged.intensity), seed: typeof o.seed === 'number' ? o.seed : (Date.now() & 0xffff) });
       return { lang, text: r.text, changes: r.changes || [] };
     }
     case 'stylometry': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
+      const { engine, lang, langPack } = await resolve(message.text, o);
       return { lang, ...engine.fingerprint(message.text, { lang, langPack }) };
     }
     case 'classify': {
-      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
-      const langPack = await loadPack(lang);
+      const { engine, lang, langPack } = await resolve(message.text, o);
       return { lang, ...engine.classifyContent(message.text, { lang, langPack }) };
     }
-    case 'scan-image': {
-      if (!message.src?.startsWith('data:')) return { needsPermission: true };
-      const comma = message.src.indexOf(',');
-      const body = message.src.slice(comma + 1);
-      const bytes = /;base64/i.test(message.src.slice(5, comma))
-        ? Uint8Array.from(atob(body), (c) => c.charCodeAt(0))
-        : new TextEncoder().encode(decodeURIComponent(body));
-      return engine.detectMediaWatermarks(bytes, {});
+    case 'detect-media': {
+      const engine = await loadEngine();
+      return engine.detectMediaWatermarks(message.bytes, {});
     }
-    case 'detect-language': {
-      return engine.detectLanguage(message.text);
+    case 'clean-media': {
+      const engine = await loadEngine();
+      return engine.cleanMediaWatermarks(message.bytes);
     }
-    case 'get-usage':
-      return { events: {}, tools: {}, firstSeen: null };
-    case 'track':
-      return { ok: true };
-    case 'get-settings':
-      return { ...localSettings };
-    case 'set-settings':
-      localSettings = { ...localSettings, ...message.patch };
-      try { localStorage.setItem('th-settings', JSON.stringify(localSettings)); } catch { /* ignore */ }
-      return { ...localSettings };
     default:
-      throw new Error(`Unknown message: ${message.type}`);
+      throw new Error(`unknown compute op ${message.type}`);
   }
 }
 
-if (!IS_EXTENSION) {
-  try {
-    const saved = localStorage.getItem('th-settings');
-    if (saved) localSettings = { ...localSettings, ...JSON.parse(saved) };
-  } catch { /* ignore */ }
+function sendToWorker(message) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(message, (res) => {
+      if (chrome.runtime.lastError) return reject(new Error(chrome.runtime.lastError.message));
+      if (!res?.ok) return reject(new Error(res?.error || 'Engine error'));
+      resolve(res.data);
+    });
+  });
 }
 
 /**
@@ -162,21 +153,32 @@ if (!IS_EXTENSION) {
  * @returns {Promise<any>}
  */
 export function send(message) {
-  if (IS_EXTENSION) {
-    return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage(message, (res) => {
-        if (chrome.runtime.lastError) return reject(new Error(chrome.runtime.lastError.message));
-        if (!res?.ok) return reject(new Error(res?.error || 'Engine error'));
-        resolve(res.data);
-      });
-    });
+  if (COMPUTE_OPS.has(message.type)) return computeLocally(message);
+
+  if (IS_EXTENSION) return sendToWorker(message);
+
+  // Web-preview fallbacks for non-compute ops.
+  switch (message.type) {
+    case 'get-settings': return Promise.resolve({ ...localSettings });
+    case 'set-settings':
+      localSettings = { ...localSettings, ...message.patch };
+      try { localStorage.setItem('th-settings', JSON.stringify(localSettings)); } catch { /* */ }
+      return Promise.resolve({ ...localSettings });
+    case 'get-usage': return Promise.resolve({ events: {}, tools: {} });
+    case 'track': return Promise.resolve({ ok: true });
+    case 'scan-page': return Promise.resolve({ error: 'page scan needs the extension' });
+    default: return Promise.reject(new Error(`unknown op ${message.type}`));
   }
-  return localHandle(message);
 }
 
-/** i18n with graceful web fallback. */
-import { FALLBACK_MESSAGES } from './messages.fallback.js';
+if (!IS_EXTENSION) {
+  try {
+    const saved = localStorage.getItem('th-settings');
+    if (saved) localSettings = { ...localSettings, ...JSON.parse(saved) };
+  } catch { /* */ }
+}
 
+// ── i18n ────────────────────────────────────────────────────────
 let webLocale = 'en';
 if (!IS_EXTENSION) {
   const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
@@ -185,10 +187,7 @@ if (!IS_EXTENSION) {
   if (forced && FALLBACK_MESSAGES[forced]) webLocale = forced;
 }
 
-/**
- * @param {string} key
- * @param {string[]} [subs]
- */
+/** @param {string} key @param {string[]} [subs] */
 export function t(key, subs) {
   let msg = '';
   if (IS_EXTENSION) {

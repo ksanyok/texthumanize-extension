@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Molto informale"
  },
+ "tone_academic": {
+  "message": "Accademico"
+ },
+ "tone_professional": {
+  "message": "Professionale"
+ },
+ "tone_friendly": {
+  "message": "Amichevole"
+ },
+ "tone_casual": {
+  "message": "Informale"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
  "readingLevel": {
   "message": "Livello di lettura"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Benvenuto in TextHumanize"
+ },
+ "tabText": {
+  "message": "Testo"
+ },
+ "tabPage": {
+  "message": "Pagina"
+ },
+ "tabMedia": {
+  "message": "Media"
+ },
+ "inputPlaceholder2": {
+  "message": "Incolla o digita il testo — oppure selezionalo su una pagina…"
+ },
+ "humanizeCta": {
+  "message": "✨ Umanizza"
+ },
+ "pageLead": {
+  "message": "Analizza la scheda aperta: quanto testo sembra IA, immagini IA e leggibilità."
+ },
+ "scanPage": {
+  "message": "🔍 Analizza la pagina"
+ },
+ "scanning": {
+  "message": "Scansione della pagina…"
+ },
+ "pageAiText": {
+  "message": "Testo tipo IA · $COUNT$ blocchi",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "Immagini IA · su $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Passaggi più tipo IA"
+ },
+ "pageScanUnavailable": {
+  "message": "La scansione richiede l'estensione (su una pagina web normale)."
+ },
+ "heatTitle": {
+  "message": "Mappa IA per frase"
+ },
+ "human": {
+  "message": "umano"
+ },
+ "aiLike": {
+  "message": "IA"
+ },
+ "dropTitle": {
+  "message": "Trascina un'immagine o un file multimediale"
+ },
+ "dropHint": {
+  "message": "Controlla i marcatori IA e scaricalo senza metadati nascosti"
+ },
+ "choose": {
+  "message": "Scegli file"
+ },
+ "mediaCleaned": {
+  "message": "Pulito · rimossi $COUNT$ blocchi di metadati",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Nessun metadato rimovibile — il file è già pulito"
+ },
+ "downloadClean": {
+  "message": "Scarica file pulito"
+ },
+ "mediaHonest": {
+  "message": "Rimuove solo metadati/provenienza. Le filigrane nel contenuto (es. SynthID) no."
  }
 }

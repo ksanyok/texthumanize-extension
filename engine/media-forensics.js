@@ -768,3 +768,140 @@ export function detectMediaWatermarks(bytes, opts = {}) {
 export function mediaWatermarkReport(bytes) {
   return detectMediaWatermarks(bytes);
 }
+
+// ─────────────────────────────────────────────────────────────
+//  Cleaning — strip provenance/metadata, re-serialise the container.
+//  Port of the Python `clean_media_watermarks` / `_clean_*` path.
+//  Only container metadata is removed; pixel/audio content is untouched.
+// ─────────────────────────────────────────────────────────────
+
+// PNG ancillary chunks that carry text/metadata/provenance and are safe to drop.
+const PNG_DROP_CHUNKS = new Set(['tEXt', 'iTXt', 'zTXt', 'eXIf', 'iCCP', 'caBX', 'caÿP']);
+
+/** @param {Uint8Array} chunkBytes */
+function chunkLooksProvenance(bytes) {
+  const low = lowerAsciiCopy(bytes);
+  for (const m of PROVENANCE_MARKERS) if (indexOfBytes(low, m.needle) !== -1) return true;
+  for (const g of GENERATOR_MARKERS) if (indexOfBytes(low, g.needle) !== -1) return true;
+  return false;
+}
+
+/** @param {Uint8Array} data @returns {{cleaned: Uint8Array, removedItems: {kind:string,label:string}[]}} */
+function cleanPng(data) {
+  const removedItems = [];
+  const kept = [data.subarray(0, 8)]; // signature
+  let off = 8;
+  while (off + 8 <= data.length) {
+    const len = dv(data).getUint32(off);
+    const type = latin1(data.subarray(off + 4, off + 8));
+    const end = off + 12 + len;
+    if (end > data.length) break;
+    const chunk = data.subarray(off, end);
+    const dataPart = data.subarray(off + 8, off + 8 + len);
+    const drop = PNG_DROP_CHUNKS.has(type) || (type[0] >= 'a' && chunkLooksProvenance(dataPart));
+    if (drop) removedItems.push({ kind: 'png:' + type, label: `PNG ${type} chunk` });
+    else kept.push(chunk);
+    if (type === 'IEND') break;
+    off = end;
+  }
+  return { cleaned: concatBytes(kept), removedItems };
+}
+
+/** @param {Uint8Array} data */
+function cleanJpeg(data) {
+  const removedItems = [];
+  const kept = [Uint8Array.of(0xff, 0xd8)]; // SOI
+  let off = 2;
+  const DROP = new Set([0xe1 /*APP1 EXIF/XMP*/, 0xeb /*APP11 JUMBF/C2PA*/, 0xed /*APP13 IPTC*/, 0xee /*APP14*/, 0xfe /*COM*/]);
+  while (off + 4 <= data.length) {
+    if (data[off] !== 0xff) { off++; continue; }
+    const marker = data[off + 1];
+    if (marker === 0xd9) { kept.push(Uint8Array.of(0xff, 0xd9)); break; } // EOI
+    if (marker === 0xda) { kept.push(data.subarray(off)); break; } // SOS → copy rest verbatim
+    if (marker >= 0xd0 && marker <= 0xd7) { kept.push(data.subarray(off, off + 2)); off += 2; continue; }
+    const len = dv(data).getUint16(off + 2);
+    const end = off + 2 + len;
+    if (end > data.length) { kept.push(data.subarray(off)); break; }
+    const seg = data.subarray(off, end);
+    const payload = data.subarray(off + 4, end);
+    const drop = DROP.has(marker) || ((marker & 0xf0) === 0xe0 && chunkLooksProvenance(payload));
+    if (drop) removedItems.push({ kind: 'jpeg:APP' + (marker - 0xe0), label: `JPEG 0x${marker.toString(16)} segment` });
+    else kept.push(seg);
+    off = end;
+  }
+  return { cleaned: concatBytes(kept), removedItems };
+}
+
+/** @param {Uint8Array} data — RIFF (WebP/WAV/AVI) */
+function cleanRiff(data) {
+  const removedItems = [];
+  const DROP = new Set(['EXIF', 'XMP ', 'ICCP', 'INFO', 'LIST', 'iCCP']);
+  const head = data.subarray(0, 12); // 'RIFF' size 'WEBP'/'WAVE'
+  const kept = [];
+  let off = 12;
+  while (off + 8 <= data.length) {
+    const id = latin1(data.subarray(off, off + 4));
+    const len = dv(data).getUint32(off + 4, true);
+    const padded = len + (len & 1);
+    const end = off + 8 + padded;
+    if (end > data.length) break;
+    const chunk = data.subarray(off, Math.min(end, data.length));
+    const drop = DROP.has(id) || chunkLooksProvenance(data.subarray(off + 8, off + 8 + Math.min(len, 4096)));
+    if (drop) removedItems.push({ kind: 'riff:' + id.trim(), label: `RIFF ${id.trim()} chunk` });
+    else kept.push(chunk);
+    off = end;
+  }
+  const body = concatBytes(kept);
+  const out = concatBytes([head, body]);
+  // Fix RIFF size field = total - 8.
+  new DataView(out.buffer).setUint32(4, out.length - 8, true);
+  return { cleaned: out, removedItems };
+}
+
+function concatBytes(parts) {
+  let n = 0;
+  for (const p of parts) n += p.length;
+  const out = new Uint8Array(n);
+  let o = 0;
+  for (const p of parts) { out.set(p, o); o += p.length; }
+  return out;
+}
+
+/**
+ * Strip provenance metadata from an image container and return a valid file
+ * of the same format with the metadata removed. Pixel/audio data is untouched.
+ * Formats without a cleaner (gif/mp4/webm/…) are returned unchanged.
+ *
+ * @param {Uint8Array|ArrayBuffer|ArrayBufferView} bytes
+ * @returns {{cleaned: Uint8Array, format: string, removed: number, removedItems: {kind:string,label:string}[], report: MediaWatermarkReport}}
+ */
+export function cleanMediaWatermarks(bytes) {
+  const data = toU8(bytes);
+  const report = detectMediaWatermarks(data);
+  const fmt = report.format;
+  let result;
+  try {
+    if (fmt === 'png') result = cleanPng(data);
+    else if (fmt === 'jpeg') result = cleanJpeg(data);
+    else if (fmt === 'webp' || fmt === 'wav' || fmt === 'avi') result = cleanRiff(data);
+    else result = { cleaned: data, removedItems: [{ kind: 'unsupported', label: `no metadata cleaner for ${fmt}` }] };
+  } catch {
+    result = { cleaned: data, removedItems: [] };
+  }
+  const stripped = result.removedItems.filter((r) => r.kind !== 'unsupported');
+  return {
+    cleaned: result.cleaned,
+    format: fmt,
+    removed: stripped.length,
+    removedItems: result.removedItems,
+    report,
+  };
+}
+
+/**
+ * Convenience wrapper returning the clean bytes plus a compact summary.
+ * @param {Uint8Array|ArrayBuffer|ArrayBufferView} bytes
+ */
+export function mediaCleanReport(bytes) {
+  return cleanMediaWatermarks(bytes);
+}

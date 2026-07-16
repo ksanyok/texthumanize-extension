@@ -10,7 +10,7 @@
  */
 
 export { humanize } from './pipeline.js';
-export { AIDetector, detectAi } from './detector.js';
+export { AIDetector, detectAi, sentenceScores } from './detector.js';
 export { detectLanguage } from './lang-detect.js';
 export { WatermarkDetector, detectWatermarks, cleanWatermarks } from './watermark.js';
 export { TypographyNormalizer } from './normalizer.js';
@@ -24,7 +24,7 @@ export { analyzeReadability, ReadabilityAnalyzer } from './readability.js';
 export { paraphrase, ParaphraseEngine } from './paraphrase.js';
 export { fingerprint, compareStyle, Stylometry } from './stylometry.js';
 export { classifyContent } from './content-type.js';
-export { detectMediaWatermarks, mediaFormat, mediaWatermarkReport } from './media-forensics.js';
+export { detectMediaWatermarks, mediaFormat, mediaWatermarkReport, cleanMediaWatermarks, mediaCleanReport } from './media-forensics.js';
 export { TOOLS, getTool, isUnlocked, inlineTools, MONETIZATION_ENABLED } from './entitlements.js';
 
 export const ENGINE_VERSION = '2.0.0';

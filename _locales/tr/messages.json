@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Çok samimi"
  },
+ "tone_academic": {
+  "message": "Akademik"
+ },
+ "tone_professional": {
+  "message": "Profesyonel"
+ },
+ "tone_friendly": {
+  "message": "Samimi"
+ },
+ "tone_casual": {
+  "message": "Gündelik"
+ },
+ "tone_marketing": {
+  "message": "Pazarlama"
+ },
  "readingLevel": {
   "message": "Okuma düzeyi"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "TextHumanize'e hoş geldiniz"
+ },
+ "tabText": {
+  "message": "Metin"
+ },
+ "tabPage": {
+  "message": "Sayfa"
+ },
+ "tabMedia": {
+  "message": "Medya"
+ },
+ "inputPlaceholder2": {
+  "message": "Metni yapıştırın veya yazın — ya da bir sayfada metin seçin…"
+ },
+ "humanizeCta": {
+  "message": "✨ Doğallaştır"
+ },
+ "pageLead": {
+  "message": "Açık sekmeyi tarar: ne kadar metin YZ görünüyor, YZ görselleri ve okunabilirlik."
+ },
+ "scanPage": {
+  "message": "🔍 Sayfayı tara"
+ },
+ "scanning": {
+  "message": "Sayfa taranıyor…"
+ },
+ "pageAiText": {
+  "message": "YZ benzeri metin · $COUNT$ blok",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "YZ görseli · $COUNT$ içinde",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "En YZ benzeri bölümler"
+ },
+ "pageScanUnavailable": {
+  "message": "Sayfa taraması uzantı gerektirir (normal bir web sayfasında açın)."
+ },
+ "heatTitle": {
+  "message": "Cümleye göre YZ ısı haritası"
+ },
+ "human": {
+  "message": "insan"
+ },
+ "aiLike": {
+  "message": "YZ"
+ },
+ "dropTitle": {
+  "message": "Bir görsel veya medya dosyası bırakın"
+ },
+ "dropHint": {
+  "message": "YZ işaretlerini kontrol edip gizli meta veriler olmadan indir"
+ },
+ "choose": {
+  "message": "Dosya seç"
+ },
+ "mediaCleaned": {
+  "message": "Temizlendi · $COUNT$ meta veri bloğu kaldırıldı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Kaldırılacak meta veri yok — dosya zaten temiz"
+ },
+ "downloadClean": {
+  "message": "Temiz dosyayı indir"
+ },
+ "mediaHonest": {
+  "message": "Yalnızca meta veri/kaynağı kaldırır. İçiçe işaretler (ör. SynthID) kaldırılamaz."
  }
 }

@@ -2,6 +2,38 @@
 
 All notable changes to TextHumanize for Chrome.
 
+## [2.1.0] — 2026-07-17
+
+A usability + reliability pass answering real feedback.
+
+### Added
+- **Popup is now a hub with 3 tabs — Text · Page · Media:**
+  - **Text**: big Humanize CTA + Check / Tone / Readability / Paraphrase, with a
+    circular **AI-score gauge**, a **per-sentence AI heatmap** (red = AI-like,
+    green = human), readability gauges, and a one-tap "Humanize now" when a text
+    scores AI-like.
+  - **Page**: "Scan this page" reports how much on-page text looks AI-written,
+    how many images carry AI-provenance markers, page readability, with one-tap
+    humanize on the most AI-like passages.
+  - **Media**: drag-and-drop an image/media file → provenance verdict + one-click
+    **download a copy with metadata/provenance stripped**.
+- Per-sentence heatmap scorer that works on single sentences (the full detector
+  returns 0 for <2 sentences), anchored to the document score.
+- Media **cleaning** (metadata/provenance removal) for PNG / JPEG / WebP / WAV.
+
+### Fixed
+- **Editors in iframes now work** — classic WordPress/TinyMCE and the WordPress
+  6.3+ block-editor canvas run inside an `<iframe>`; the content scripts now
+  inject into all frames, so the action chip appears there too.
+- Image-hover provenance and settings toggles reworked to actually take effect.
+
+### Changed
+- **Removed style profiles** — simpler, no dropdown; one sensible default.
+- Settings are now a clear list of module toggles (bubble, editor chip, image
+  hover, effects, watermark cleaning, anonymous stats).
+- Full visual redesign of the popup and settings (gauges, heatmap, drop zone,
+  cleaner spacing, dark/light).
+
 ## [2.0.0] — 2026-07-16
 
 The "show it off" release — the extension now surfaces most of the

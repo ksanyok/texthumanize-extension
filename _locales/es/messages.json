@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Muy informal"
  },
+ "tone_academic": {
+  "message": "Académico"
+ },
+ "tone_professional": {
+  "message": "Profesional"
+ },
+ "tone_friendly": {
+  "message": "Amistoso"
+ },
+ "tone_casual": {
+  "message": "Informal"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
  "readingLevel": {
   "message": "Nivel de lectura"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Bienvenido a TextHumanize"
+ },
+ "tabText": {
+  "message": "Texto"
+ },
+ "tabPage": {
+  "message": "Página"
+ },
+ "tabMedia": {
+  "message": "Medios"
+ },
+ "inputPlaceholder2": {
+  "message": "Pegue o escriba texto — o seleccione texto en cualquier página…"
+ },
+ "humanizeCta": {
+  "message": "✨ Humanizar"
+ },
+ "pageLead": {
+  "message": "Analiza la pestaña abierta: cuánto texto parece IA, imágenes IA y legibilidad."
+ },
+ "scanPage": {
+  "message": "🔍 Analizar la página"
+ },
+ "scanning": {
+  "message": "Analizando la página…"
+ },
+ "pageAiText": {
+  "message": "Texto tipo IA · $COUNT$ bloques",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "Imágenes IA · de $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Pasajes más tipo IA"
+ },
+ "pageScanUnavailable": {
+  "message": "El escaneo de página requiere la extensión (en una página web normal)."
+ },
+ "heatTitle": {
+  "message": "Mapa IA por frase"
+ },
+ "human": {
+  "message": "humano"
+ },
+ "aiLike": {
+  "message": "IA"
+ },
+ "dropTitle": {
+  "message": "Suelte una imagen o archivo multimedia"
+ },
+ "dropHint": {
+  "message": "Comprueba marcas de IA y descárgalo sin metadatos ocultos"
+ },
+ "choose": {
+  "message": "Elegir archivo"
+ },
+ "mediaCleaned": {
+  "message": "Limpiado · $COUNT$ bloques de metadatos eliminados",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "No hay metadatos que eliminar — el archivo ya está limpio"
+ },
+ "downloadClean": {
+  "message": "Descargar archivo limpio"
+ },
+ "mediaHonest": {
+  "message": "Elimina solo metadatos/procedencia. Las marcas incrustadas (p. ej. SynthID) no."
  }
 }

@@ -2061,4 +2061,79 @@ export function detectAi(text, options = {}) {
   return new AIDetector().detect(text, options);
 }
 
+// ─────────────────────────────────────────────────────────────
+//  Per-sentence AI heatmap scoring.
+//  The full detector returns 0 for single sentences (its short-text and
+//  ≥2-sentence guards). For a heatmap we score each sentence by its density
+//  of AI-typical markers vs human/casual markers, anchored to the document's
+//  overall AI probability so the map stays consistent with the headline.
+// ─────────────────────────────────────────────────────────────
+
+const HEATMAP_AI_WORDS = new Set([
+  'furthermore', 'moreover', 'additionally', 'consequently', 'nevertheless',
+  'nonetheless', 'thus', 'therefore', 'hence', 'notably', 'importantly',
+  'comprehensive', 'methodology', 'implementation', 'facilitate', 'facilitates',
+  'leverage', 'leverages', 'optimize', 'optimization', 'utilize', 'utilization',
+  'demonstrate', 'demonstrates', 'substantial', 'significant', 'innovative',
+  'robust', 'paradigm', 'paradigms', 'streamline', 'aforementioned', 'stakeholders',
+  'необходимо', 'следует', 'данный', 'данная', 'комплексный', 'комплексная',
+  'методология', 'реализация', 'обеспечивает', 'оптимизацию', 'существенные',
+  'значительные', 'вышеуказанный', 'демонстрирует', 'таким', 'образом',
+]);
+
+const HEATMAP_HUMAN_WORDS = new Set([
+  'honestly', 'actually', 'basically', 'gonna', 'wanna', 'kinda', 'yeah', 'ok',
+  'okay', 'lol', 'tbh', 'i', 'me', 'my', 'we', 'you', 'just', 'really', 'so',
+  'well', 'anyway', 'though', 'stuff', 'thing', 'things',
+  'честно', 'я', 'мы', 'ты', 'просто', 'ну', 'вот', 'типа', 'вообще', 'блин',
+]);
+
+/**
+ * Score each sentence for the AI heatmap.
+ * @param {string} text
+ * @param {{lang?: string, langPack?: LangPack|null, overall?: number}} [options]
+ * @returns {{sentences: {text: string, prob: number}[], overall: number}}
+ */
+export function sentenceScores(text, options = {}) {
+  const { langPack = null } = options;
+  const sentences = (text.split(/(?<=[.!?…])\s+/).map((s) => s.trim()).filter((s) => s.split(/\s+/).length >= 3));
+
+  let overall = options.overall;
+  if (typeof overall !== 'number') {
+    const doc = new AIDetector().detect(text, options);
+    overall = doc.verdict === 'unknown' ? 0.5 : doc.aiProbability;
+  }
+
+  const packAi = new Set([
+    ...keysOf(langPack?.ai_connectors).map((s) => String(s).toLowerCase()),
+    ...keysOf(langPack?.bureaucratic).map((s) => String(s).toLowerCase()),
+  ]);
+  const packHuman = new Set(keysOf(langPack?.colloquial_markers).map((s) => String(s).toLowerCase()));
+  const phrases = keysOf(langPack?.bureaucratic_phrases).map((s) => String(s).toLowerCase());
+
+  const scored = sentences.map((sentence) => {
+    const low = sentence.toLowerCase();
+    const words = low.match(/\p{L}[\p{L}\p{N}'’-]*/gu) || [];
+    const n = Math.max(5, words.length);
+    let ai = 0;
+    let human = 0;
+    for (const w of words) {
+      if (HEATMAP_AI_WORDS.has(w) || packAi.has(w)) ai++;
+      if (HEATMAP_HUMAN_WORDS.has(w) || packHuman.has(w)) human++;
+    }
+    for (const p of phrases) if (p.includes(' ') && low.includes(p)) ai += 2;
+    if (/n't|'re|'ll|'m|'ve|gonna|wanna/.test(low)) human += 1;
+    if (/[!?]{1,}$/.test(sentence)) human += 0.5;
+
+    const aiDensity = ai / n;
+    const humanDensity = human / n;
+    const lengthFactor = words.length > 28 ? 0.12 : words.length < 8 ? -0.12 : 0;
+    const signal = Math.max(0, Math.min(1, 0.5 + aiDensity * 1.6 - humanDensity * 1.5 + lengthFactor));
+    const prob = Math.max(0, Math.min(1, 0.45 * signal + 0.55 * overall + (aiDensity > 0.12 ? 0.08 : 0) - (humanDensity > 0.12 ? 0.12 : 0)));
+    return { text: sentence, prob };
+  });
+
+  return { sentences: scored, overall };
+}
+
 export default AIDetector;

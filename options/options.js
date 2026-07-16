@@ -30,7 +30,6 @@ for (const [code, name] of LANGS) {
 
 const intensity = $('#intensity');
 const intensityVal = $('#intensity-val');
-const profile = $('#profile');
 const bubble = $('#selection-bubble');
 const chip = $('#editor-chip');
 const imageHover = $('#image-hover');
@@ -42,7 +41,6 @@ const saveNote = $('#save-note');
 send({ type: 'get-settings' }).then((s) => {
   intensity.value = s.intensity;
   intensityVal.textContent = s.intensity;
-  profile.value = s.profile;
   langMode.value = s.langMode || 'auto';
   bubble.checked = !!s.selectionBubble;
   chip.checked = s.editorChip !== false;
@@ -64,7 +62,6 @@ function save(patch) {
 }
 
 intensity.addEventListener('change', () => save({ intensity: Number(intensity.value) }));
-profile.addEventListener('change', () => save({ profile: profile.value }));
 langMode.addEventListener('change', () => save({ langMode: langMode.value }));
 bubble.addEventListener('change', () => save({ selectionBubble: bubble.checked }));
 chip.addEventListener('change', () => save({ editorChip: chip.checked }));

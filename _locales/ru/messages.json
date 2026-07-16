@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Очень разговорный"
  },
+ "tone_academic": {
+  "message": "Академический"
+ },
+ "tone_professional": {
+  "message": "Деловой"
+ },
+ "tone_friendly": {
+  "message": "Дружелюбный"
+ },
+ "tone_casual": {
+  "message": "Разговорный"
+ },
+ "tone_marketing": {
+  "message": "Маркетинговый"
+ },
  "readingLevel": {
   "message": "Уровень чтения"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Добро пожаловать в TextHumanize"
+ },
+ "tabText": {
+  "message": "Текст"
+ },
+ "tabPage": {
+  "message": "Страница"
+ },
+ "tabMedia": {
+  "message": "Медиа"
+ },
+ "inputPlaceholder2": {
+  "message": "Вставьте или введите текст — либо выделите текст на любой странице…"
+ },
+ "humanizeCta": {
+  "message": "✨ Гуманизировать"
+ },
+ "pageLead": {
+  "message": "Сканирует открытую вкладку: сколько текста похоже на ИИ, ИИ-картинки и читабельность."
+ },
+ "scanPage": {
+  "message": "🔍 Сканировать страницу"
+ },
+ "scanning": {
+  "message": "Сканирую страницу…"
+ },
+ "pageAiText": {
+  "message": "Текст похож на ИИ · блоков: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "ИИ-картинки · из $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Самые ИИ-подобные фрагменты"
+ },
+ "pageScanUnavailable": {
+  "message": "Скан страницы работает в расширении (откройте на обычной веб-странице)."
+ },
+ "heatTitle": {
+  "message": "ИИ-карта по предложениям"
+ },
+ "human": {
+  "message": "человек"
+ },
+ "aiLike": {
+  "message": "ИИ"
+ },
+ "dropTitle": {
+  "message": "Перетащите изображение или медиафайл"
+ },
+ "dropHint": {
+  "message": "Проверим маркеры ИИ и вернём файл без скрытых метаданных"
+ },
+ "choose": {
+  "message": "Выбрать файл"
+ },
+ "mediaCleaned": {
+  "message": "Очищено · удалено блоков метаданных: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Удаляемых метаданных не найдено — файл уже чист"
+ },
+ "downloadClean": {
+  "message": "Скачать чистый файл"
+ },
+ "mediaHonest": {
+  "message": "Удаляет только метаданные/провенанс. Внутриконтентные метки (напр. SynthID) убрать нельзя."
  }
 }

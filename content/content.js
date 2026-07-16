@@ -95,6 +95,7 @@
   function hideBubble() { if (bubble) bubble.classList.remove('th-visible'); }
 
   document.addEventListener('mouseup', (e) => {
+    if (window.top !== window) return; // bubble only in the top document
     if (window.THX.shadow && e.composedPath?.().some((n) => n === window.THX.shadow?.host)) return;
     setTimeout(() => {
       const sel = getSelection();
@@ -108,8 +109,45 @@
   }, true);
   addEventListener('scroll', hideBubble, true);
 
-  // ── Actions from the service worker (context menu / commands) ──
+  // ── Page collection for the popup "Scan this page" feature ──
+  function collectPage() {
+    const blocks = [];
+    const seen = new Set();
+    const sel = 'p, li, h1, h2, h3, blockquote, article, section, td, dd, figcaption';
+    for (const el of document.querySelectorAll(sel)) {
+      if (el.closest('nav, footer, header, aside')) continue;
+      const txt = (el.innerText || '').trim().replace(/\s+/g, ' ');
+      if (txt.length < 60) continue;
+      const key = txt.slice(0, 80);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      blocks.push(txt.slice(0, 600));
+      if (blocks.length >= 40) break;
+    }
+    const images = [];
+    const iseen = new Set();
+    for (const img of document.images) {
+      const r = img.getBoundingClientRect();
+      if (r.width < 128 || r.height < 128) continue;
+      const src = img.currentSrc || img.src;
+      if (!src || iseen.has(src) || src.startsWith('data:')) continue;
+      iseen.add(src);
+      images.push(src);
+      if (images.length >= 12) break;
+    }
+    let words = 0;
+    try { words = (document.body.innerText.trim().match(/\S+/g) || []).length; } catch { /* */ }
+    return { blocks, images, words };
+  }
+
+  // ── Actions from the service worker (context menu / commands / scan) ──
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message?.type === 'collect-page') {
+      // Only the top document answers, so the popup gets one response.
+      if (window.top !== window) return;
+      sendResponse(collectPage());
+      return;
+    }
     if (message?.type !== 'th-action') return;
     let target = captureSelection();
     if (!target && message.selectionText) {

@@ -1,6 +1,6 @@
 {
   "name": "texthumanize-extension",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "TextHumanize for Chrome — offline text naturalization, AI-style check and hidden-watermark cleaning on any page",
   "private": true,
   "type": "module",

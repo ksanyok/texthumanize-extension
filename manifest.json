@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "TextHumanize",
   "description": "__MSG_extDesc__",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "default_locale": "en",
   "author": "Alexandr Krikun",
   "homepage_url": "https://github.com/ksanyok/TextHumanize",
@@ -38,7 +38,8 @@
         "content/content.js"
       ],
       "run_at": "document_idle",
-      "all_frames": false
+      "all_frames": true,
+      "match_about_blank": true
     }
   ],
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],

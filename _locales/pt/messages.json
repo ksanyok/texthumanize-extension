@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Muito informal"
  },
+ "tone_academic": {
+  "message": "Acadêmico"
+ },
+ "tone_professional": {
+  "message": "Profissional"
+ },
+ "tone_friendly": {
+  "message": "Amigável"
+ },
+ "tone_casual": {
+  "message": "Descontraído"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
  "readingLevel": {
   "message": "Nível de leitura"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Bem-vindo ao TextHumanize"
+ },
+ "tabText": {
+  "message": "Texto"
+ },
+ "tabPage": {
+  "message": "Página"
+ },
+ "tabMedia": {
+  "message": "Mídia"
+ },
+ "inputPlaceholder2": {
+  "message": "Cole ou digite o texto — ou selecione texto em qualquer página…"
+ },
+ "humanizeCta": {
+  "message": "✨ Humanizar"
+ },
+ "pageLead": {
+  "message": "Analisa a aba aberta: quanto texto parece IA, imagens de IA e legibilidade."
+ },
+ "scanPage": {
+  "message": "🔍 Analisar a página"
+ },
+ "scanning": {
+  "message": "Analisando a página…"
+ },
+ "pageAiText": {
+  "message": "Texto tipo IA · $COUNT$ blocos",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "Imagens IA · de $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Trechos mais tipo IA"
+ },
+ "pageScanUnavailable": {
+  "message": "A varredura precisa da extensão (em uma página web normal)."
+ },
+ "heatTitle": {
+  "message": "Mapa de IA por frase"
+ },
+ "human": {
+  "message": "humano"
+ },
+ "aiLike": {
+  "message": "IA"
+ },
+ "dropTitle": {
+  "message": "Solte uma imagem ou arquivo de mídia"
+ },
+ "dropHint": {
+  "message": "Verifica marcas de IA e baixa sem metadados ocultos"
+ },
+ "choose": {
+  "message": "Escolher arquivo"
+ },
+ "mediaCleaned": {
+  "message": "Limpo · $COUNT$ blocos de metadados removidos",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Sem metadados removíveis — o arquivo já está limpo"
+ },
+ "downloadClean": {
+  "message": "Baixar arquivo limpo"
+ },
+ "mediaHonest": {
+  "message": "Remove apenas metadados/proveniência. Marcas no conteúdo (ex. SynthID) não."
  }
 }

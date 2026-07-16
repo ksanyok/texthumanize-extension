@@ -12,7 +12,7 @@
  */
 
 import { humanize } from './engine/pipeline.js';
-import { AIDetector } from './engine/detector.js';
+import { AIDetector, sentenceScores } from './engine/detector.js';
 import { detectLanguage } from './engine/lang-detect.js';
 import { WatermarkDetector } from './engine/watermark.js';
 import { analyzeTone, adjustTone } from './engine/tone.js';
@@ -20,7 +20,8 @@ import { analyzeReadability } from './engine/readability.js';
 import { paraphrase } from './engine/paraphrase.js';
 import { fingerprint } from './engine/stylometry.js';
 import { classifyContent } from './engine/content-type.js';
-import { detectMediaWatermarks } from './engine/media-forensics.js';
+import { detectMediaWatermarks, cleanMediaWatermarks } from './engine/media-forensics.js';
+import { splitSentences } from './engine/util.js';
 import * as telemetry from './engine/telemetry.js';
 
 telemetry.setVersion(chrome.runtime.getManifest().version);
@@ -145,6 +146,14 @@ async function opClassify(text, overrides = {}) {
   return { lang, ...classifyContent(text, { lang, langPack }) };
 }
 
+async function opHeatmap(text, overrides = {}) {
+  const { lang, langPack } = await resolve(text, overrides);
+  const doc = new AIDetector().detect(text, { lang, langPack });
+  const overallProb = doc.verdict === 'unknown' ? 0.5 : doc.aiProbability;
+  const hm = sentenceScores(text, { lang, langPack, overall: overallProb });
+  return { lang, sentences: hm.sentences.slice(0, 120), overall: { aiProbability: doc.aiProbability, verdict: doc.verdict } };
+}
+
 // ── Image provenance scan ───────────────────────────────────────
 function bytesFromDataUrl(src) {
   const comma = src.indexOf(',');
@@ -176,6 +185,54 @@ async function scanImage(src) {
   }
 }
 
+// ── Page scan ───────────────────────────────────────────────────
+async function scanPage() {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab?.id) return { error: 'no-tab' };
+  let collected;
+  try {
+    collected = await chrome.tabs.sendMessage(tab.id, { type: 'collect-page' });
+  } catch {
+    return { error: 'no-content' };
+  }
+  if (!collected) return { error: 'empty' };
+  telemetry.track('tool_used', { tool: 'scan_page' });
+
+  const detector = new AIDetector();
+  const blocks = (collected.blocks || []).slice(0, 40);
+  let aiBlocks = 0;
+  const scored = [];
+  for (const text of blocks) {
+    const lang = detectLanguage(text);
+    const langPack = await loadLangPack(lang);
+    const prob = detector.detect(text, { lang, langPack }).aiProbability;
+    if (prob >= 0.55) aiBlocks++;
+    scored.push({ text: text.slice(0, 140), prob });
+  }
+  const topBlocks = scored.slice().sort((a, b) => b.prob - a.prob).slice(0, 6).filter((b) => b.prob >= 0.4);
+
+  const sample = blocks.join(' ').slice(0, 4000);
+  const readability = sample ? analyzeReadability(sample, detectLanguage(sample)).fleschReadingEase : null;
+
+  const imgs = (collected.images || []).slice(0, 12);
+  const hasPerm = await chrome.permissions.contains({ origins: ['<all_urls>'] }).catch(() => false);
+  let aiImages = 0;
+  let imagesNeedPermission = false;
+  if (imgs.length && !hasPerm) {
+    imagesNeedPermission = true;
+  } else {
+    for (const src of imgs) {
+      try { const r = await scanImage(src); if (r.isAiGenerated === true) aiImages++; } catch { /* */ }
+    }
+  }
+
+  return {
+    textBlocks: blocks.length, aiBlocks, topBlocks,
+    readability, images: imgs.length, aiImages, imagesNeedPermission,
+    words: collected.words || 0,
+  };
+}
+
 // ── Message hub ─────────────────────────────────────────────────
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const respond = (promise) => {
@@ -196,6 +253,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case 'stylometry': return respond(opStylometry(message.text, message.overrides));
     case 'classify': return respond(opClassify(message.text, message.overrides));
     case 'scan-image': return respond(scanImage(message.src));
+    case 'scan-page': return respond(scanPage());
+    case 'clean-media': return respond(Promise.resolve(cleanMediaWatermarks(message.bytes)));
+    case 'detect-media': return respond(Promise.resolve(detectMediaWatermarks(message.bytes)));
+    case 'heatmap': return respond(opHeatmap(message.text, message.overrides));
     case 'detect-language': return respond(Promise.resolve(detectLanguage(message.text)));
     case 'get-settings': return respond(getSettings());
     case 'set-settings': return respond((async () => {

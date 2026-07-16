@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Bardzo swobodny"
  },
+ "tone_academic": {
+  "message": "Akademicki"
+ },
+ "tone_professional": {
+  "message": "Profesjonalny"
+ },
+ "tone_friendly": {
+  "message": "Przyjazny"
+ },
+ "tone_casual": {
+  "message": "Swobodny"
+ },
+ "tone_marketing": {
+  "message": "Marketingowy"
+ },
  "readingLevel": {
   "message": "Poziom czytania"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Witaj w TextHumanize"
+ },
+ "tabText": {
+  "message": "Tekst"
+ },
+ "tabPage": {
+  "message": "Strona"
+ },
+ "tabMedia": {
+  "message": "Media"
+ },
+ "inputPlaceholder2": {
+  "message": "Wklej lub wpisz tekst — albo zaznacz tekst na stronie…"
+ },
+ "humanizeCta": {
+  "message": "✨ Uczłowiecz"
+ },
+ "pageLead": {
+  "message": "Skanuje otwartą kartę: ile tekstu wygląda na AI, obrazy AI i czytelność."
+ },
+ "scanPage": {
+  "message": "🔍 Skanuj stronę"
+ },
+ "scanning": {
+  "message": "Skanowanie strony…"
+ },
+ "pageAiText": {
+  "message": "Tekst jak AI · bloków: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "Obrazy AI · z $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Najbardziej AI fragmenty"
+ },
+ "pageScanUnavailable": {
+  "message": "Skan strony wymaga rozszerzenia (na zwykłej stronie)."
+ },
+ "heatTitle": {
+  "message": "Mapa AI wg zdań"
+ },
+ "human": {
+  "message": "człowiek"
+ },
+ "aiLike": {
+  "message": "AI"
+ },
+ "dropTitle": {
+  "message": "Upuść obraz lub plik multimedialny"
+ },
+ "dropHint": {
+  "message": "Sprawdzimy znaczniki AI i pobierzesz plik bez ukrytych metadanych"
+ },
+ "choose": {
+  "message": "Wybierz plik"
+ },
+ "mediaCleaned": {
+  "message": "Wyczyszczono · usunięto $COUNT$ bloków metadanych",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Brak metadanych do usunięcia — plik jest już czysty"
+ },
+ "downloadClean": {
+  "message": "Pobierz czysty plik"
+ },
+ "mediaHonest": {
+  "message": "Usuwa tylko metadane/pochodzenie. Znaków w treści (np. SynthID) nie."
  }
 }

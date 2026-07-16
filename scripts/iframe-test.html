@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>iframe editor test</title></head>
+<body style="font-family:sans-serif;padding:20px">
+  <h1>TinyMCE / Gutenberg-canvas iframe editor test</h1>
+  <iframe id="editor" style="width:600px;height:180px;border:1px solid #999" srcdoc='<body contenteditable="true" style="font-family:Georgia;padding:12px">Moreover, it is worth mentioning that the utilization of advanced techniques necessitates careful consideration of the comprehensive methodology.</body>'></iframe>
+  <p id="status">loading…</p>
+  <script type="module">
+    import { FALLBACK_MESSAGES } from '../popup/messages.fallback.js';
+    import * as engine from '../engine/index.js';
+
+    async function handle(m) {
+      const lang = m.text ? engine.detectLanguage(m.text) : 'en';
+      const pack = await (await fetch(`../data/langs/${lang}.json`)).json().catch(() => null);
+      if (m.type === 'humanize') return engine.humanize(m.text, { lang, intensity: 60, seed: 1, langPack: pack });
+      if (m.type === 'get-settings') return { editorChip: true, selectionBubble: true, imageHover: false, effects: true };
+      return {};
+    }
+    function makeChromeShim(win) {
+      win.chrome = {
+        i18n: { getMessage: (k) => FALLBACK_MESSAGES.en[k] || k },
+        runtime: { id: 'test', lastError: null,
+          sendMessage: (msg, cb) => { handle(msg).then((d) => cb && cb({ ok: true, data: d }), (e) => cb && cb({ ok: false, error: String(e) })); },
+          onMessage: { addListener: () => {} } },
+        storage: { onChanged: { addListener: () => {} } },
+      };
+    }
+    async function injectInto(win, doc) {
+      makeChromeShim(win);
+      for (const f of ['shared', 'panel', 'editors', 'images', 'content']) {
+        const src = await (await fetch(`../content/${f}.js`)).text();
+        const s = doc.createElement('script'); s.textContent = src; doc.body.appendChild(s);
+      }
+    }
+    const iframe = document.getElementById('editor');
+    iframe.addEventListener('load', run);
+    if (iframe.contentDocument?.readyState === 'complete') run();
+    async function run() {
+      const win = iframe.contentWindow, doc = iframe.contentDocument;
+      await injectInto(win, doc);
+      const body = doc.body;
+      body.focus();
+      body.dispatchEvent(new win.FocusEvent('focusin', { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 300));
+      const shadowHost = doc.querySelector('texthumanize-root');
+      const hasChip = !!(win.THX && win.THX.shadow && win.THX.shadow.querySelector('.th-chip'));
+      document.getElementById('status').textContent = 'THX in iframe: ' + (typeof win.THX) + ' · host: ' + !!shadowHost + ' · chip: ' + hasChip;
+      window.__iframeResult = { thx: typeof win.THX, host: !!shadowHost, chip: hasChip };
+      document.title = 'iframe-ready';
+    }
+  </script>
+</body>
+</html>

@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Дуже розмовний"
  },
+ "tone_academic": {
+  "message": "Академічний"
+ },
+ "tone_professional": {
+  "message": "Діловий"
+ },
+ "tone_friendly": {
+  "message": "Дружній"
+ },
+ "tone_casual": {
+  "message": "Розмовний"
+ },
+ "tone_marketing": {
+  "message": "Маркетинговий"
+ },
  "readingLevel": {
   "message": "Рівень читання"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Ласкаво просимо до TextHumanize"
+ },
+ "tabText": {
+  "message": "Текст"
+ },
+ "tabPage": {
+  "message": "Сторінка"
+ },
+ "tabMedia": {
+  "message": "Медіа"
+ },
+ "inputPlaceholder2": {
+  "message": "Вставте або введіть текст — або виділіть текст на будь-якій сторінці…"
+ },
+ "humanizeCta": {
+  "message": "✨ Гуманізувати"
+ },
+ "pageLead": {
+  "message": "Сканує відкриту вкладку: скільки тексту схоже на ШІ, ШІ-зображення та читабельність."
+ },
+ "scanPage": {
+  "message": "🔍 Сканувати сторінку"
+ },
+ "scanning": {
+  "message": "Сканую сторінку…"
+ },
+ "pageAiText": {
+  "message": "Текст схожий на ШІ · блоків: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "ШІ-зображення · з $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Найбільш ШІ-подібні фрагменти"
+ },
+ "pageScanUnavailable": {
+  "message": "Скан сторінки працює в розширенні (відкрийте на звичайній веб-сторінці)."
+ },
+ "heatTitle": {
+  "message": "ШІ-карта за реченнями"
+ },
+ "human": {
+  "message": "людина"
+ },
+ "aiLike": {
+  "message": "ШІ"
+ },
+ "dropTitle": {
+  "message": "Перетягніть зображення або медіафайл"
+ },
+ "dropHint": {
+  "message": "Перевіримо маркери ШІ й повернемо файл без прихованих метаданих"
+ },
+ "choose": {
+  "message": "Вибрати файл"
+ },
+ "mediaCleaned": {
+  "message": "Очищено · видалено блоків метаданих: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Метаданих для видалення не знайдено — файл уже чистий"
+ },
+ "downloadClean": {
+  "message": "Завантажити чистий файл"
+ },
+ "mediaHonest": {
+  "message": "Видаляє лише метадані/провенанс. Внутрішньоконтентні мітки (напр. SynthID) прибрати не можна."
  }
 }

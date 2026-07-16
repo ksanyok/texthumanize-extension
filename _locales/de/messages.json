@@ -298,6 +298,21 @@
  "tone_very_informal": {
   "message": "Sehr locker"
  },
+ "tone_academic": {
+  "message": "Akademisch"
+ },
+ "tone_professional": {
+  "message": "Professionell"
+ },
+ "tone_friendly": {
+  "message": "Freundlich"
+ },
+ "tone_casual": {
+  "message": "Locker"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
  "readingLevel": {
   "message": "Leseniveau"
  },
@@ -366,5 +381,86 @@
  },
  "welcomeTitle": {
   "message": "Willkommen bei TextHumanize"
+ },
+ "tabText": {
+  "message": "Text"
+ },
+ "tabPage": {
+  "message": "Seite"
+ },
+ "tabMedia": {
+  "message": "Medien"
+ },
+ "inputPlaceholder2": {
+  "message": "Text einfügen oder eingeben — oder Text auf einer Seite markieren…"
+ },
+ "humanizeCta": {
+  "message": "✨ Vermenschlichen"
+ },
+ "pageLead": {
+  "message": "Scannt den offenen Tab: wie viel Text KI-verdächtig ist, KI-Bilder und Lesbarkeit."
+ },
+ "scanPage": {
+  "message": "🔍 Seite scannen"
+ },
+ "scanning": {
+  "message": "Seite wird gescannt…"
+ },
+ "pageAiText": {
+  "message": "KI-verdächtiger Text · $COUNT$ Blöcke",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "KI-Bilder · von $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Am stärksten KI-verdächtige Passagen"
+ },
+ "pageScanUnavailable": {
+  "message": "Seiten-Scan braucht die Erweiterung (auf einer normalen Webseite öffnen)."
+ },
+ "heatTitle": {
+  "message": "KI-Heatmap je Satz"
+ },
+ "human": {
+  "message": "Mensch"
+ },
+ "aiLike": {
+  "message": "KI"
+ },
+ "dropTitle": {
+  "message": "Bild- oder Mediendatei ablegen"
+ },
+ "dropHint": {
+  "message": "Auf KI-Marker prüfen und ohne versteckte Metadaten herunterladen"
+ },
+ "choose": {
+  "message": "Datei wählen"
+ },
+ "mediaCleaned": {
+  "message": "Bereinigt · $COUNT$ Metadaten entfernt",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "Keine entfernbaren Metadaten — Datei ist bereits sauber"
+ },
+ "downloadClean": {
+  "message": "Saubere Datei laden"
+ },
+ "mediaHonest": {
+  "message": "Entfernt nur Metadaten/Provenienz. In-Content-Wasserzeichen (z. B. SynthID) nicht."
  }
 }
