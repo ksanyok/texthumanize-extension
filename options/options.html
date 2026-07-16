@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TextHumanize — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header class="head">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="22" height="22" rx="6" fill="url(#thg)"/>
+        <path d="M7 8.2h10M12 8.2V17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="17.4" cy="15.8" r="2.6" fill="#fff" opacity=".9"/>
+        <defs><linearGradient id="thg" x1="0" y1="0" x2="24" y2="24">
+          <stop stop-color="#6d5efc"/><stop offset="1" stop-color="#22b8cf"/>
+        </linearGradient></defs>
+      </svg>
+      <h1 data-i18n="optTitle"></h1>
+      <span id="save-note" class="save-note" hidden data-i18n="saved"></span>
+    </header>
+
+    <section class="card">
+      <h2 data-i18n="optDefaults"></h2>
+      <label class="row">
+        <span data-i18n="intensity"></span>
+        <input type="range" id="intensity" min="0" max="100" step="5">
+        <b id="intensity-val"></b>
+      </label>
+      <label class="row">
+        <span data-i18n="profile"></span>
+        <select id="profile">
+          <option value="web">Web</option>
+          <option value="chat">Chat</option>
+          <option value="seo">SEO</option>
+          <option value="docs">Docs</option>
+          <option value="formal">Formal</option>
+          <option value="academic">Academic</option>
+          <option value="marketing">Marketing</option>
+          <option value="social">Social</option>
+          <option value="email">Email</option>
+        </select>
+      </label>
+      <label class="row">
+        <span data-i18n="optLanguage"></span>
+        <select id="lang-mode"></select>
+      </label>
+    </section>
+
+    <section class="card">
+      <label class="toggle-row">
+        <div>
+          <b data-i18n="optBubble"></b>
+          <p class="dim" data-i18n="optBubbleDesc"></p>
+        </div>
+        <input type="checkbox" id="selection-bubble">
+      </label>
+      <label class="toggle-row">
+        <div>
+          <b data-i18n="optCleanWm"></b>
+          <p class="dim" data-i18n="optCleanWmDesc"></p>
+        </div>
+        <input type="checkbox" id="clean-watermarks">
+      </label>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="optShortcuts"></h2>
+      <p class="dim" data-i18n="optShortcutsDesc"></p>
+    </section>
+
+    <section class="card about">
+      <h2 data-i18n="optAbout"></h2>
+      <p class="dim" data-i18n="optAboutText"></p>
+      <p class="links">
+        <a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener">TextHumanize library</a>
+        <a href="https://github.com/ksanyok/texthumanize-extension" target="_blank" rel="noopener">Extension source</a>
+        <a href="https://texthumanize.link" target="_blank" rel="noopener">texthumanize.link</a>
+      </p>
+      <p class="dim credit" data-i18n="credit"></p>
+    </section>
+  </main>
+  <script src="options.js" type="module"></script>
+</body>
+</html>

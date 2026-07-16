@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — humanizacja tekstu AI, sprawdzanie i czyszczenie znaków"
+ },
+ "extDesc": {
+  "message": "100% offline: czyni tekst naturalniejszym, ocenia prawdopodobieństwo AI i usuwa ukryte znaki — na każdej stronie. 25 języków."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Uczłowiecz zaznaczony tekst"
+ },
+ "cmdCheckSelection": {
+  "message": "Sprawdź zaznaczony tekst (wynik AI)"
+ },
+ "menuHumanize": {
+  "message": "✨ Uczłowiecz zaznaczenie"
+ },
+ "menuCheck": {
+  "message": "🔍 Sprawdź styl AI"
+ },
+ "menuClean": {
+  "message": "🧹 Usuń ukryte znaki"
+ },
+ "menuWorkspace": {
+  "message": "Otwórz obszar roboczy TextHumanize"
+ },
+ "offlineBadge": {
+  "message": "offline"
+ },
+ "close": {
+  "message": "Zamknij"
+ },
+ "processing": {
+  "message": "Przetwarzanie…"
+ },
+ "intensity": {
+  "message": "Intensywność"
+ },
+ "profile": {
+  "message": "Profil"
+ },
+ "actHumanize": {
+  "message": "Uczłowiecz"
+ },
+ "actCheck": {
+  "message": "Sprawdź"
+ },
+ "actClean": {
+  "message": "Wyczyść"
+ },
+ "cleanHint": {
+  "message": "Usuń niewidoczne znaki, homoglify i ukryte znaki wodne"
+ },
+ "replaceInPage": {
+  "message": "Zamień na stronie"
+ },
+ "copy": {
+  "message": "Kopiuj"
+ },
+ "copied": {
+  "message": "Skopiowano"
+ },
+ "replaced": {
+  "message": "Zamieniono"
+ },
+ "reroll": {
+  "message": "Wariant"
+ },
+ "rerollHint": {
+  "message": "Wygeneruj inny wariant"
+ },
+ "credit": {
+  "message": "Autor: Alexandr Krikun · Oparte na TextHumanize"
+ },
+ "creditExt": {
+  "message": "Kod źródłowy"
+ },
+ "noSelection": {
+  "message": "Najpierw zaznacz tekst na stronie (min. 15 znaków)."
+ },
+ "aiScore": {
+  "message": "Wynik AI"
+ },
+ "confidence": {
+  "message": "Pewność"
+ },
+ "words": {
+  "message": "Słowa"
+ },
+ "topSignals": {
+  "message": "Główne sygnały"
+ },
+ "watermarksFound": {
+  "message": "Znaleziono ukryte znaki: usunięto $COUNT$ znaków",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "Nie wykryto ukrytych znaków wodnych"
+ },
+ "beforeLabel": {
+  "message": "Przed"
+ },
+ "afterLabel": {
+  "message": "Po"
+ },
+ "improvedBy": {
+  "message": "Sygnały stylu AI zmniejszone o $COUNT$ punktów",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "Zastosowano zmian: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "usunięto ukrytych znaków: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "Styl AI"
+ },
+ "verdict_human": {
+  "message": "Styl ludzki"
+ },
+ "verdict_mixed": {
+  "message": "Mieszany"
+ },
+ "verdict_unknown": {
+  "message": "Za krótki"
+ },
+ "inputPlaceholder": {
+  "message": "Wklej lub wpisz tekst — albo zaznacz tekst na stronie i użyj ✨ lub menu kontekstowego…"
+ },
+ "paste": {
+  "message": "Wklej"
+ },
+ "clear": {
+  "message": "Wyczyść pole"
+ },
+ "viewResult": {
+  "message": "Wynik"
+ },
+ "viewChanges": {
+  "message": "Zmiany"
+ },
+ "openWorkspace": {
+  "message": "Otwórz na całej stronie"
+ },
+ "settings": {
+  "message": "Ustawienia"
+ },
+ "saved": {
+  "message": "Zapisano"
+ },
+ "optTitle": {
+  "message": "Ustawienia TextHumanize"
+ },
+ "optDefaults": {
+  "message": "Domyślne przetwarzanie"
+ },
+ "optLanguage": {
+  "message": "Język tekstu"
+ },
+ "optLangAuto": {
+  "message": "Automatyczne wykrywanie (zalecane)"
+ },
+ "optBubble": {
+  "message": "Dymek zaznaczenia"
+ },
+ "optBubbleDesc": {
+  "message": "Pokazuj przycisk ✨ obok zaznaczonego tekstu"
+ },
+ "optCleanWm": {
+  "message": "Czyść ukryte znaki podczas humanizacji"
+ },
+ "optCleanWmDesc": {
+  "message": "Automatycznie usuwaj znaki zerowej szerokości i homoglify"
+ },
+ "optShortcuts": {
+  "message": "Skróty klawiszowe"
+ },
+ "optShortcutsDesc": {
+  "message": "Konfiguracja: chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "O rozszerzeniu"
+ },
+ "optAboutText": {
+  "message": "Darmowe i open source. Oparte na bibliotece TextHumanize — silniku naturalizacji tekstu działającym w 100% offline (Python · TypeScript · PHP, 25 języków). Twój tekst nigdy nie opuszcza urządzenia."
+ },
+ "metric_pattern": {
+  "message": "Słowa i frazy AI"
+ },
+ "metric_burstiness": {
+  "message": "Jednolita długość zdań"
+ },
+ "metric_stylometry": {
+  "message": "Styl formalny"
+ },
+ "metric_voice": {
+  "message": "Strona bierna"
+ },
+ "metric_entity": {
+  "message": "Ogólnikowe odniesienia"
+ },
+ "metric_opening": {
+  "message": "Powtarzalne początki"
+ },
+ "metric_grammar": {
+  "message": "Zbyt idealna gramatyka"
+ },
+ "metric_entropy": {
+  "message": "Przewidywalne sformułowania"
+ },
+ "metric_discourse": {
+  "message": "Sztywna struktura"
+ },
+ "metric_rhythm": {
+  "message": "Monotonny rytm"
+ },
+ "metric_vocabulary": {
+  "message": "Ograniczone słownictwo"
+ },
+ "metric_perplexity": {
+  "message": "Niska perpleksja"
+ },
+ "metric_punctuation": {
+  "message": "Interpunkcja typowa dla AI"
+ },
+ "metric_readability": {
+  "message": "Jednolita czytelność"
+ },
+ "metric_semantic_rep": {
+  "message": "Powtórzenia semantyczne"
+ }
+}

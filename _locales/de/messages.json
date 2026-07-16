@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — KI-Text natürlicher machen, prüfen & Wasserzeichen entfernen"
+ },
+ "extDesc": {
+  "message": "100 % offline: macht Texte natürlicher, schätzt KI-Wahrscheinlichkeit und entfernt versteckte Wasserzeichen — auf jeder Seite. 25 Sprachen."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Markierten Text natürlicher machen"
+ },
+ "cmdCheckSelection": {
+  "message": "Markierten Text prüfen (KI-Score)"
+ },
+ "menuHumanize": {
+  "message": "✨ Auswahl natürlicher machen"
+ },
+ "menuCheck": {
+  "message": "🔍 Auf KI-Stil prüfen"
+ },
+ "menuClean": {
+  "message": "🧹 Versteckte Zeichen entfernen"
+ },
+ "menuWorkspace": {
+  "message": "TextHumanize-Arbeitsbereich öffnen"
+ },
+ "offlineBadge": {
+  "message": "offline"
+ },
+ "close": {
+  "message": "Schließen"
+ },
+ "processing": {
+  "message": "Verarbeitung…"
+ },
+ "intensity": {
+  "message": "Intensität"
+ },
+ "profile": {
+  "message": "Profil"
+ },
+ "actHumanize": {
+  "message": "Vermenschlichen"
+ },
+ "actCheck": {
+  "message": "Prüfen"
+ },
+ "actClean": {
+  "message": "Bereinigen"
+ },
+ "cleanHint": {
+  "message": "Unsichtbare Zeichen, Homoglyphen und versteckte Wasserzeichen entfernen"
+ },
+ "replaceInPage": {
+  "message": "Auf der Seite ersetzen"
+ },
+ "copy": {
+  "message": "Kopieren"
+ },
+ "copied": {
+  "message": "Kopiert"
+ },
+ "replaced": {
+  "message": "Ersetzt"
+ },
+ "reroll": {
+  "message": "Variante"
+ },
+ "rerollHint": {
+  "message": "Weitere Variante erzeugen"
+ },
+ "credit": {
+  "message": "Von Alexandr Krikun · Basiert auf TextHumanize"
+ },
+ "creditExt": {
+  "message": "Quellcode"
+ },
+ "noSelection": {
+  "message": "Bitte zuerst Text auf der Seite markieren (mind. 15 Zeichen)."
+ },
+ "aiScore": {
+  "message": "KI-Score"
+ },
+ "confidence": {
+  "message": "Konfidenz"
+ },
+ "words": {
+  "message": "Wörter"
+ },
+ "topSignals": {
+  "message": "Top-Signale"
+ },
+ "watermarksFound": {
+  "message": "Versteckte Marken gefunden: $COUNT$ Zeichen entfernt",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "Keine versteckten Wasserzeichen erkannt"
+ },
+ "beforeLabel": {
+  "message": "Vorher"
+ },
+ "afterLabel": {
+  "message": "Nachher"
+ },
+ "improvedBy": {
+  "message": "KI-Stil-Signale um $COUNT$ Punkte reduziert",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "$COUNT$ Änderungen angewendet",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "$COUNT$ versteckte Zeichen entfernt",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "KI-typisch"
+ },
+ "verdict_human": {
+  "message": "Menschlich"
+ },
+ "verdict_mixed": {
+  "message": "Gemischt"
+ },
+ "verdict_unknown": {
+  "message": "Zu kurz"
+ },
+ "inputPlaceholder": {
+  "message": "Text einfügen oder eingeben — oder Text auf einer Seite markieren und ✨ bzw. das Kontextmenü nutzen…"
+ },
+ "paste": {
+  "message": "Einfügen"
+ },
+ "clear": {
+  "message": "Leeren"
+ },
+ "viewResult": {
+  "message": "Ergebnis"
+ },
+ "viewChanges": {
+  "message": "Änderungen"
+ },
+ "openWorkspace": {
+  "message": "Als Vollseite öffnen"
+ },
+ "settings": {
+  "message": "Einstellungen"
+ },
+ "saved": {
+  "message": "Gespeichert"
+ },
+ "optTitle": {
+  "message": "TextHumanize-Einstellungen"
+ },
+ "optDefaults": {
+  "message": "Standard-Verarbeitung"
+ },
+ "optLanguage": {
+  "message": "Textsprache"
+ },
+ "optLangAuto": {
+  "message": "Automatisch erkennen (empfohlen)"
+ },
+ "optBubble": {
+  "message": "Auswahl-Blase"
+ },
+ "optBubbleDesc": {
+  "message": "✨-Schaltfläche neben markiertem Text anzeigen"
+ },
+ "optCleanWm": {
+  "message": "Versteckte Marken beim Vermenschlichen entfernen"
+ },
+ "optCleanWmDesc": {
+  "message": "Nullbreite Zeichen, Homoglyphen und andere unsichtbare Marken automatisch entfernen"
+ },
+ "optShortcuts": {
+  "message": "Tastenkürzel"
+ },
+ "optShortcutsDesc": {
+  "message": "Konfigurierbar unter chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "Über"
+ },
+ "optAboutText": {
+  "message": "Kostenlos und Open Source. Basiert auf der TextHumanize-Bibliothek — einer 100 % offline arbeitenden Text-Naturalisierungs-Engine (Python · TypeScript · PHP, 25 Sprachen). Ihr Text verlässt nie Ihr Gerät."
+ },
+ "metric_pattern": {
+  "message": "KI-Wörter & Phrasen"
+ },
+ "metric_burstiness": {
+  "message": "Gleichförmige Satzlängen"
+ },
+ "metric_stylometry": {
+  "message": "Formaler Stil"
+ },
+ "metric_voice": {
+  "message": "Passivkonstruktionen"
+ },
+ "metric_entity": {
+  "message": "Generische Verweise"
+ },
+ "metric_opening": {
+  "message": "Wiederholte Satzanfänge"
+ },
+ "metric_grammar": {
+  "message": "Zu perfekte Grammatik"
+ },
+ "metric_entropy": {
+  "message": "Vorhersehbare Formulierungen"
+ },
+ "metric_discourse": {
+  "message": "Starre Struktur"
+ },
+ "metric_rhythm": {
+  "message": "Monotoner Rhythmus"
+ },
+ "metric_vocabulary": {
+  "message": "Begrenzter Wortschatz"
+ },
+ "metric_perplexity": {
+  "message": "Niedrige Perplexität"
+ },
+ "metric_punctuation": {
+  "message": "KI-typische Zeichensetzung"
+ },
+ "metric_readability": {
+  "message": "Gleichförmige Lesbarkeit"
+ },
+ "metric_semantic_rep": {
+  "message": "Semantische Wiederholung"
+ }
+}

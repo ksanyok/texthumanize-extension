@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — гуманизация текста, проверка на ИИ и очистка меток"
+ },
+ "extDesc": {
+  "message": "Полностью офлайн: делает текст естественнее, оценивает вероятность ИИ и удаляет скрытые метки — на любой странице. 25 языков."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Гуманизировать выделенный текст"
+ },
+ "cmdCheckSelection": {
+  "message": "Проверить выделенный текст (ИИ-скор)"
+ },
+ "menuHumanize": {
+  "message": "✨ Гуманизировать выделенное"
+ },
+ "menuCheck": {
+  "message": "🔍 Проверить на ИИ-стиль"
+ },
+ "menuClean": {
+  "message": "🧹 Удалить скрытые символы"
+ },
+ "menuWorkspace": {
+  "message": "Открыть рабочую область TextHumanize"
+ },
+ "offlineBadge": {
+  "message": "офлайн"
+ },
+ "close": {
+  "message": "Закрыть"
+ },
+ "processing": {
+  "message": "Обработка…"
+ },
+ "intensity": {
+  "message": "Интенсивность"
+ },
+ "profile": {
+  "message": "Профиль"
+ },
+ "actHumanize": {
+  "message": "Гуманизировать"
+ },
+ "actCheck": {
+  "message": "Проверить"
+ },
+ "actClean": {
+  "message": "Очистить"
+ },
+ "cleanHint": {
+  "message": "Удалить невидимые символы, гомоглифы и скрытые метки"
+ },
+ "replaceInPage": {
+  "message": "Заменить на странице"
+ },
+ "copy": {
+  "message": "Копировать"
+ },
+ "copied": {
+  "message": "Скопировано"
+ },
+ "replaced": {
+  "message": "Заменено"
+ },
+ "reroll": {
+  "message": "Вариант"
+ },
+ "rerollHint": {
+  "message": "Сгенерировать другой вариант"
+ },
+ "credit": {
+  "message": "Автор: Alexandr Krikun · Работает на TextHumanize"
+ },
+ "creditExt": {
+  "message": "Код расширения"
+ },
+ "noSelection": {
+  "message": "Сначала выделите текст на странице (от 15 символов)."
+ },
+ "aiScore": {
+  "message": "ИИ-скор"
+ },
+ "confidence": {
+  "message": "Уверенность"
+ },
+ "words": {
+  "message": "Слов"
+ },
+ "topSignals": {
+  "message": "Основные сигналы"
+ },
+ "watermarksFound": {
+  "message": "Найдены скрытые метки: удалено символов — $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "Скрытых меток не обнаружено"
+ },
+ "beforeLabel": {
+  "message": "До"
+ },
+ "afterLabel": {
+  "message": "После"
+ },
+ "improvedBy": {
+  "message": "ИИ-сигналы снижены на $COUNT$ пунктов",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "Применено изменений: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "удалено скрытых символов: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "Похоже на ИИ"
+ },
+ "verdict_human": {
+  "message": "Похоже на человека"
+ },
+ "verdict_mixed": {
+  "message": "Смешанный"
+ },
+ "verdict_unknown": {
+  "message": "Мало текста"
+ },
+ "inputPlaceholder": {
+  "message": "Вставьте или введите текст — либо выделите текст на любой странице и используйте кнопку ✨ или контекстное меню…"
+ },
+ "paste": {
+  "message": "Вставить"
+ },
+ "clear": {
+  "message": "Очистить поле"
+ },
+ "viewResult": {
+  "message": "Результат"
+ },
+ "viewChanges": {
+  "message": "Изменения"
+ },
+ "openWorkspace": {
+  "message": "Открыть на всю страницу"
+ },
+ "settings": {
+  "message": "Настройки"
+ },
+ "saved": {
+  "message": "Сохранено"
+ },
+ "optTitle": {
+  "message": "Настройки TextHumanize"
+ },
+ "optDefaults": {
+  "message": "Параметры обработки по умолчанию"
+ },
+ "optLanguage": {
+  "message": "Язык текста"
+ },
+ "optLangAuto": {
+  "message": "Автоопределение (рекомендуется)"
+ },
+ "optBubble": {
+  "message": "Кнопка у выделения"
+ },
+ "optBubbleDesc": {
+  "message": "Показывать кнопку ✨ рядом с выделенным текстом на страницах"
+ },
+ "optCleanWm": {
+  "message": "Очищать скрытые метки при гуманизации"
+ },
+ "optCleanWmDesc": {
+  "message": "Автоматически удалять невидимые символы, гомоглифы и другие скрытые метки"
+ },
+ "optShortcuts": {
+  "message": "Горячие клавиши"
+ },
+ "optShortcutsDesc": {
+  "message": "Настраиваются на chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "О расширении"
+ },
+ "optAboutText": {
+  "message": "Бесплатное расширение с открытым кодом. Построено на библиотеке TextHumanize — полностью офлайн-движке натурализации текста (Python · TypeScript · PHP, 25 языков). Ваш текст никогда не покидает устройство."
+ },
+ "metric_pattern": {
+  "message": "ИИ-слова и фразы"
+ },
+ "metric_burstiness": {
+  "message": "Однородная длина предложений"
+ },
+ "metric_stylometry": {
+  "message": "Формальный стиль"
+ },
+ "metric_voice": {
+  "message": "Пассивный залог"
+ },
+ "metric_entity": {
+  "message": "Абстрактные формулировки"
+ },
+ "metric_opening": {
+  "message": "Однотипные начала предложений"
+ },
+ "metric_grammar": {
+  "message": "Слишком идеальная грамматика"
+ },
+ "metric_entropy": {
+  "message": "Предсказуемые формулировки"
+ },
+ "metric_discourse": {
+  "message": "Жёсткая структура"
+ },
+ "metric_rhythm": {
+  "message": "Монотонный ритм"
+ },
+ "metric_vocabulary": {
+  "message": "Ограниченный словарь"
+ },
+ "metric_perplexity": {
+  "message": "Низкая перплексия"
+ },
+ "metric_punctuation": {
+  "message": "ИИ-типичная пунктуация"
+ },
+ "metric_readability": {
+  "message": "Однородная читабельность"
+ },
+ "metric_semantic_rep": {
+  "message": "Смысловые повторы"
+ }
+}

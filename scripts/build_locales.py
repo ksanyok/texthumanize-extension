@@ -1,0 +1,635 @@
+#!/usr/bin/env python3
+"""Build Chrome _locales/*/messages.json and popup/messages.fallback.js
+from the single translation catalog below. Run from the repo root:
+
+    python3 scripts/build_locales.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+# key → {locale → text}. $1 placeholders are Chrome i18n substitutions.
+CATALOG: dict[str, dict[str, str]] = {
+    "extName": {
+        "en": "TextHumanize — AI Text Humanizer, Checker & Watermark Cleaner",
+        "ru": "TextHumanize — гуманизация текста, проверка на ИИ и очистка меток",
+        "uk": "TextHumanize — гуманізація тексту, перевірка на ШІ та очищення міток",
+        "de": "TextHumanize — KI-Text natürlicher machen, prüfen & Wasserzeichen entfernen",
+        "fr": "TextHumanize — humaniser le texte IA, vérifier et nettoyer les filigranes",
+        "es": "TextHumanize — humanizar texto de IA, comprobar y limpiar marcas",
+        "pl": "TextHumanize — humanizacja tekstu AI, sprawdzanie i czyszczenie znaków",
+        "it": "TextHumanize — umanizza testo IA, verifica e pulizia filigrane",
+        "pt": "TextHumanize — humanizar texto de IA, verificar e limpar marcas",
+        "tr": "TextHumanize — yapay zekâ metnini doğallaştırma, kontrol ve temizlik",
+    },
+    "extDesc": {
+        "en": "100% offline text naturalizer: humanize AI-style writing, check AI probability, strip hidden watermarks — on any page. 25 languages.",
+        "ru": "Полностью офлайн: делает текст естественнее, оценивает вероятность ИИ и удаляет скрытые метки — на любой странице. 25 языков.",
+        "uk": "Повністю офлайн: робить текст природнішим, оцінює ймовірність ШІ та видаляє приховані мітки — на будь-якій сторінці. 25 мов.",
+        "de": "100 % offline: macht Texte natürlicher, schätzt KI-Wahrscheinlichkeit und entfernt versteckte Wasserzeichen — auf jeder Seite. 25 Sprachen.",
+        "fr": "100 % hors ligne : rend le texte plus naturel, évalue la probabilité d'IA et supprime les filigranes cachés — sur toute page. 25 langues.",
+        "es": "100 % sin conexión: hace el texto más natural, estima la probabilidad de IA y elimina marcas ocultas — en cualquier página. 25 idiomas.",
+        "pl": "100% offline: czyni tekst naturalniejszym, ocenia prawdopodobieństwo AI i usuwa ukryte znaki — na każdej stronie. 25 języków.",
+        "it": "100% offline: rende il testo più naturale, stima la probabilità di IA e rimuove filigrane nascoste — su ogni pagina. 25 lingue.",
+        "pt": "100% offline: torna o texto mais natural, estima a probabilidade de IA e remove marcas ocultas — em qualquer página. 25 idiomas.",
+        "tr": "%100 çevrimdışı: metni doğallaştırır, yapay zekâ olasılığını ölçer ve gizli işaretleri kaldırır — her sayfada. 25 dil.",
+    },
+    "cmdHumanizeSelection": {
+        "en": "Humanize selected text",
+        "ru": "Гуманизировать выделенный текст",
+        "uk": "Гуманізувати виділений текст",
+        "de": "Markierten Text natürlicher machen",
+        "fr": "Humaniser le texte sélectionné",
+        "es": "Humanizar el texto seleccionado",
+        "pl": "Uczłowiecz zaznaczony tekst",
+        "it": "Umanizza il testo selezionato",
+        "pt": "Humanizar o texto selecionado",
+        "tr": "Seçili metni doğallaştır",
+    },
+    "cmdCheckSelection": {
+        "en": "Check selected text (AI score)",
+        "ru": "Проверить выделенный текст (ИИ-скор)",
+        "uk": "Перевірити виділений текст (ШІ-скор)",
+        "de": "Markierten Text prüfen (KI-Score)",
+        "fr": "Vérifier le texte sélectionné (score IA)",
+        "es": "Comprobar el texto seleccionado (puntuación IA)",
+        "pl": "Sprawdź zaznaczony tekst (wynik AI)",
+        "it": "Verifica il testo selezionato (punteggio IA)",
+        "pt": "Verificar o texto selecionado (pontuação de IA)",
+        "tr": "Seçili metni kontrol et (YZ puanı)",
+    },
+    "menuHumanize": {
+        "en": "✨ Humanize selection",
+        "ru": "✨ Гуманизировать выделенное",
+        "uk": "✨ Гуманізувати виділене",
+        "de": "✨ Auswahl natürlicher machen",
+        "fr": "✨ Humaniser la sélection",
+        "es": "✨ Humanizar selección",
+        "pl": "✨ Uczłowiecz zaznaczenie",
+        "it": "✨ Umanizza selezione",
+        "pt": "✨ Humanizar seleção",
+        "tr": "✨ Seçimi doğallaştır",
+    },
+    "menuCheck": {
+        "en": "🔍 Check for AI style",
+        "ru": "🔍 Проверить на ИИ-стиль",
+        "uk": "🔍 Перевірити на ШІ-стиль",
+        "de": "🔍 Auf KI-Stil prüfen",
+        "fr": "🔍 Vérifier le style IA",
+        "es": "🔍 Comprobar estilo de IA",
+        "pl": "🔍 Sprawdź styl AI",
+        "it": "🔍 Verifica stile IA",
+        "pt": "🔍 Verificar estilo de IA",
+        "tr": "🔍 YZ stilini kontrol et",
+    },
+    "menuClean": {
+        "en": "🧹 Remove hidden characters",
+        "ru": "🧹 Удалить скрытые символы",
+        "uk": "🧹 Видалити приховані символи",
+        "de": "🧹 Versteckte Zeichen entfernen",
+        "fr": "🧹 Supprimer les caractères cachés",
+        "es": "🧹 Eliminar caracteres ocultos",
+        "pl": "🧹 Usuń ukryte znaki",
+        "it": "🧹 Rimuovi caratteri nascosti",
+        "pt": "🧹 Remover caracteres ocultos",
+        "tr": "🧹 Gizli karakterleri kaldır",
+    },
+    "menuWorkspace": {
+        "en": "Open TextHumanize workspace",
+        "ru": "Открыть рабочую область TextHumanize",
+        "uk": "Відкрити робочий простір TextHumanize",
+        "de": "TextHumanize-Arbeitsbereich öffnen",
+        "fr": "Ouvrir l'espace TextHumanize",
+        "es": "Abrir el espacio de TextHumanize",
+        "pl": "Otwórz obszar roboczy TextHumanize",
+        "it": "Apri l'area di lavoro TextHumanize",
+        "pt": "Abrir o espaço TextHumanize",
+        "tr": "TextHumanize çalışma alanını aç",
+    },
+    "offlineBadge": {
+        "en": "offline", "ru": "офлайн", "uk": "офлайн", "de": "offline",
+        "fr": "hors ligne", "es": "sin conexión", "pl": "offline",
+        "it": "offline", "pt": "offline", "tr": "çevrimdışı",
+    },
+    "close": {
+        "en": "Close", "ru": "Закрыть", "uk": "Закрити", "de": "Schließen",
+        "fr": "Fermer", "es": "Cerrar", "pl": "Zamknij", "it": "Chiudi",
+        "pt": "Fechar", "tr": "Kapat",
+    },
+    "processing": {
+        "en": "Processing…", "ru": "Обработка…", "uk": "Обробка…",
+        "de": "Verarbeitung…", "fr": "Traitement…", "es": "Procesando…",
+        "pl": "Przetwarzanie…", "it": "Elaborazione…", "pt": "Processando…",
+        "tr": "İşleniyor…",
+    },
+    "intensity": {
+        "en": "Intensity", "ru": "Интенсивность", "uk": "Інтенсивність",
+        "de": "Intensität", "fr": "Intensité", "es": "Intensidad",
+        "pl": "Intensywność", "it": "Intensità", "pt": "Intensidade",
+        "tr": "Yoğunluk",
+    },
+    "profile": {
+        "en": "Profile", "ru": "Профиль", "uk": "Профіль", "de": "Profil",
+        "fr": "Profil", "es": "Perfil", "pl": "Profil", "it": "Profilo",
+        "pt": "Perfil", "tr": "Profil",
+    },
+    "actHumanize": {
+        "en": "Humanize", "ru": "Гуманизировать", "uk": "Гуманізувати",
+        "de": "Vermenschlichen", "fr": "Humaniser", "es": "Humanizar",
+        "pl": "Uczłowiecz", "it": "Umanizza", "pt": "Humanizar",
+        "tr": "Doğallaştır",
+    },
+    "actCheck": {
+        "en": "Check", "ru": "Проверить", "uk": "Перевірити", "de": "Prüfen",
+        "fr": "Vérifier", "es": "Comprobar", "pl": "Sprawdź", "it": "Verifica",
+        "pt": "Verificar", "tr": "Kontrol et",
+    },
+    "actClean": {
+        "en": "Clean", "ru": "Очистить", "uk": "Очистити", "de": "Bereinigen",
+        "fr": "Nettoyer", "es": "Limpiar", "pl": "Wyczyść", "it": "Pulisci",
+        "pt": "Limpar", "tr": "Temizle",
+    },
+    "cleanHint": {
+        "en": "Remove invisible characters, homoglyphs and hidden watermarks",
+        "ru": "Удалить невидимые символы, гомоглифы и скрытые метки",
+        "uk": "Видалити невидимі символи, гомогліфи та приховані мітки",
+        "de": "Unsichtbare Zeichen, Homoglyphen und versteckte Wasserzeichen entfernen",
+        "fr": "Supprimer les caractères invisibles, homoglyphes et filigranes cachés",
+        "es": "Eliminar caracteres invisibles, homóglifos y marcas ocultas",
+        "pl": "Usuń niewidoczne znaki, homoglify i ukryte znaki wodne",
+        "it": "Rimuovi caratteri invisibili, omoglifi e filigrane nascoste",
+        "pt": "Remover caracteres invisíveis, homóglifos e marcas ocultas",
+        "tr": "Görünmez karakterleri, homoglifleri ve gizli işaretleri kaldır",
+    },
+    "replaceInPage": {
+        "en": "Replace on page", "ru": "Заменить на странице",
+        "uk": "Замінити на сторінці", "de": "Auf der Seite ersetzen",
+        "fr": "Remplacer sur la page", "es": "Reemplazar en la página",
+        "pl": "Zamień na stronie", "it": "Sostituisci nella pagina",
+        "pt": "Substituir na página", "tr": "Sayfada değiştir",
+    },
+    "copy": {
+        "en": "Copy", "ru": "Копировать", "uk": "Копіювати", "de": "Kopieren",
+        "fr": "Copier", "es": "Copiar", "pl": "Kopiuj", "it": "Copia",
+        "pt": "Copiar", "tr": "Kopyala",
+    },
+    "copied": {
+        "en": "Copied", "ru": "Скопировано", "uk": "Скопійовано",
+        "de": "Kopiert", "fr": "Copié", "es": "Copiado", "pl": "Skopiowano",
+        "it": "Copiato", "pt": "Copiado", "tr": "Kopyalandı",
+    },
+    "replaced": {
+        "en": "Replaced", "ru": "Заменено", "uk": "Замінено", "de": "Ersetzt",
+        "fr": "Remplacé", "es": "Reemplazado", "pl": "Zamieniono",
+        "it": "Sostituito", "pt": "Substituído", "tr": "Değiştirildi",
+    },
+    "reroll": {
+        "en": "Variant", "ru": "Вариант", "uk": "Варіант", "de": "Variante",
+        "fr": "Variante", "es": "Variante", "pl": "Wariant", "it": "Variante",
+        "pt": "Variante", "tr": "Varyant",
+    },
+    "rerollHint": {
+        "en": "Generate another variant",
+        "ru": "Сгенерировать другой вариант",
+        "uk": "Згенерувати інший варіант",
+        "de": "Weitere Variante erzeugen",
+        "fr": "Générer une autre variante",
+        "es": "Generar otra variante",
+        "pl": "Wygeneruj inny wariant",
+        "it": "Genera un'altra variante",
+        "pt": "Gerar outra variante",
+        "tr": "Başka bir varyant üret",
+    },
+    "credit": {
+        "en": "Made by Alexandr Krikun · Powered by TextHumanize",
+        "ru": "Автор: Alexandr Krikun · Работает на TextHumanize",
+        "uk": "Автор: Alexandr Krikun · Працює на TextHumanize",
+        "de": "Von Alexandr Krikun · Basiert auf TextHumanize",
+        "fr": "Par Alexandr Krikun · Propulsé par TextHumanize",
+        "es": "Por Alexandr Krikun · Con tecnología TextHumanize",
+        "pl": "Autor: Alexandr Krikun · Oparte na TextHumanize",
+        "it": "Di Alexandr Krikun · Basato su TextHumanize",
+        "pt": "Por Alexandr Krikun · Com tecnologia TextHumanize",
+        "tr": "Alexandr Krikun · TextHumanize altyapısıyla",
+    },
+    "creditExt": {
+        "en": "Extension source", "ru": "Код расширения", "uk": "Код розширення",
+        "de": "Quellcode", "fr": "Code source", "es": "Código fuente",
+        "pl": "Kod źródłowy", "it": "Codice sorgente", "pt": "Código-fonte",
+        "tr": "Kaynak kodu",
+    },
+    "noSelection": {
+        "en": "Select some text on the page first (15+ characters).",
+        "ru": "Сначала выделите текст на странице (от 15 символов).",
+        "uk": "Спочатку виділіть текст на сторінці (від 15 символів).",
+        "de": "Bitte zuerst Text auf der Seite markieren (mind. 15 Zeichen).",
+        "fr": "Sélectionnez d'abord du texte sur la page (15+ caractères).",
+        "es": "Seleccione primero texto en la página (15+ caracteres).",
+        "pl": "Najpierw zaznacz tekst na stronie (min. 15 znaków).",
+        "it": "Seleziona prima del testo nella pagina (15+ caratteri).",
+        "pt": "Selecione primeiro um texto na página (15+ caracteres).",
+        "tr": "Önce sayfada metin seçin (15+ karakter).",
+    },
+    "aiScore": {
+        "en": "AI score", "ru": "ИИ-скор", "uk": "ШІ-скор", "de": "KI-Score",
+        "fr": "Score IA", "es": "Puntuación IA", "pl": "Wynik AI",
+        "it": "Punteggio IA", "pt": "Pontuação IA", "tr": "YZ puanı",
+    },
+    "confidence": {
+        "en": "Confidence", "ru": "Уверенность", "uk": "Впевненість",
+        "de": "Konfidenz", "fr": "Confiance", "es": "Confianza",
+        "pl": "Pewność", "it": "Confidenza", "pt": "Confiança", "tr": "Güven",
+    },
+    "words": {
+        "en": "Words", "ru": "Слов", "uk": "Слів", "de": "Wörter",
+        "fr": "Mots", "es": "Palabras", "pl": "Słowa", "it": "Parole",
+        "pt": "Palavras", "tr": "Kelime",
+    },
+    "topSignals": {
+        "en": "Top signals", "ru": "Основные сигналы", "uk": "Основні сигнали",
+        "de": "Top-Signale", "fr": "Signaux principaux", "es": "Señales principales",
+        "pl": "Główne sygnały", "it": "Segnali principali", "pt": "Principais sinais",
+        "tr": "Başlıca sinyaller",
+    },
+    "watermarksFound": {
+        "en": "Hidden marks found: $1 characters removed",
+        "ru": "Найдены скрытые метки: удалено символов — $1",
+        "uk": "Знайдено приховані мітки: видалено символів — $1",
+        "de": "Versteckte Marken gefunden: $1 Zeichen entfernt",
+        "fr": "Marques cachées trouvées : $1 caractères supprimés",
+        "es": "Marcas ocultas encontradas: $1 caracteres eliminados",
+        "pl": "Znaleziono ukryte znaki: usunięto $1 znaków",
+        "it": "Trovate marcature nascoste: rimossi $1 caratteri",
+        "pt": "Marcas ocultas encontradas: $1 caracteres removidos",
+        "tr": "Gizli işaretler bulundu: $1 karakter kaldırıldı",
+    },
+    "noWatermarks": {
+        "en": "No hidden watermarks detected",
+        "ru": "Скрытых меток не обнаружено",
+        "uk": "Прихованих міток не виявлено",
+        "de": "Keine versteckten Wasserzeichen erkannt",
+        "fr": "Aucun filigrane caché détecté",
+        "es": "No se detectaron marcas ocultas",
+        "pl": "Nie wykryto ukrytych znaków wodnych",
+        "it": "Nessuna filigrana nascosta rilevata",
+        "pt": "Nenhuma marca oculta detectada",
+        "tr": "Gizli işaret bulunamadı",
+    },
+    "beforeLabel": {
+        "en": "Before", "ru": "До", "uk": "До", "de": "Vorher", "fr": "Avant",
+        "es": "Antes", "pl": "Przed", "it": "Prima", "pt": "Antes", "tr": "Önce",
+    },
+    "afterLabel": {
+        "en": "After", "ru": "После", "uk": "Після", "de": "Nachher",
+        "fr": "Après", "es": "Después", "pl": "Po", "it": "Dopo",
+        "pt": "Depois", "tr": "Sonra",
+    },
+    "improvedBy": {
+        "en": "AI-style signals reduced by $1 points",
+        "ru": "ИИ-сигналы снижены на $1 пунктов",
+        "uk": "ШІ-сигнали знижено на $1 пунктів",
+        "de": "KI-Stil-Signale um $1 Punkte reduziert",
+        "fr": "Signaux de style IA réduits de $1 points",
+        "es": "Señales de estilo IA reducidas en $1 puntos",
+        "pl": "Sygnały stylu AI zmniejszone o $1 punktów",
+        "it": "Segnali di stile IA ridotti di $1 punti",
+        "pt": "Sinais de estilo de IA reduzidos em $1 pontos",
+        "tr": "YZ stili sinyalleri $1 puan azaltıldı",
+    },
+    "changesCount": {
+        "en": "$1 changes applied", "ru": "Применено изменений: $1",
+        "uk": "Застосовано змін: $1", "de": "$1 Änderungen angewendet",
+        "fr": "$1 modifications appliquées", "es": "$1 cambios aplicados",
+        "pl": "Zastosowano zmian: $1", "it": "$1 modifiche applicate",
+        "pt": "$1 alterações aplicadas", "tr": "$1 değişiklik uygulandı",
+    },
+    "hiddenRemoved": {
+        "en": "$1 hidden characters removed",
+        "ru": "удалено скрытых символов: $1",
+        "uk": "видалено прихованих символів: $1",
+        "de": "$1 versteckte Zeichen entfernt",
+        "fr": "$1 caractères cachés supprimés",
+        "es": "$1 caracteres ocultos eliminados",
+        "pl": "usunięto ukrytych znaków: $1",
+        "it": "$1 caratteri nascosti rimossi",
+        "pt": "$1 caracteres ocultos removidos",
+        "tr": "$1 gizli karakter kaldırıldı",
+    },
+    "verdict_ai": {
+        "en": "AI-like", "ru": "Похоже на ИИ", "uk": "Схоже на ШІ",
+        "de": "KI-typisch", "fr": "Style IA", "es": "Estilo IA",
+        "pl": "Styl AI", "it": "Stile IA", "pt": "Estilo IA", "tr": "YZ tarzı",
+    },
+    "verdict_human": {
+        "en": "Human-like", "ru": "Похоже на человека", "uk": "Схоже на людину",
+        "de": "Menschlich", "fr": "Style humain", "es": "Estilo humano",
+        "pl": "Styl ludzki", "it": "Stile umano", "pt": "Estilo humano",
+        "tr": "İnsan tarzı",
+    },
+    "verdict_mixed": {
+        "en": "Mixed", "ru": "Смешанный", "uk": "Змішаний", "de": "Gemischt",
+        "fr": "Mixte", "es": "Mixto", "pl": "Mieszany", "it": "Misto",
+        "pt": "Misto", "tr": "Karışık",
+    },
+    "verdict_unknown": {
+        "en": "Too short", "ru": "Мало текста", "uk": "Замало тексту",
+        "de": "Zu kurz", "fr": "Trop court", "es": "Demasiado corto",
+        "pl": "Za krótki", "it": "Troppo corto", "pt": "Muito curto",
+        "tr": "Çok kısa",
+    },
+    "inputPlaceholder": {
+        "en": "Paste or type text — or select text on any page and use the ✨ button / right-click menu…",
+        "ru": "Вставьте или введите текст — либо выделите текст на любой странице и используйте кнопку ✨ или контекстное меню…",
+        "uk": "Вставте або введіть текст — або виділіть текст на будь-якій сторінці й використайте кнопку ✨ чи контекстне меню…",
+        "de": "Text einfügen oder eingeben — oder Text auf einer Seite markieren und ✨ bzw. das Kontextmenü nutzen…",
+        "fr": "Collez ou saisissez du texte — ou sélectionnez du texte sur une page et utilisez ✨ ou le menu contextuel…",
+        "es": "Pegue o escriba texto — o seleccione texto en cualquier página y use ✨ o el menú contextual…",
+        "pl": "Wklej lub wpisz tekst — albo zaznacz tekst na stronie i użyj ✨ lub menu kontekstowego…",
+        "it": "Incolla o digita il testo — oppure seleziona testo su una pagina e usa ✨ o il menu contestuale…",
+        "pt": "Cole ou digite o texto — ou selecione texto em qualquer página e use ✨ ou o menu de contexto…",
+        "tr": "Metni yapıştırın veya yazın — ya da herhangi bir sayfada metin seçip ✨ veya sağ tık menüsünü kullanın…",
+    },
+    "paste": {
+        "en": "Paste", "ru": "Вставить", "uk": "Вставити", "de": "Einfügen",
+        "fr": "Coller", "es": "Pegar", "pl": "Wklej", "it": "Incolla",
+        "pt": "Colar", "tr": "Yapıştır",
+    },
+    "clear": {
+        "en": "Clear", "ru": "Очистить поле", "uk": "Очистити поле",
+        "de": "Leeren", "fr": "Effacer", "es": "Borrar", "pl": "Wyczyść pole",
+        "it": "Svuota", "pt": "Limpar campo", "tr": "Temizle",
+    },
+    "viewResult": {
+        "en": "Result", "ru": "Результат", "uk": "Результат", "de": "Ergebnis",
+        "fr": "Résultat", "es": "Resultado", "pl": "Wynik", "it": "Risultato",
+        "pt": "Resultado", "tr": "Sonuç",
+    },
+    "viewChanges": {
+        "en": "Changes", "ru": "Изменения", "uk": "Зміни", "de": "Änderungen",
+        "fr": "Modifications", "es": "Cambios", "pl": "Zmiany", "it": "Modifiche",
+        "pt": "Alterações", "tr": "Değişiklikler",
+    },
+    "openWorkspace": {
+        "en": "Open as full page", "ru": "Открыть на всю страницу",
+        "uk": "Відкрити на всю сторінку", "de": "Als Vollseite öffnen",
+        "fr": "Ouvrir en pleine page", "es": "Abrir a página completa",
+        "pl": "Otwórz na całej stronie", "it": "Apri a pagina intera",
+        "pt": "Abrir em página inteira", "tr": "Tam sayfa aç",
+    },
+    "settings": {
+        "en": "Settings", "ru": "Настройки", "uk": "Налаштування",
+        "de": "Einstellungen", "fr": "Paramètres", "es": "Ajustes",
+        "pl": "Ustawienia", "it": "Impostazioni", "pt": "Configurações",
+        "tr": "Ayarlar",
+    },
+    "saved": {
+        "en": "Saved", "ru": "Сохранено", "uk": "Збережено", "de": "Gespeichert",
+        "fr": "Enregistré", "es": "Guardado", "pl": "Zapisano", "it": "Salvato",
+        "pt": "Salvo", "tr": "Kaydedildi",
+    },
+    # Options page
+    "optTitle": {
+        "en": "TextHumanize settings", "ru": "Настройки TextHumanize",
+        "uk": "Налаштування TextHumanize", "de": "TextHumanize-Einstellungen",
+        "fr": "Paramètres TextHumanize", "es": "Ajustes de TextHumanize",
+        "pl": "Ustawienia TextHumanize", "it": "Impostazioni TextHumanize",
+        "pt": "Configurações do TextHumanize", "tr": "TextHumanize ayarları",
+    },
+    "optDefaults": {
+        "en": "Processing defaults", "ru": "Параметры обработки по умолчанию",
+        "uk": "Параметри обробки за замовчуванням", "de": "Standard-Verarbeitung",
+        "fr": "Paramètres de traitement", "es": "Valores de procesamiento",
+        "pl": "Domyślne przetwarzanie", "it": "Impostazioni predefinite",
+        "pt": "Padrões de processamento", "tr": "Varsayılan işleme",
+    },
+    "optLanguage": {
+        "en": "Text language", "ru": "Язык текста", "uk": "Мова тексту",
+        "de": "Textsprache", "fr": "Langue du texte", "es": "Idioma del texto",
+        "pl": "Język tekstu", "it": "Lingua del testo", "pt": "Idioma do texto",
+        "tr": "Metin dili",
+    },
+    "optLangAuto": {
+        "en": "Auto-detect (recommended)", "ru": "Автоопределение (рекомендуется)",
+        "uk": "Автовизначення (рекомендовано)", "de": "Automatisch erkennen (empfohlen)",
+        "fr": "Détection auto (recommandé)", "es": "Detección automática (recomendado)",
+        "pl": "Automatyczne wykrywanie (zalecane)", "it": "Rilevamento automatico (consigliato)",
+        "pt": "Detecção automática (recomendado)", "tr": "Otomatik algıla (önerilir)",
+    },
+    "optBubble": {
+        "en": "Selection bubble", "ru": "Кнопка у выделения",
+        "uk": "Кнопка біля виділення", "de": "Auswahl-Blase",
+        "fr": "Bulle de sélection", "es": "Burbuja de selección",
+        "pl": "Dymek zaznaczenia", "it": "Bolla di selezione",
+        "pt": "Bolha de seleção", "tr": "Seçim balonu",
+    },
+    "optBubbleDesc": {
+        "en": "Show the ✨ button next to selected text on pages",
+        "ru": "Показывать кнопку ✨ рядом с выделенным текстом на страницах",
+        "uk": "Показувати кнопку ✨ поруч із виділеним текстом на сторінках",
+        "de": "✨-Schaltfläche neben markiertem Text anzeigen",
+        "fr": "Afficher le bouton ✨ à côté du texte sélectionné",
+        "es": "Mostrar el botón ✨ junto al texto seleccionado",
+        "pl": "Pokazuj przycisk ✨ obok zaznaczonego tekstu",
+        "it": "Mostra il pulsante ✨ accanto al testo selezionato",
+        "pt": "Mostrar o botão ✨ ao lado do texto selecionado",
+        "tr": "Seçili metnin yanında ✨ düğmesini göster",
+    },
+    "optCleanWm": {
+        "en": "Clean hidden marks while humanizing",
+        "ru": "Очищать скрытые метки при гуманизации",
+        "uk": "Очищати приховані мітки під час гуманізації",
+        "de": "Versteckte Marken beim Vermenschlichen entfernen",
+        "fr": "Nettoyer les marques cachées pendant l'humanisation",
+        "es": "Limpiar marcas ocultas al humanizar",
+        "pl": "Czyść ukryte znaki podczas humanizacji",
+        "it": "Pulisci le marcature nascoste durante l'umanizzazione",
+        "pt": "Limpar marcas ocultas ao humanizar",
+        "tr": "Doğallaştırırken gizli işaretleri temizle",
+    },
+    "optCleanWmDesc": {
+        "en": "Strip zero-width characters, homoglyphs and other invisible marks automatically",
+        "ru": "Автоматически удалять невидимые символы, гомоглифы и другие скрытые метки",
+        "uk": "Автоматично видаляти невидимі символи, гомогліфи та інші приховані мітки",
+        "de": "Nullbreite Zeichen, Homoglyphen und andere unsichtbare Marken automatisch entfernen",
+        "fr": "Supprimer automatiquement caractères invisibles et homoglyphes",
+        "es": "Eliminar automáticamente caracteres invisibles y homóglifos",
+        "pl": "Automatycznie usuwaj znaki zerowej szerokości i homoglify",
+        "it": "Rimuovi automaticamente caratteri invisibili e omoglifi",
+        "pt": "Remover automaticamente caracteres invisíveis e homóglifos",
+        "tr": "Sıfır genişlikli karakterleri ve homoglifleri otomatik kaldır",
+    },
+    "optShortcuts": {
+        "en": "Keyboard shortcuts", "ru": "Горячие клавиши", "uk": "Гарячі клавіші",
+        "de": "Tastenkürzel", "fr": "Raccourcis clavier", "es": "Atajos de teclado",
+        "pl": "Skróty klawiszowe", "it": "Scorciatoie da tastiera",
+        "pt": "Atalhos de teclado", "tr": "Klavye kısayolları",
+    },
+    "optShortcutsDesc": {
+        "en": "Configure at chrome://extensions/shortcuts",
+        "ru": "Настраиваются на chrome://extensions/shortcuts",
+        "uk": "Налаштовуються на chrome://extensions/shortcuts",
+        "de": "Konfigurierbar unter chrome://extensions/shortcuts",
+        "fr": "Configurables sur chrome://extensions/shortcuts",
+        "es": "Se configuran en chrome://extensions/shortcuts",
+        "pl": "Konfiguracja: chrome://extensions/shortcuts",
+        "it": "Configurabili su chrome://extensions/shortcuts",
+        "pt": "Configuráveis em chrome://extensions/shortcuts",
+        "tr": "chrome://extensions/shortcuts adresinden ayarlanır",
+    },
+    "optAbout": {
+        "en": "About", "ru": "О расширении", "uk": "Про розширення",
+        "de": "Über", "fr": "À propos", "es": "Acerca de", "pl": "O rozszerzeniu",
+        "it": "Informazioni", "pt": "Sobre", "tr": "Hakkında",
+    },
+    "optAboutText": {
+        "en": "Free and open-source. Built on the TextHumanize library — a 100% offline text naturalization engine (Python · TypeScript · PHP, 25 languages). Your text never leaves your device.",
+        "ru": "Бесплатное расширение с открытым кодом. Построено на библиотеке TextHumanize — полностью офлайн-движке натурализации текста (Python · TypeScript · PHP, 25 языков). Ваш текст никогда не покидает устройство.",
+        "uk": "Безкоштовне розширення з відкритим кодом. Побудоване на бібліотеці TextHumanize — повністю офлайн-рушії натуралізації тексту (Python · TypeScript · PHP, 25 мов). Ваш текст ніколи не залишає пристрій.",
+        "de": "Kostenlos und Open Source. Basiert auf der TextHumanize-Bibliothek — einer 100 % offline arbeitenden Text-Naturalisierungs-Engine (Python · TypeScript · PHP, 25 Sprachen). Ihr Text verlässt nie Ihr Gerät.",
+        "fr": "Gratuit et open source. Basé sur la bibliothèque TextHumanize — un moteur de naturalisation de texte 100 % hors ligne (Python · TypeScript · PHP, 25 langues). Votre texte ne quitte jamais votre appareil.",
+        "es": "Gratuito y de código abierto. Basado en la biblioteca TextHumanize — un motor de naturalización de texto 100 % sin conexión (Python · TypeScript · PHP, 25 idiomas). Su texto nunca sale de su dispositivo.",
+        "pl": "Darmowe i open source. Oparte na bibliotece TextHumanize — silniku naturalizacji tekstu działającym w 100% offline (Python · TypeScript · PHP, 25 języków). Twój tekst nigdy nie opuszcza urządzenia.",
+        "it": "Gratuito e open source. Basato sulla libreria TextHumanize — un motore di naturalizzazione del testo 100% offline (Python · TypeScript · PHP, 25 lingue). Il tuo testo non lascia mai il dispositivo.",
+        "pt": "Gratuito e de código aberto. Baseado na biblioteca TextHumanize — um mecanismo de naturalização de texto 100% offline (Python · TypeScript · PHP, 25 idiomas). Seu texto nunca sai do seu dispositivo.",
+        "tr": "Ücretsiz ve açık kaynak. TextHumanize kitaplığı üzerine kuruludur — %100 çevrimdışı metin doğallaştırma motoru (Python · TypeScript · PHP, 25 dil). Metniniz asla cihazınızdan çıkmaz.",
+    },
+    # Detector metric names (top signals)
+    "metric_pattern": {
+        "en": "AI words & phrases", "ru": "ИИ-слова и фразы", "uk": "ШІ-слова та фрази",
+        "de": "KI-Wörter & Phrasen", "fr": "Mots et phrases IA", "es": "Palabras y frases de IA",
+        "pl": "Słowa i frazy AI", "it": "Parole e frasi IA", "pt": "Palavras e frases de IA",
+        "tr": "YZ kelime ve ifadeleri",
+    },
+    "metric_burstiness": {
+        "en": "Uniform sentence lengths", "ru": "Однородная длина предложений",
+        "uk": "Однорідна довжина речень", "de": "Gleichförmige Satzlängen",
+        "fr": "Longueurs de phrases uniformes", "es": "Longitudes de frase uniformes",
+        "pl": "Jednolita długość zdań", "it": "Lunghezze di frase uniformi",
+        "pt": "Comprimentos de frase uniformes", "tr": "Tekdüze cümle uzunlukları",
+    },
+    "metric_stylometry": {
+        "en": "Formal style", "ru": "Формальный стиль", "uk": "Формальний стиль",
+        "de": "Formaler Stil", "fr": "Style formel", "es": "Estilo formal",
+        "pl": "Styl formalny", "it": "Stile formale", "pt": "Estilo formal",
+        "tr": "Resmî üslup",
+    },
+    "metric_voice": {
+        "en": "Passive voice", "ru": "Пассивный залог", "uk": "Пасивний стан",
+        "de": "Passivkonstruktionen", "fr": "Voix passive", "es": "Voz pasiva",
+        "pl": "Strona bierna", "it": "Forma passiva", "pt": "Voz passiva",
+        "tr": "Edilgen çatı",
+    },
+    "metric_entity": {
+        "en": "Generic references", "ru": "Абстрактные формулировки",
+        "uk": "Абстрактні формулювання", "de": "Generische Verweise",
+        "fr": "Références génériques", "es": "Referencias genéricas",
+        "pl": "Ogólnikowe odniesienia", "it": "Riferimenti generici",
+        "pt": "Referências genéricas", "tr": "Genel ifadeler",
+    },
+    "metric_opening": {
+        "en": "Repetitive openings", "ru": "Однотипные начала предложений",
+        "uk": "Однотипні початки речень", "de": "Wiederholte Satzanfänge",
+        "fr": "Débuts répétitifs", "es": "Comienzos repetitivos",
+        "pl": "Powtarzalne początki", "it": "Inizi ripetitivi",
+        "pt": "Aberturas repetitivas", "tr": "Tekrarlayan başlangıçlar",
+    },
+    "metric_grammar": {
+        "en": "Too-perfect grammar", "ru": "Слишком идеальная грамматика",
+        "uk": "Занадто ідеальна граматика", "de": "Zu perfekte Grammatik",
+        "fr": "Grammaire trop parfaite", "es": "Gramática demasiado perfecta",
+        "pl": "Zbyt idealna gramatyka", "it": "Grammatica troppo perfetta",
+        "pt": "Gramática perfeita demais", "tr": "Fazla kusursuz dil bilgisi",
+    },
+    "metric_entropy": {
+        "en": "Predictable wording", "ru": "Предсказуемые формулировки",
+        "uk": "Передбачувані формулювання", "de": "Vorhersehbare Formulierungen",
+        "fr": "Formulations prévisibles", "es": "Redacción predecible",
+        "pl": "Przewidywalne sformułowania", "it": "Formulazioni prevedibili",
+        "pt": "Redação previsível", "tr": "Öngörülebilir ifade",
+    },
+    "metric_discourse": {
+        "en": "Rigid structure", "ru": "Жёсткая структура", "uk": "Жорстка структура",
+        "de": "Starre Struktur", "fr": "Structure rigide", "es": "Estructura rígida",
+        "pl": "Sztywna struktura", "it": "Struttura rigida", "pt": "Estrutura rígida",
+        "tr": "Katı yapı",
+    },
+    "metric_rhythm": {
+        "en": "Monotonous rhythm", "ru": "Монотонный ритм", "uk": "Монотонний ритм",
+        "de": "Monotoner Rhythmus", "fr": "Rythme monotone", "es": "Ritmo monótono",
+        "pl": "Monotonny rytm", "it": "Ritmo monotono", "pt": "Ritmo monótono",
+        "tr": "Monoton ritim",
+    },
+    "metric_vocabulary": {
+        "en": "Limited vocabulary", "ru": "Ограниченный словарь",
+        "uk": "Обмежений словник", "de": "Begrenzter Wortschatz",
+        "fr": "Vocabulaire limité", "es": "Vocabulario limitado",
+        "pl": "Ograniczone słownictwo", "it": "Vocabolario limitato",
+        "pt": "Vocabulário limitado", "tr": "Sınırlı kelime dağarcığı",
+    },
+    "metric_perplexity": {
+        "en": "Low perplexity", "ru": "Низкая перплексия", "uk": "Низька перплексія",
+        "de": "Niedrige Perplexität", "fr": "Faible perplexité", "es": "Baja perplejidad",
+        "pl": "Niska perpleksja", "it": "Bassa perplessità", "pt": "Baixa perplexidade",
+        "tr": "Düşük şaşkınlık ölçüsü",
+    },
+    "metric_punctuation": {
+        "en": "AI-typical punctuation", "ru": "ИИ-типичная пунктуация",
+        "uk": "ШІ-типова пунктуація", "de": "KI-typische Zeichensetzung",
+        "fr": "Ponctuation typique IA", "es": "Puntuación típica de IA",
+        "pl": "Interpunkcja typowa dla AI", "it": "Punteggiatura tipica IA",
+        "pt": "Pontuação típica de IA", "tr": "YZ tipik noktalama",
+    },
+    "metric_readability": {
+        "en": "Uniform readability", "ru": "Однородная читабельность",
+        "uk": "Однорідна читабельність", "de": "Gleichförmige Lesbarkeit",
+        "fr": "Lisibilité uniforme", "es": "Legibilidad uniforme",
+        "pl": "Jednolita czytelność", "it": "Leggibilità uniforme",
+        "pt": "Legibilidade uniforme", "tr": "Tekdüze okunabilirlik",
+    },
+    "metric_semantic_rep": {
+        "en": "Semantic repetition", "ru": "Смысловые повторы", "uk": "Смислові повтори",
+        "de": "Semantische Wiederholung", "fr": "Répétition sémantique",
+        "es": "Repetición semántica", "pl": "Powtórzenia semantyczne",
+        "it": "Ripetizione semantica", "pt": "Repetição semântica",
+        "tr": "Anlamsal tekrar",
+    },
+}
+
+LOCALES = ["en", "ru", "uk", "de", "fr", "es", "pl", "it", "pt", "tr"]
+
+
+def main() -> None:
+    root = Path(__file__).resolve().parent.parent
+
+    for locale in LOCALES:
+        messages = {}
+        for key, translations in CATALOG.items():
+            text = translations.get(locale) or translations["en"]
+            entry = {"message": text}
+            if "$1" in text:
+                entry["placeholders"] = {"1": {"content": "$1"}}
+                entry["message"] = text.replace("$1", "$1$")
+                # Chrome named placeholders: use $N$ syntax referencing placeholders
+                entry = {"message": text.replace("$1", "$COUNT$"),
+                         "placeholders": {"count": {"content": "$1"}}}
+            messages[key] = entry
+        dest = root / "_locales" / locale / "messages.json"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(json.dumps(messages, ensure_ascii=False, indent=1),
+                        encoding="utf-8")
+
+    # Web fallback module (popup opened as a plain page / demo).
+    fallback = {loc: {k: v.get(loc) or v["en"] for k, v in CATALOG.items()}
+                for loc in LOCALES}
+    js = ("/** Generated by scripts/build_locales.py — do not edit by hand. */\n"
+          "export const FALLBACK_MESSAGES = "
+          + json.dumps(fallback, ensure_ascii=False, separators=(",", ":"))
+          + ";\n")
+    (root / "popup" / "messages.fallback.js").write_text(js, encoding="utf-8")
+
+    print(f"Built {len(LOCALES)} locales × {len(CATALOG)} keys")
+
+
+if __name__ == "__main__":
+    main()

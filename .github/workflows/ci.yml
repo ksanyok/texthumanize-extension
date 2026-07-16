@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Engine unit tests
+        run: npm test
+      - name: Validate manifest
+        run: node -e "const m = require('./manifest.json'); if (m.manifest_version !== 3) throw new Error('MV3 required'); console.log('manifest ok:', m.name, m.version)"
+      - name: Package
+        run: bash scripts/package.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: extension-zip
+          path: dist/*.zip

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>icon-gen</title></head>
+<body style="background:#222;display:flex;gap:12px;padding:20px;">
+<script>
+function drawIcon(size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+  const s = size / 128;
+
+  // Rounded-square gradient background
+  const r = 28 * s;
+  const g = ctx.createLinearGradient(0, 0, size, size);
+  g.addColorStop(0, '#6d5efc');
+  g.addColorStop(1, '#22b8cf');
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.arcTo(size, 0, size, size, r);
+  ctx.arcTo(size, size, 0, size, r);
+  ctx.arcTo(0, size, 0, 0, r);
+  ctx.arcTo(0, 0, size, 0, r);
+  ctx.closePath();
+  ctx.fillStyle = g;
+  ctx.fill();
+
+  // Subtle inner glow (top-left light)
+  const glow = ctx.createRadialGradient(size*0.28, size*0.2, 0, size*0.28, size*0.2, size*0.9);
+  glow.addColorStop(0, 'rgba(255,255,255,0.22)');
+  glow.addColorStop(0.5, 'rgba(255,255,255,0.05)');
+  glow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = glow;
+  ctx.fill();
+
+  // "T" glyph
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 13 * s;
+  ctx.beginPath();
+  ctx.moveTo(34 * s, 42 * s);
+  ctx.lineTo(94 * s, 42 * s);
+  ctx.moveTo(64 * s, 42 * s);
+  ctx.lineTo(64 * s, 96 * s);
+  ctx.stroke();
+
+  // Sparkle (humanization touch) bottom-right
+  const sx = 95 * s, sy = 88 * s, sr = 14 * s;
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.moveTo(sx, sy - sr);
+  ctx.quadraticCurveTo(sx + sr*0.18, sy - sr*0.18, sx + sr, sy);
+  ctx.quadraticCurveTo(sx + sr*0.18, sy + sr*0.18, sx, sy + sr);
+  ctx.quadraticCurveTo(sx - sr*0.18, sy + sr*0.18, sx - sr, sy);
+  ctx.quadraticCurveTo(sx - sr*0.18, sy - sr*0.18, sx, sy - sr);
+  ctx.closePath();
+  ctx.fill();
+
+  document.body.appendChild(c);
+  c.style.width = '96px';
+  c.style.height = '96px';
+  c.style.imageRendering = 'pixelated';
+  return c.toDataURL('image/png');
+}
+
+window.ICONS = {};
+for (const size of [16, 32, 48, 128, 440]) {
+  window.ICONS[size] = drawIcon(size);
+}
+document.title = 'icons-ready';
+</script>
+</body>
+</html>

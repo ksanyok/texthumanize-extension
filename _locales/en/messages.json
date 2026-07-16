@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — AI Text Humanizer, Checker & Watermark Cleaner"
+ },
+ "extDesc": {
+  "message": "100% offline text naturalizer: humanize AI-style writing, check AI probability, strip hidden watermarks — on any page. 25 languages."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Humanize selected text"
+ },
+ "cmdCheckSelection": {
+  "message": "Check selected text (AI score)"
+ },
+ "menuHumanize": {
+  "message": "✨ Humanize selection"
+ },
+ "menuCheck": {
+  "message": "🔍 Check for AI style"
+ },
+ "menuClean": {
+  "message": "🧹 Remove hidden characters"
+ },
+ "menuWorkspace": {
+  "message": "Open TextHumanize workspace"
+ },
+ "offlineBadge": {
+  "message": "offline"
+ },
+ "close": {
+  "message": "Close"
+ },
+ "processing": {
+  "message": "Processing…"
+ },
+ "intensity": {
+  "message": "Intensity"
+ },
+ "profile": {
+  "message": "Profile"
+ },
+ "actHumanize": {
+  "message": "Humanize"
+ },
+ "actCheck": {
+  "message": "Check"
+ },
+ "actClean": {
+  "message": "Clean"
+ },
+ "cleanHint": {
+  "message": "Remove invisible characters, homoglyphs and hidden watermarks"
+ },
+ "replaceInPage": {
+  "message": "Replace on page"
+ },
+ "copy": {
+  "message": "Copy"
+ },
+ "copied": {
+  "message": "Copied"
+ },
+ "replaced": {
+  "message": "Replaced"
+ },
+ "reroll": {
+  "message": "Variant"
+ },
+ "rerollHint": {
+  "message": "Generate another variant"
+ },
+ "credit": {
+  "message": "Made by Alexandr Krikun · Powered by TextHumanize"
+ },
+ "creditExt": {
+  "message": "Extension source"
+ },
+ "noSelection": {
+  "message": "Select some text on the page first (15+ characters)."
+ },
+ "aiScore": {
+  "message": "AI score"
+ },
+ "confidence": {
+  "message": "Confidence"
+ },
+ "words": {
+  "message": "Words"
+ },
+ "topSignals": {
+  "message": "Top signals"
+ },
+ "watermarksFound": {
+  "message": "Hidden marks found: $COUNT$ characters removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "No hidden watermarks detected"
+ },
+ "beforeLabel": {
+  "message": "Before"
+ },
+ "afterLabel": {
+  "message": "After"
+ },
+ "improvedBy": {
+  "message": "AI-style signals reduced by $COUNT$ points",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "$COUNT$ changes applied",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "$COUNT$ hidden characters removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "AI-like"
+ },
+ "verdict_human": {
+  "message": "Human-like"
+ },
+ "verdict_mixed": {
+  "message": "Mixed"
+ },
+ "verdict_unknown": {
+  "message": "Too short"
+ },
+ "inputPlaceholder": {
+  "message": "Paste or type text — or select text on any page and use the ✨ button / right-click menu…"
+ },
+ "paste": {
+  "message": "Paste"
+ },
+ "clear": {
+  "message": "Clear"
+ },
+ "viewResult": {
+  "message": "Result"
+ },
+ "viewChanges": {
+  "message": "Changes"
+ },
+ "openWorkspace": {
+  "message": "Open as full page"
+ },
+ "settings": {
+  "message": "Settings"
+ },
+ "saved": {
+  "message": "Saved"
+ },
+ "optTitle": {
+  "message": "TextHumanize settings"
+ },
+ "optDefaults": {
+  "message": "Processing defaults"
+ },
+ "optLanguage": {
+  "message": "Text language"
+ },
+ "optLangAuto": {
+  "message": "Auto-detect (recommended)"
+ },
+ "optBubble": {
+  "message": "Selection bubble"
+ },
+ "optBubbleDesc": {
+  "message": "Show the ✨ button next to selected text on pages"
+ },
+ "optCleanWm": {
+  "message": "Clean hidden marks while humanizing"
+ },
+ "optCleanWmDesc": {
+  "message": "Strip zero-width characters, homoglyphs and other invisible marks automatically"
+ },
+ "optShortcuts": {
+  "message": "Keyboard shortcuts"
+ },
+ "optShortcutsDesc": {
+  "message": "Configure at chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "About"
+ },
+ "optAboutText": {
+  "message": "Free and open-source. Built on the TextHumanize library — a 100% offline text naturalization engine (Python · TypeScript · PHP, 25 languages). Your text never leaves your device."
+ },
+ "metric_pattern": {
+  "message": "AI words & phrases"
+ },
+ "metric_burstiness": {
+  "message": "Uniform sentence lengths"
+ },
+ "metric_stylometry": {
+  "message": "Formal style"
+ },
+ "metric_voice": {
+  "message": "Passive voice"
+ },
+ "metric_entity": {
+  "message": "Generic references"
+ },
+ "metric_opening": {
+  "message": "Repetitive openings"
+ },
+ "metric_grammar": {
+  "message": "Too-perfect grammar"
+ },
+ "metric_entropy": {
+  "message": "Predictable wording"
+ },
+ "metric_discourse": {
+  "message": "Rigid structure"
+ },
+ "metric_rhythm": {
+  "message": "Monotonous rhythm"
+ },
+ "metric_vocabulary": {
+  "message": "Limited vocabulary"
+ },
+ "metric_perplexity": {
+  "message": "Low perplexity"
+ },
+ "metric_punctuation": {
+  "message": "AI-typical punctuation"
+ },
+ "metric_readability": {
+  "message": "Uniform readability"
+ },
+ "metric_semantic_rep": {
+  "message": "Semantic repetition"
+ }
+}

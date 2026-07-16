@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — humanizar texto de IA, comprobar y limpiar marcas"
+ },
+ "extDesc": {
+  "message": "100 % sin conexión: hace el texto más natural, estima la probabilidad de IA y elimina marcas ocultas — en cualquier página. 25 idiomas."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Humanizar el texto seleccionado"
+ },
+ "cmdCheckSelection": {
+  "message": "Comprobar el texto seleccionado (puntuación IA)"
+ },
+ "menuHumanize": {
+  "message": "✨ Humanizar selección"
+ },
+ "menuCheck": {
+  "message": "🔍 Comprobar estilo de IA"
+ },
+ "menuClean": {
+  "message": "🧹 Eliminar caracteres ocultos"
+ },
+ "menuWorkspace": {
+  "message": "Abrir el espacio de TextHumanize"
+ },
+ "offlineBadge": {
+  "message": "sin conexión"
+ },
+ "close": {
+  "message": "Cerrar"
+ },
+ "processing": {
+  "message": "Procesando…"
+ },
+ "intensity": {
+  "message": "Intensidad"
+ },
+ "profile": {
+  "message": "Perfil"
+ },
+ "actHumanize": {
+  "message": "Humanizar"
+ },
+ "actCheck": {
+  "message": "Comprobar"
+ },
+ "actClean": {
+  "message": "Limpiar"
+ },
+ "cleanHint": {
+  "message": "Eliminar caracteres invisibles, homóglifos y marcas ocultas"
+ },
+ "replaceInPage": {
+  "message": "Reemplazar en la página"
+ },
+ "copy": {
+  "message": "Copiar"
+ },
+ "copied": {
+  "message": "Copiado"
+ },
+ "replaced": {
+  "message": "Reemplazado"
+ },
+ "reroll": {
+  "message": "Variante"
+ },
+ "rerollHint": {
+  "message": "Generar otra variante"
+ },
+ "credit": {
+  "message": "Por Alexandr Krikun · Con tecnología TextHumanize"
+ },
+ "creditExt": {
+  "message": "Código fuente"
+ },
+ "noSelection": {
+  "message": "Seleccione primero texto en la página (15+ caracteres)."
+ },
+ "aiScore": {
+  "message": "Puntuación IA"
+ },
+ "confidence": {
+  "message": "Confianza"
+ },
+ "words": {
+  "message": "Palabras"
+ },
+ "topSignals": {
+  "message": "Señales principales"
+ },
+ "watermarksFound": {
+  "message": "Marcas ocultas encontradas: $COUNT$ caracteres eliminados",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "No se detectaron marcas ocultas"
+ },
+ "beforeLabel": {
+  "message": "Antes"
+ },
+ "afterLabel": {
+  "message": "Después"
+ },
+ "improvedBy": {
+  "message": "Señales de estilo IA reducidas en $COUNT$ puntos",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "$COUNT$ cambios aplicados",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "$COUNT$ caracteres ocultos eliminados",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "Estilo IA"
+ },
+ "verdict_human": {
+  "message": "Estilo humano"
+ },
+ "verdict_mixed": {
+  "message": "Mixto"
+ },
+ "verdict_unknown": {
+  "message": "Demasiado corto"
+ },
+ "inputPlaceholder": {
+  "message": "Pegue o escriba texto — o seleccione texto en cualquier página y use ✨ o el menú contextual…"
+ },
+ "paste": {
+  "message": "Pegar"
+ },
+ "clear": {
+  "message": "Borrar"
+ },
+ "viewResult": {
+  "message": "Resultado"
+ },
+ "viewChanges": {
+  "message": "Cambios"
+ },
+ "openWorkspace": {
+  "message": "Abrir a página completa"
+ },
+ "settings": {
+  "message": "Ajustes"
+ },
+ "saved": {
+  "message": "Guardado"
+ },
+ "optTitle": {
+  "message": "Ajustes de TextHumanize"
+ },
+ "optDefaults": {
+  "message": "Valores de procesamiento"
+ },
+ "optLanguage": {
+  "message": "Idioma del texto"
+ },
+ "optLangAuto": {
+  "message": "Detección automática (recomendado)"
+ },
+ "optBubble": {
+  "message": "Burbuja de selección"
+ },
+ "optBubbleDesc": {
+  "message": "Mostrar el botón ✨ junto al texto seleccionado"
+ },
+ "optCleanWm": {
+  "message": "Limpiar marcas ocultas al humanizar"
+ },
+ "optCleanWmDesc": {
+  "message": "Eliminar automáticamente caracteres invisibles y homóglifos"
+ },
+ "optShortcuts": {
+  "message": "Atajos de teclado"
+ },
+ "optShortcutsDesc": {
+  "message": "Se configuran en chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "Acerca de"
+ },
+ "optAboutText": {
+  "message": "Gratuito y de código abierto. Basado en la biblioteca TextHumanize — un motor de naturalización de texto 100 % sin conexión (Python · TypeScript · PHP, 25 idiomas). Su texto nunca sale de su dispositivo."
+ },
+ "metric_pattern": {
+  "message": "Palabras y frases de IA"
+ },
+ "metric_burstiness": {
+  "message": "Longitudes de frase uniformes"
+ },
+ "metric_stylometry": {
+  "message": "Estilo formal"
+ },
+ "metric_voice": {
+  "message": "Voz pasiva"
+ },
+ "metric_entity": {
+  "message": "Referencias genéricas"
+ },
+ "metric_opening": {
+  "message": "Comienzos repetitivos"
+ },
+ "metric_grammar": {
+  "message": "Gramática demasiado perfecta"
+ },
+ "metric_entropy": {
+  "message": "Redacción predecible"
+ },
+ "metric_discourse": {
+  "message": "Estructura rígida"
+ },
+ "metric_rhythm": {
+  "message": "Ritmo monótono"
+ },
+ "metric_vocabulary": {
+  "message": "Vocabulario limitado"
+ },
+ "metric_perplexity": {
+  "message": "Baja perplejidad"
+ },
+ "metric_punctuation": {
+  "message": "Puntuación típica de IA"
+ },
+ "metric_readability": {
+  "message": "Legibilidad uniforme"
+ },
+ "metric_semantic_rep": {
+  "message": "Repetición semántica"
+ }
+}

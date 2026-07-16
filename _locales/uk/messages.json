@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — гуманізація тексту, перевірка на ШІ та очищення міток"
+ },
+ "extDesc": {
+  "message": "Повністю офлайн: робить текст природнішим, оцінює ймовірність ШІ та видаляє приховані мітки — на будь-якій сторінці. 25 мов."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Гуманізувати виділений текст"
+ },
+ "cmdCheckSelection": {
+  "message": "Перевірити виділений текст (ШІ-скор)"
+ },
+ "menuHumanize": {
+  "message": "✨ Гуманізувати виділене"
+ },
+ "menuCheck": {
+  "message": "🔍 Перевірити на ШІ-стиль"
+ },
+ "menuClean": {
+  "message": "🧹 Видалити приховані символи"
+ },
+ "menuWorkspace": {
+  "message": "Відкрити робочий простір TextHumanize"
+ },
+ "offlineBadge": {
+  "message": "офлайн"
+ },
+ "close": {
+  "message": "Закрити"
+ },
+ "processing": {
+  "message": "Обробка…"
+ },
+ "intensity": {
+  "message": "Інтенсивність"
+ },
+ "profile": {
+  "message": "Профіль"
+ },
+ "actHumanize": {
+  "message": "Гуманізувати"
+ },
+ "actCheck": {
+  "message": "Перевірити"
+ },
+ "actClean": {
+  "message": "Очистити"
+ },
+ "cleanHint": {
+  "message": "Видалити невидимі символи, гомогліфи та приховані мітки"
+ },
+ "replaceInPage": {
+  "message": "Замінити на сторінці"
+ },
+ "copy": {
+  "message": "Копіювати"
+ },
+ "copied": {
+  "message": "Скопійовано"
+ },
+ "replaced": {
+  "message": "Замінено"
+ },
+ "reroll": {
+  "message": "Варіант"
+ },
+ "rerollHint": {
+  "message": "Згенерувати інший варіант"
+ },
+ "credit": {
+  "message": "Автор: Alexandr Krikun · Працює на TextHumanize"
+ },
+ "creditExt": {
+  "message": "Код розширення"
+ },
+ "noSelection": {
+  "message": "Спочатку виділіть текст на сторінці (від 15 символів)."
+ },
+ "aiScore": {
+  "message": "ШІ-скор"
+ },
+ "confidence": {
+  "message": "Впевненість"
+ },
+ "words": {
+  "message": "Слів"
+ },
+ "topSignals": {
+  "message": "Основні сигнали"
+ },
+ "watermarksFound": {
+  "message": "Знайдено приховані мітки: видалено символів — $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "Прихованих міток не виявлено"
+ },
+ "beforeLabel": {
+  "message": "До"
+ },
+ "afterLabel": {
+  "message": "Після"
+ },
+ "improvedBy": {
+  "message": "ШІ-сигнали знижено на $COUNT$ пунктів",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "Застосовано змін: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "видалено прихованих символів: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "Схоже на ШІ"
+ },
+ "verdict_human": {
+  "message": "Схоже на людину"
+ },
+ "verdict_mixed": {
+  "message": "Змішаний"
+ },
+ "verdict_unknown": {
+  "message": "Замало тексту"
+ },
+ "inputPlaceholder": {
+  "message": "Вставте або введіть текст — або виділіть текст на будь-якій сторінці й використайте кнопку ✨ чи контекстне меню…"
+ },
+ "paste": {
+  "message": "Вставити"
+ },
+ "clear": {
+  "message": "Очистити поле"
+ },
+ "viewResult": {
+  "message": "Результат"
+ },
+ "viewChanges": {
+  "message": "Зміни"
+ },
+ "openWorkspace": {
+  "message": "Відкрити на всю сторінку"
+ },
+ "settings": {
+  "message": "Налаштування"
+ },
+ "saved": {
+  "message": "Збережено"
+ },
+ "optTitle": {
+  "message": "Налаштування TextHumanize"
+ },
+ "optDefaults": {
+  "message": "Параметри обробки за замовчуванням"
+ },
+ "optLanguage": {
+  "message": "Мова тексту"
+ },
+ "optLangAuto": {
+  "message": "Автовизначення (рекомендовано)"
+ },
+ "optBubble": {
+  "message": "Кнопка біля виділення"
+ },
+ "optBubbleDesc": {
+  "message": "Показувати кнопку ✨ поруч із виділеним текстом на сторінках"
+ },
+ "optCleanWm": {
+  "message": "Очищати приховані мітки під час гуманізації"
+ },
+ "optCleanWmDesc": {
+  "message": "Автоматично видаляти невидимі символи, гомогліфи та інші приховані мітки"
+ },
+ "optShortcuts": {
+  "message": "Гарячі клавіші"
+ },
+ "optShortcutsDesc": {
+  "message": "Налаштовуються на chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "Про розширення"
+ },
+ "optAboutText": {
+  "message": "Безкоштовне розширення з відкритим кодом. Побудоване на бібліотеці TextHumanize — повністю офлайн-рушії натуралізації тексту (Python · TypeScript · PHP, 25 мов). Ваш текст ніколи не залишає пристрій."
+ },
+ "metric_pattern": {
+  "message": "ШІ-слова та фрази"
+ },
+ "metric_burstiness": {
+  "message": "Однорідна довжина речень"
+ },
+ "metric_stylometry": {
+  "message": "Формальний стиль"
+ },
+ "metric_voice": {
+  "message": "Пасивний стан"
+ },
+ "metric_entity": {
+  "message": "Абстрактні формулювання"
+ },
+ "metric_opening": {
+  "message": "Однотипні початки речень"
+ },
+ "metric_grammar": {
+  "message": "Занадто ідеальна граматика"
+ },
+ "metric_entropy": {
+  "message": "Передбачувані формулювання"
+ },
+ "metric_discourse": {
+  "message": "Жорстка структура"
+ },
+ "metric_rhythm": {
+  "message": "Монотонний ритм"
+ },
+ "metric_vocabulary": {
+  "message": "Обмежений словник"
+ },
+ "metric_perplexity": {
+  "message": "Низька перплексія"
+ },
+ "metric_punctuation": {
+  "message": "ШІ-типова пунктуація"
+ },
+ "metric_readability": {
+  "message": "Однорідна читабельність"
+ },
+ "metric_semantic_rep": {
+  "message": "Смислові повтори"
+ }
+}

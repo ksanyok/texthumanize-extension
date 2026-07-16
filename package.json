@@ -1,0 +1,14 @@
+{
+  "name": "texthumanize-extension",
+  "version": "1.0.0",
+  "description": "TextHumanize for Chrome — offline text naturalization, AI-style check and hidden-watermark cleaning on any page",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/engine.test.js",
+    "package": "bash scripts/package.sh"
+  },
+  "author": "Alexandr Krikun (https://github.com/ksanyok)",
+  "license": "MIT",
+  "homepage": "https://github.com/ksanyok/TextHumanize"
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TextHumanize</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <span class="logo">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="22" height="22" rx="6" fill="url(#thg)"/>
+        <path d="M7 8.2h10M12 8.2V17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="17.4" cy="15.8" r="2.6" fill="#fff" opacity=".9"/>
+        <defs><linearGradient id="thg" x1="0" y1="0" x2="24" y2="24">
+          <stop stop-color="#6d5efc"/><stop offset="1" stop-color="#22b8cf"/>
+        </linearGradient></defs>
+      </svg>
+    </span>
+    <h1>TextHumanize</h1>
+    <span class="badge offline" data-i18n="offlineBadge"></span>
+    <span class="spacer"></span>
+    <button id="open-workspace" class="icon-btn" data-i18n-title="openWorkspace" title="">⤢</button>
+    <button id="open-options" class="icon-btn" data-i18n-title="settings" title="">⚙</button>
+  </header>
+
+  <main>
+    <section class="input-zone">
+      <textarea id="input" data-i18n-placeholder="inputPlaceholder" spellcheck="false"></textarea>
+      <div class="input-meta">
+        <span id="lang-badge" class="badge" hidden></span>
+        <span id="char-count" class="dim"></span>
+        <span class="spacer"></span>
+        <button id="paste-btn" class="mini-btn" data-i18n="paste"></button>
+        <button id="clear-btn" class="mini-btn" data-i18n="clear" hidden></button>
+      </div>
+    </section>
+
+    <section class="controls">
+      <label class="slider-row">
+        <span data-i18n="intensity"></span>
+        <input type="range" id="intensity" min="0" max="100" step="5">
+        <b id="intensity-val"></b>
+      </label>
+      <label class="select-row">
+        <span data-i18n="profile"></span>
+        <select id="profile">
+          <option value="web">Web</option>
+          <option value="chat">Chat</option>
+          <option value="seo">SEO</option>
+          <option value="docs">Docs</option>
+          <option value="formal">Formal</option>
+          <option value="academic">Academic</option>
+          <option value="marketing">Marketing</option>
+          <option value="social">Social</option>
+          <option value="email">Email</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="action-row">
+      <button id="humanize-btn" class="btn primary" data-i18n="actHumanize"></button>
+      <button id="check-btn" class="btn" data-i18n="actCheck"></button>
+      <button id="clean-btn" class="btn" data-i18n="actClean" data-i18n-title="cleanHint" title=""></button>
+    </section>
+
+    <section id="result-zone" hidden>
+      <div id="score-zone"></div>
+      <div class="result-head">
+        <div class="view-tabs" id="view-tabs" hidden>
+          <button data-view="result" class="view-tab active" data-i18n="viewResult"></button>
+          <button data-view="diff" class="view-tab" data-i18n="viewChanges"></button>
+        </div>
+        <span class="spacer"></span>
+        <button id="reroll-btn" class="mini-btn" data-i18n-title="rerollHint" title="" hidden>↻</button>
+        <button id="copy-btn" class="mini-btn" data-i18n="copy" hidden></button>
+      </div>
+      <div id="result-text" class="result-text" contenteditable="true" spellcheck="false"></div>
+      <div id="result-meta" class="dim small"></div>
+    </section>
+
+    <div id="busy" class="busy" hidden>
+      <span class="spinner"></span><span data-i18n="processing"></span>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener" data-i18n="credit"></a>
+    <span class="dot">·</span>
+    <a href="https://github.com/ksanyok/texthumanize-extension" target="_blank" rel="noopener" data-i18n="creditExt"></a>
+  </footer>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

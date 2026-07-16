@@ -1,0 +1,250 @@
+{
+ "extName": {
+  "message": "TextHumanize — yapay zekâ metnini doğallaştırma, kontrol ve temizlik"
+ },
+ "extDesc": {
+  "message": "%100 çevrimdışı: metni doğallaştırır, yapay zekâ olasılığını ölçer ve gizli işaretleri kaldırır — her sayfada. 25 dil."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Seçili metni doğallaştır"
+ },
+ "cmdCheckSelection": {
+  "message": "Seçili metni kontrol et (YZ puanı)"
+ },
+ "menuHumanize": {
+  "message": "✨ Seçimi doğallaştır"
+ },
+ "menuCheck": {
+  "message": "🔍 YZ stilini kontrol et"
+ },
+ "menuClean": {
+  "message": "🧹 Gizli karakterleri kaldır"
+ },
+ "menuWorkspace": {
+  "message": "TextHumanize çalışma alanını aç"
+ },
+ "offlineBadge": {
+  "message": "çevrimdışı"
+ },
+ "close": {
+  "message": "Kapat"
+ },
+ "processing": {
+  "message": "İşleniyor…"
+ },
+ "intensity": {
+  "message": "Yoğunluk"
+ },
+ "profile": {
+  "message": "Profil"
+ },
+ "actHumanize": {
+  "message": "Doğallaştır"
+ },
+ "actCheck": {
+  "message": "Kontrol et"
+ },
+ "actClean": {
+  "message": "Temizle"
+ },
+ "cleanHint": {
+  "message": "Görünmez karakterleri, homoglifleri ve gizli işaretleri kaldır"
+ },
+ "replaceInPage": {
+  "message": "Sayfada değiştir"
+ },
+ "copy": {
+  "message": "Kopyala"
+ },
+ "copied": {
+  "message": "Kopyalandı"
+ },
+ "replaced": {
+  "message": "Değiştirildi"
+ },
+ "reroll": {
+  "message": "Varyant"
+ },
+ "rerollHint": {
+  "message": "Başka bir varyant üret"
+ },
+ "credit": {
+  "message": "Alexandr Krikun · TextHumanize altyapısıyla"
+ },
+ "creditExt": {
+  "message": "Kaynak kodu"
+ },
+ "noSelection": {
+  "message": "Önce sayfada metin seçin (15+ karakter)."
+ },
+ "aiScore": {
+  "message": "YZ puanı"
+ },
+ "confidence": {
+  "message": "Güven"
+ },
+ "words": {
+  "message": "Kelime"
+ },
+ "topSignals": {
+  "message": "Başlıca sinyaller"
+ },
+ "watermarksFound": {
+  "message": "Gizli işaretler bulundu: $COUNT$ karakter kaldırıldı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "Gizli işaret bulunamadı"
+ },
+ "beforeLabel": {
+  "message": "Önce"
+ },
+ "afterLabel": {
+  "message": "Sonra"
+ },
+ "improvedBy": {
+  "message": "YZ stili sinyalleri $COUNT$ puan azaltıldı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "$COUNT$ değişiklik uygulandı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "$COUNT$ gizli karakter kaldırıldı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "YZ tarzı"
+ },
+ "verdict_human": {
+  "message": "İnsan tarzı"
+ },
+ "verdict_mixed": {
+  "message": "Karışık"
+ },
+ "verdict_unknown": {
+  "message": "Çok kısa"
+ },
+ "inputPlaceholder": {
+  "message": "Metni yapıştırın veya yazın — ya da herhangi bir sayfada metin seçip ✨ veya sağ tık menüsünü kullanın…"
+ },
+ "paste": {
+  "message": "Yapıştır"
+ },
+ "clear": {
+  "message": "Temizle"
+ },
+ "viewResult": {
+  "message": "Sonuç"
+ },
+ "viewChanges": {
+  "message": "Değişiklikler"
+ },
+ "openWorkspace": {
+  "message": "Tam sayfa aç"
+ },
+ "settings": {
+  "message": "Ayarlar"
+ },
+ "saved": {
+  "message": "Kaydedildi"
+ },
+ "optTitle": {
+  "message": "TextHumanize ayarları"
+ },
+ "optDefaults": {
+  "message": "Varsayılan işleme"
+ },
+ "optLanguage": {
+  "message": "Metin dili"
+ },
+ "optLangAuto": {
+  "message": "Otomatik algıla (önerilir)"
+ },
+ "optBubble": {
+  "message": "Seçim balonu"
+ },
+ "optBubbleDesc": {
+  "message": "Seçili metnin yanında ✨ düğmesini göster"
+ },
+ "optCleanWm": {
+  "message": "Doğallaştırırken gizli işaretleri temizle"
+ },
+ "optCleanWmDesc": {
+  "message": "Sıfır genişlikli karakterleri ve homoglifleri otomatik kaldır"
+ },
+ "optShortcuts": {
+  "message": "Klavye kısayolları"
+ },
+ "optShortcutsDesc": {
+  "message": "chrome://extensions/shortcuts adresinden ayarlanır"
+ },
+ "optAbout": {
+  "message": "Hakkında"
+ },
+ "optAboutText": {
+  "message": "Ücretsiz ve açık kaynak. TextHumanize kitaplığı üzerine kuruludur — %100 çevrimdışı metin doğallaştırma motoru (Python · TypeScript · PHP, 25 dil). Metniniz asla cihazınızdan çıkmaz."
+ },
+ "metric_pattern": {
+  "message": "YZ kelime ve ifadeleri"
+ },
+ "metric_burstiness": {
+  "message": "Tekdüze cümle uzunlukları"
+ },
+ "metric_stylometry": {
+  "message": "Resmî üslup"
+ },
+ "metric_voice": {
+  "message": "Edilgen çatı"
+ },
+ "metric_entity": {
+  "message": "Genel ifadeler"
+ },
+ "metric_opening": {
+  "message": "Tekrarlayan başlangıçlar"
+ },
+ "metric_grammar": {
+  "message": "Fazla kusursuz dil bilgisi"
+ },
+ "metric_entropy": {
+  "message": "Öngörülebilir ifade"
+ },
+ "metric_discourse": {
+  "message": "Katı yapı"
+ },
+ "metric_rhythm": {
+  "message": "Monoton ritim"
+ },
+ "metric_vocabulary": {
+  "message": "Sınırlı kelime dağarcığı"
+ },
+ "metric_perplexity": {
+  "message": "Düşük şaşkınlık ölçüsü"
+ },
+ "metric_punctuation": {
+  "message": "YZ tipik noktalama"
+ },
+ "metric_readability": {
+  "message": "Tekdüze okunabilirlik"
+ },
+ "metric_semantic_rep": {
+  "message": "Anlamsal tekrar"
+ }
+}

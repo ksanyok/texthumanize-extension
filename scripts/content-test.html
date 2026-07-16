@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>content-script test page</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; line-height: 1.6; padding: 0 20px; }
+  textarea { width: 100%; min-height: 90px; font: inherit; }
+</style>
+</head>
+<body>
+  <h1>Article for selection testing</h1>
+  <p id="ai-paragraph">It is important to note that the comprehensive methodology facilitates significant optimization of the workflow. Furthermore, the implementation demonstrates substantial improvements in operational efficiency. Additionally, the framework leverages innovative paradigms to streamline the process. Consequently, the aforementioned approach delivers a robust and comprehensive solution for all stakeholders involved.</p>
+
+  <h2>Editable field</h2>
+  <textarea id="field">Moreover, it is worth mentioning that the utilization of advanced techniques necessitates careful consideration of the comprehensive methodology employed throughout the entire process.</textarea>
+
+  <script type="module">
+    // ── chrome.* shim: routes engine calls to the local engine modules ──
+    import { FALLBACK_MESSAGES } from '../popup/messages.fallback.js';
+
+    const listeners = [];
+    let enginePromise = null;
+    const packCache = new Map();
+
+    async function loadPack(code) {
+      if (packCache.has(code)) return packCache.get(code);
+      try {
+        const res = await fetch(`../data/langs/${code}.json`);
+        const pack = res.ok ? await res.json() : null;
+        packCache.set(code, pack);
+        return pack;
+      } catch { return null; }
+    }
+
+    async function handle(message) {
+      if (!enginePromise) enginePromise = import('../engine/index.js');
+      const engine = await enginePromise;
+      const overrides = message.overrides || {};
+      const lang = engine.detectLanguage(message.text);
+      const langPack = await loadPack(lang);
+      switch (message.type) {
+        case 'humanize':
+          return engine.humanize(message.text, {
+            lang, profile: 'web',
+            intensity: Number(overrides.intensity ?? 60),
+            seed: typeof overrides.seed === 'number' ? overrides.seed : 42,
+            cleanWatermarks: true, langPack,
+          });
+        case 'analyze': {
+          const detection = new engine.AIDetector().detect(message.text, { lang, langPack });
+          const wm = new engine.WatermarkDetector(lang).detect(message.text);
+          return { lang, detection, watermark: {
+            hasWatermarks: wm.hasWatermarks, types: wm.watermarkTypes,
+            removed: wm.charactersRemoved, kirchenbauerScore: wm.kirchenbauerScore } };
+        }
+        case 'clean': {
+          const report = new engine.WatermarkDetector(lang).detect(message.text);
+          return { lang, text: report.cleanedText, hasWatermarks: report.hasWatermarks,
+            types: report.watermarkTypes, details: report.details,
+            removed: report.charactersRemoved,
+            homoglyphs: report.homoglyphsFound.length, zeroWidth: report.zeroWidthCount };
+        }
+        case 'get-settings':
+          return { intensity: 60, profile: 'web', selectionBubble: true, cleanWatermarks: true };
+        default:
+          throw new Error('unknown ' + message.type);
+      }
+    }
+
+    window.chrome = {
+      i18n: {
+        getMessage: (key, subs) => {
+          let msg = FALLBACK_MESSAGES.en[key] || '';
+          if (msg && subs) (Array.isArray(subs) ? subs : [subs]).forEach((s, i) => {
+            msg = msg.replace(`$${i + 1}`, s);
+          });
+          return msg;
+        },
+      },
+      runtime: {
+        id: undefined,
+        lastError: null,
+        sendMessage: (msg, cb) => {
+          handle(msg).then(
+            (data) => cb && cb({ ok: true, data }),
+            (err) => cb && cb({ ok: false, error: String(err) }),
+          );
+        },
+        onMessage: { addListener: (fn) => listeners.push(fn) },
+      },
+      storage: { onChanged: { addListener: () => {} } },
+    };
+    window.__thDispatch = (msg) => listeners.forEach((fn) => fn(msg, {}, () => {}));
+
+    // Load the content script AFTER the shim is in place.
+    const s = document.createElement('script');
+    s.src = '../content/content.js';
+    document.body.appendChild(s);
+    s.onload = () => {
+      document.title = 'content-ready';
+      if (new URLSearchParams(location.search).get('auto')) {
+        const p = document.querySelector('#ai-paragraph');
+        const range = document.createRange();
+        range.selectNodeContents(p);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        window.__thDispatch({ type: 'th-action', action: 'humanize', selectionText: '' });
+      }
+    };
+  </script>
+</body>
+</html>
