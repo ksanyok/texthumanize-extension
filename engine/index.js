@@ -1,8 +1,9 @@
 /**
  * TextHumanize browser engine — public API.
  *
- * 100% offline text naturalization, AI-style analysis and watermark
- * cleaning, powered by the TextHumanize library dictionaries.
+ * 100% offline text naturalization, AI-style analysis, watermark cleaning,
+ * tone, readability, paraphrase, stylometry, content typing and image
+ * provenance forensics — powered by the TextHumanize library dictionaries.
  *
  * @see https://github.com/ksanyok/TextHumanize
  * @module engine
@@ -17,5 +18,14 @@ export { Debureaucratizer } from './debureaucratizer.js';
 export { TextNaturalizer } from './naturalizer.js';
 export { Rng, splitSentences, changeRatio, maskProtected } from './util.js';
 
-export const ENGINE_VERSION = '1.0.0';
+// v2 tools
+export { analyzeTone, adjustTone, ToneAnalyzer, ToneAdjuster } from './tone.js';
+export { analyzeReadability, ReadabilityAnalyzer } from './readability.js';
+export { paraphrase, ParaphraseEngine } from './paraphrase.js';
+export { fingerprint, compareStyle, Stylometry } from './stylometry.js';
+export { classifyContent } from './content-type.js';
+export { detectMediaWatermarks, mediaFormat, mediaWatermarkReport } from './media-forensics.js';
+export { TOOLS, getTool, isUnlocked, inlineTools, MONETIZATION_ENABLED } from './entitlements.js';
+
+export const ENGINE_VERSION = '2.0.0';
 export const LIBRARY_VERSION = '0.34.0';

@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Répétition sémantique"
+ },
+ "actTone": {
+  "message": "Ton"
+ },
+ "actParaphrase": {
+  "message": "Paraphraser"
+ },
+ "actReadability": {
+  "message": "Lisibilité"
+ },
+ "actStylometry": {
+  "message": "ADN du style"
+ },
+ "actImage": {
+  "message": "Vérif. image IA"
+ },
+ "menuTone": {
+  "message": "🎭 Analyser le ton"
+ },
+ "menuImage": {
+  "message": "🖼️ Vérifier l'image (IA)"
+ },
+ "formality": {
+  "message": "Formalité"
+ },
+ "toneLevel": {
+  "message": "Ton"
+ },
+ "toneAdjust": {
+  "message": "Ajuster le ton"
+ },
+ "toneMoreFormal": {
+  "message": "Plus formel"
+ },
+ "toneMoreCasual": {
+  "message": "Plus décontracté"
+ },
+ "tone_very_formal": {
+  "message": "Très formel"
+ },
+ "tone_formal": {
+  "message": "Formel"
+ },
+ "tone_neutral": {
+  "message": "Neutre"
+ },
+ "tone_informal": {
+  "message": "Informel"
+ },
+ "tone_very_informal": {
+  "message": "Très familier"
+ },
+ "readingLevel": {
+  "message": "Niveau de lecture"
+ },
+ "grade": {
+  "message": "Niveau"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Facilité Flesch"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Niveau Flesch–Kincaid"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "Indice SMOG"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Analyse…"
+ },
+ "imgAi": {
+  "message": "Généré par IA"
+ },
+ "imgAuthentic": {
+  "message": "Authentique (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Aucun marqueur IA"
+ },
+ "imgNotGuarantee": {
+  "message": "(sans garantie)"
+ },
+ "imgEnableHint": {
+  "message": "Activez la vérification des images"
+ },
+ "optChip": {
+  "message": "Puce d'action dans l'éditeur"
+ },
+ "optChipDesc": {
+  "message": "Afficher des actions rapides au focus d'un champ de texte"
+ },
+ "optImageHover": {
+  "message": "Provenance IA des images au survol"
+ },
+ "optImageHoverDesc": {
+  "message": "Survolez une image pour vérifier les marqueurs IA (autorisation requise)"
+ },
+ "optEffects": {
+  "message": "Effets visuels"
+ },
+ "optEffectsDesc": {
+  "message": "Étincelles et animations douces (désactivé si mouvement réduit)"
+ },
+ "optTelemetry": {
+  "message": "Stats d'usage anonymes"
+ },
+ "optTelemetryDesc": {
+  "message": "Partager quels outils sont utilisés (jamais votre texte). Activé par défaut."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Bienvenue sur TextHumanize"
  }
 }

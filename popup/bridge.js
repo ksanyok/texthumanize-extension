@@ -91,9 +91,54 @@ async function localHandle(message) {
         zeroWidth: report.zeroWidthCount,
       };
     }
+    case 'tone': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const langPack = await loadPack(lang);
+      return { lang, ...engine.analyzeTone(message.text, { lang, langPack }) };
+    }
+    case 'tone-adjust': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const langPack = await loadPack(lang);
+      const r = engine.adjustTone(message.text, overrides.target || 'neutral', { lang, langPack, seed: overrides.seed || 0 });
+      return { lang, text: r.text, changes: r.changes || [] };
+    }
+    case 'readability': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      return { lang, ...engine.analyzeReadability(message.text, lang) };
+    }
+    case 'paraphrase': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const langPack = await loadPack(lang);
+      const r = engine.paraphrase(message.text, { lang, langPack, intensity: Number(merged.intensity),
+        seed: typeof overrides.seed === 'number' ? overrides.seed : (Date.now() & 0xffff) });
+      return { lang, text: r.text, changes: r.changes || [] };
+    }
+    case 'stylometry': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const langPack = await loadPack(lang);
+      return { lang, ...engine.fingerprint(message.text, { lang, langPack }) };
+    }
+    case 'classify': {
+      const lang = merged.langMode === 'auto' ? engine.detectLanguage(message.text) : merged.langMode;
+      const langPack = await loadPack(lang);
+      return { lang, ...engine.classifyContent(message.text, { lang, langPack }) };
+    }
+    case 'scan-image': {
+      if (!message.src?.startsWith('data:')) return { needsPermission: true };
+      const comma = message.src.indexOf(',');
+      const body = message.src.slice(comma + 1);
+      const bytes = /;base64/i.test(message.src.slice(5, comma))
+        ? Uint8Array.from(atob(body), (c) => c.charCodeAt(0))
+        : new TextEncoder().encode(decodeURIComponent(body));
+      return engine.detectMediaWatermarks(bytes, {});
+    }
     case 'detect-language': {
       return engine.detectLanguage(message.text);
     }
+    case 'get-usage':
+      return { events: {}, tools: {}, firstSeen: null };
+    case 'track':
+      return { ok: true };
     case 'get-settings':
       return { ...localSettings };
     case 'set-settings':

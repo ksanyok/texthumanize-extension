@@ -183,6 +183,16 @@ body.page-mode .input-zone textarea { min-height: 180px; }
 
 .btn:disabled { opacity: .55; cursor: default; }
 
+.tool-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: -4px; }
+.tool-btn {
+  border: 1px solid var(--line); background: transparent; color: var(--dim);
+  font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 9px; cursor: pointer;
+  transition: all .12s;
+}
+.tool-btn:hover { color: var(--fg); background: var(--panel); transform: translateY(-1px); }
+.tool-btn:disabled { opacity: .5; cursor: default; transform: none; }
+.tool-btn .pro { font-size: 8px; font-weight: 800; color: var(--accent); margin-left: 2px; }
+
 #result-zone {
   border: 1px solid var(--line);
   border-radius: 12px;

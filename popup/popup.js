@@ -119,9 +119,26 @@ $('#humanize-btn').addEventListener('click', () => run('humanize'));
 $('#check-btn').addEventListener('click', () => run('check'));
 $('#clean-btn').addEventListener('click', () => run('clean'));
 
+// Secondary tool row (analysis + transforms).
+const SECONDARY_TOOLS = [
+  { action: 'tone', i18n: 'actTone', icon: '🎭' },
+  { action: 'readability', i18n: 'actReadability', icon: '📖' },
+  { action: 'paraphrase', i18n: 'actParaphrase', icon: '🔀', pro: true },
+  { action: 'stylometry', i18n: 'actStylometry', icon: '🧬', pro: true },
+];
+const toolRow = $('#tool-row');
+for (const tool of SECONDARY_TOOLS) {
+  const b = document.createElement('button');
+  b.className = 'tool-btn';
+  b.dataset.action = tool.action;
+  b.innerHTML = `${tool.icon} ${t(tool.i18n)}${tool.pro ? ' <span class="pro">PRO</span>' : ''}`;
+  b.addEventListener('click', () => run(tool.action));
+  toolRow.appendChild(b);
+}
+
 rerollBtn.addEventListener('click', () => {
   lastSeed = (lastSeed * 1103515245 + 12345) & 0x7fffffff;
-  run('humanize', { seed: lastSeed });
+  run(lastAction === 'paraphrase' ? 'paraphrase' : 'humanize', { seed: lastSeed });
 });
 
 copyBtn.addEventListener('click', async () => {
@@ -146,7 +163,7 @@ for (const tab of viewTabs.querySelectorAll('.view-tab')) {
 
 function setBusy(on) {
   busy.hidden = !on;
-  for (const btn of document.querySelectorAll('.action-row .btn')) btn.disabled = on;
+  for (const btn of document.querySelectorAll('.action-row .btn, .tool-row .tool-btn')) btn.disabled = on;
 }
 
 async function run(action, extra = {}) {
@@ -154,7 +171,10 @@ async function run(action, extra = {}) {
   if (!text) { input.focus(); return; }
 
   setBusy(true);
-  const typeMap = { humanize: 'humanize', check: 'analyze', clean: 'clean' };
+  const typeMap = {
+    humanize: 'humanize', check: 'analyze', clean: 'clean',
+    tone: 'tone', readability: 'readability', paraphrase: 'paraphrase', stylometry: 'stylometry',
+  };
   const overrides = { intensity: Number(intensity.value), profile: profile.value, ...extra };
   if (params.get('seed') !== null && overrides.seed === undefined) {
     overrides.seed = Number(params.get('seed'));
@@ -242,6 +262,69 @@ function render() {
     viewTabs.hidden = true;
     copyBtn.hidden = false;
     rerollBtn.hidden = true;
+    return;
+  }
+
+  if (lastAction === 'tone') {
+    updateBadge(lastResult.lang);
+    const pct = Math.round((lastResult.formalityScore ?? lastResult.score ?? 0.5) * 100);
+    const cls = pct >= 60 ? 'red' : pct >= 35 ? 'yellow' : 'green';
+    const levelName = t(`tone_${lastResult.level}`) || lastResult.level;
+    const inds = (lastResult.indicators || []).slice(0, 6);
+    scoreZone.innerHTML = `
+      <div class="meter-row"><span class="meter-label">${t('formality')}</span>
+        <div class="meter"><div class="meter-fill ${cls}" style="width:${pct}%"></div></div>
+        <b class="meter-num ${cls}">${pct}%</b></div>
+      <div class="dim small">${t('toneLevel')}: <b>${escapeHtml(String(levelName))}</b></div>
+      ${inds.length ? `<ul class="sig-list">${inds.map((x) => `<li>${escapeHtml(String(x))}</li>`).join('')}</ul>` : ''}`;
+    resultText.hidden = true;
+    resultMeta.textContent = '';
+    viewTabs.hidden = copyBtn.hidden = rerollBtn.hidden = true;
+    return;
+  }
+
+  if (lastAction === 'readability') {
+    updateBadge(lastResult.lang);
+    const rows = [
+      ['fleschReadingEase', lastResult.fleschReadingEase],
+      ['fleschKincaidGrade', lastResult.fleschKincaidGrade],
+      ['gunningFog', lastResult.gunningFog],
+      ['smog', lastResult.smog],
+      ['colemanLiau', lastResult.colemanLiau],
+    ];
+    scoreZone.innerHTML = `
+      <div class="dim small">${t('readingLevel')}: <b>${escapeHtml(String(lastResult.readingLevel || ''))}</b>
+        &nbsp;·&nbsp; ${t('grade')}: <b>${lastResult.gradeLevel != null ? Math.round(lastResult.gradeLevel) : '—'}</b></div>
+      <ul class="sig-list">${rows.map(([k, v]) => `<li>${escapeHtml(t(`metric_${k}`) || k)}: <b>${v != null ? Math.round(v * 10) / 10 : '—'}</b></li>`).join('')}</ul>`;
+    resultText.hidden = true;
+    resultMeta.textContent = '';
+    viewTabs.hidden = copyBtn.hidden = rerollBtn.hidden = true;
+    return;
+  }
+
+  if (lastAction === 'stylometry') {
+    updateBadge(lastResult.lang);
+    const p = lastResult.profile || lastResult;
+    const entries = Object.entries(p).filter(([, v]) => typeof v === 'number').slice(0, 10);
+    scoreZone.innerHTML = `
+      ${lastResult.summary ? `<div class="dim small">${escapeHtml(String(lastResult.summary))}</div>` : ''}
+      <ul class="sig-list">${entries.map(([k, v]) => `<li>${escapeHtml(k)}: <b>${Math.round(v * 100) / 100}</b></li>`).join('')}</ul>`;
+    resultText.hidden = true;
+    resultMeta.textContent = '';
+    viewTabs.hidden = copyBtn.hidden = rerollBtn.hidden = true;
+    return;
+  }
+
+  if (lastAction === 'paraphrase') {
+    updateBadge(lastResult.lang);
+    scoreZone.innerHTML = `<div class="dim small">${t('changesCount', [String((lastResult.changes || []).length)])}</div>`;
+    resultText.hidden = false;
+    resultText.textContent = lastResult.text;
+    resultText.contentEditable = 'true';
+    resultMeta.textContent = '';
+    viewTabs.hidden = true;
+    copyBtn.hidden = false;
+    rerollBtn.hidden = false;
     return;
   }
 
@@ -349,7 +432,8 @@ $('#open-options').addEventListener('click', () => {
 updateCounts();
 if (input.value) updateLang();
 const autoMode = params.get('mode');
-if ((autoMode === 'check' || autoMode === 'humanize' || autoMode === 'clean') && input.value) {
+const AUTO_ACTIONS = ['check', 'humanize', 'clean', 'tone', 'readability', 'paraphrase', 'stylometry'];
+if (AUTO_ACTIONS.includes(autoMode) && input.value) {
   settingsReady.then(() => run(autoMode));
 }
 input.focus();

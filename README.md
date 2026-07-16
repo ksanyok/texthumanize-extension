@@ -23,17 +23,28 @@
 
 ## What it does
 
-TextHumanize for Chrome brings the TextHumanize engine to every page you visit:
+TextHumanize for Chrome brings the whole TextHumanize engine to every page you visit — and puts it right where you write:
 
 - ✨ **Humanize** — reduce AI-typical style signals in any selected text: formulaic connectors, bureaucratic vocabulary, uniform sentence rhythm. Replace the text right on the page (inputs, textareas, editors) or copy the result.
 - 🔍 **Check** — get an instant AI-style score (0–100%) computed by a 15-metric statistical detector ported 1:1 from the TextHumanize library: burstiness, entropy, AI-pattern density, passive voice, rhythm, perplexity and more.
 - 🧹 **Clean** — strip hidden watermarks: zero-width characters, Unicode steganography, homoglyph substitutions, spacing anomalies. Includes a Kirchenbauer-style green-list statistical test.
+- 🎭 **Tone** — analyze formality and one-click shift a passage more formal or more casual.
+- 📖 **Readability** — Flesch Reading Ease, Flesch–Kincaid, Gunning Fog, SMOG, Coleman–Liau, and more.
+- 🔀 **Paraphrase** & 🧬 **Style DNA** — reword text and read its stylometric fingerprint.
+- 🖼️ **Image AI-provenance** *(opt-in)* — hover any image to check it for AI-generation markers (C2PA / XMP / EXIF / generator signatures: Midjourney, DALL·E, Stable Diffusion, Firefly…). Honest verdicts, scanned 100% on your device.
+
+### Where you work
+
+- **In-editor chip** — focus a text field or rich editor (Gmail, X, LinkedIn, Reddit, Notion, Slack, ChatGPT, WordPress…) and a small chip offers quick actions with in-place replacement.
+- **Selection bubble** — select text anywhere → ✨ → results in a draggable panel.
+- **Popup & full-page workspace** — for longer texts, with a word-level diff of every change.
+- **Tasteful effects** — sparkles, count-up scores, shimmer; auto-off under reduced-motion.
 
 ### Why this extension
 
 | | |
 |---|---|
-| 🔒 **100% offline** | Your text never leaves the browser. No servers, no accounts, no telemetry, no network requests — the manifest contains no host permissions for remote calls. |
+| 🔒 **Private by design** | Your text never leaves the browser — every text/analysis tool runs locally. Image scanning reads bytes on-device. The only thing that can ever leave is **anonymous, content-free** usage counts (tool names, never text), on by default and one-click off. See [PRIVACY.md](PRIVACY.md). |
 | ⚡ **Fast** | 20–300 ms per paragraph, pure algorithmic processing (no ML downloads). |
 | 🌍 **25 languages** | Full dictionaries for EN · RU · UK · DE · FR · ES · PL · IT · PT + 16 more, with automatic language detection. UI in 10 languages. |
 | 🎛 **Precise control** | Intensity 0–100, 9 style profiles, reproducible seeded output, honest before/after scoring. |

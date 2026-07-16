@@ -4,111 +4,89 @@
 <meta charset="utf-8">
 <title>content-script test page</title>
 <style>
-  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; line-height: 1.6; padding: 0 20px; }
-  textarea { width: 100%; min-height: 90px; font: inherit; }
+  body { font-family: Georgia, serif; max-width: 780px; margin: 30px auto; line-height: 1.6; padding: 0 20px; }
+  textarea { width: 100%; min-height: 90px; font: inherit; padding: 8px; }
+  .grid { display: flex; gap: 20px; align-items: flex-start; margin: 20px 0; }
+  img { border-radius: 8px; }
 </style>
 </head>
 <body>
-  <h1>Article for selection testing</h1>
+  <h1>Article for selection & editor testing</h1>
   <p id="ai-paragraph">It is important to note that the comprehensive methodology facilitates significant optimization of the workflow. Furthermore, the implementation demonstrates substantial improvements in operational efficiency. Additionally, the framework leverages innovative paradigms to streamline the process. Consequently, the aforementioned approach delivers a robust and comprehensive solution for all stakeholders involved.</p>
 
-  <h2>Editable field</h2>
+  <h2>Editable field (focus me → chip appears)</h2>
   <textarea id="field">Moreover, it is worth mentioning that the utilization of advanced techniques necessitates careful consideration of the comprehensive methodology employed throughout the entire process.</textarea>
 
+  <h2>Contenteditable (rich editor)</h2>
+  <div id="rich" contenteditable="true" style="border:1px solid #ccc;border-radius:8px;padding:10px;min-height:60px">Additionally, the aforementioned framework demonstrates substantial capabilities across numerous operational domains.</div>
+
+  <h2>Images (hover to check provenance)</h2>
+  <div class="grid">
+    <img id="img-ai" width="200" height="150" alt="ai">
+    <img id="img-clean" width="200" height="150" alt="clean">
+  </div>
+
   <script type="module">
-    // ── chrome.* shim: routes engine calls to the local engine modules ──
     import { FALLBACK_MESSAGES } from '../popup/messages.fallback.js';
+    import * as engine from '../engine/index.js';
 
-    const listeners = [];
-    let enginePromise = null;
     const packCache = new Map();
-
     async function loadPack(code) {
       if (packCache.has(code)) return packCache.get(code);
-      try {
-        const res = await fetch(`../data/langs/${code}.json`);
-        const pack = res.ok ? await res.json() : null;
-        packCache.set(code, pack);
-        return pack;
-      } catch { return null; }
+      try { const r = await fetch(`../data/langs/${code}.json`); const p = r.ok ? await r.json() : null; packCache.set(code, p); return p; }
+      catch { return null; }
     }
 
-    async function handle(message) {
-      if (!enginePromise) enginePromise = import('../engine/index.js');
-      const engine = await enginePromise;
-      const overrides = message.overrides || {};
-      const lang = engine.detectLanguage(message.text);
-      const langPack = await loadPack(lang);
-      switch (message.type) {
-        case 'humanize':
-          return engine.humanize(message.text, {
-            lang, profile: 'web',
-            intensity: Number(overrides.intensity ?? 60),
-            seed: typeof overrides.seed === 'number' ? overrides.seed : 42,
-            cleanWatermarks: true, langPack,
-          });
-        case 'analyze': {
-          const detection = new engine.AIDetector().detect(message.text, { lang, langPack });
-          const wm = new engine.WatermarkDetector(lang).detect(message.text);
-          return { lang, detection, watermark: {
-            hasWatermarks: wm.hasWatermarks, types: wm.watermarkTypes,
-            removed: wm.charactersRemoved, kirchenbauerScore: wm.kirchenbauerScore } };
+    async function handle(m) {
+      const o = m.overrides || {};
+      const lang = m.text ? engine.detectLanguage(m.text) : 'en';
+      const pack = await loadPack(lang);
+      switch (m.type) {
+        case 'humanize': return engine.humanize(m.text, { lang, profile: 'web', intensity: Number(o.intensity ?? 60), seed: o.seed ?? 42, cleanWatermarks: true, langPack: pack });
+        case 'analyze': { const d = new engine.AIDetector().detect(m.text, { lang, langPack: pack }); const w = new engine.WatermarkDetector(lang).detect(m.text); return { lang, detection: d, watermark: { hasWatermarks: w.hasWatermarks, types: w.watermarkTypes, removed: w.charactersRemoved } }; }
+        case 'clean': { const r = new engine.WatermarkDetector(lang).detect(m.text); return { lang, text: r.cleanedText, hasWatermarks: r.hasWatermarks, types: r.watermarkTypes, details: r.details, removed: r.charactersRemoved }; }
+        case 'tone': return { lang, ...engine.analyzeTone(m.text, { lang, langPack: pack }) };
+        case 'tone-adjust': { const r = engine.adjustTone(m.text, o.target || 'neutral', { lang, langPack: pack, seed: o.seed || 0 }); return { lang, text: r.text, changes: r.changes || [] }; }
+        case 'readability': return { lang, ...engine.analyzeReadability(m.text, lang) };
+        case 'paraphrase': { const r = engine.paraphrase(m.text, { lang, langPack: pack, intensity: Number(o.intensity ?? 60), seed: o.seed ?? 42 }); return { lang, text: r.text, changes: r.changes || [] }; }
+        case 'stylometry': return { lang, ...engine.fingerprint(m.text, { lang, langPack: pack }) };
+        case 'scan-image': {
+          if (!m.src?.startsWith('data:')) return { needsPermission: true };
+          const comma = m.src.indexOf(','); const body = m.src.slice(comma + 1);
+          const bytes = /;base64/i.test(m.src.slice(5, comma)) ? Uint8Array.from(atob(body), c => c.charCodeAt(0)) : new TextEncoder().encode(decodeURIComponent(body));
+          return engine.detectMediaWatermarks(bytes, {});
         }
-        case 'clean': {
-          const report = new engine.WatermarkDetector(lang).detect(message.text);
-          return { lang, text: report.cleanedText, hasWatermarks: report.hasWatermarks,
-            types: report.watermarkTypes, details: report.details,
-            removed: report.charactersRemoved,
-            homoglyphs: report.homoglyphsFound.length, zeroWidth: report.zeroWidthCount };
-        }
-        case 'get-settings':
-          return { intensity: 60, profile: 'web', selectionBubble: true, cleanWatermarks: true };
-        default:
-          throw new Error('unknown ' + message.type);
+        case 'get-settings': return { intensity: 60, profile: 'web', selectionBubble: true, editorChip: true, imageHover: true, effects: true, cleanWatermarks: true, telemetry: true };
+        case 'track': case 'get-usage': return {};
+        default: throw new Error('unknown ' + m.type);
       }
     }
 
+    const listeners = [];
     window.chrome = {
-      i18n: {
-        getMessage: (key, subs) => {
-          let msg = FALLBACK_MESSAGES.en[key] || '';
-          if (msg && subs) (Array.isArray(subs) ? subs : [subs]).forEach((s, i) => {
-            msg = msg.replace(`$${i + 1}`, s);
-          });
-          return msg;
-        },
-      },
-      runtime: {
-        id: undefined,
-        lastError: null,
-        sendMessage: (msg, cb) => {
-          handle(msg).then(
-            (data) => cb && cb({ ok: true, data }),
-            (err) => cb && cb({ ok: false, error: String(err) }),
-          );
-        },
-        onMessage: { addListener: (fn) => listeners.push(fn) },
-      },
+      i18n: { getMessage: (k, subs) => { let s = FALLBACK_MESSAGES.en[k] || ''; if (s && subs) (Array.isArray(subs) ? subs : [subs]).forEach((x, i) => { s = s.replace(`$${i + 1}`, x); }); return s; } },
+      runtime: { id: 'test', lastError: null,
+        sendMessage: (msg, cb) => { handle(msg).then((d) => cb && cb({ ok: true, data: d }), (e) => cb && cb({ ok: false, error: String(e) })); },
+        onMessage: { addListener: (fn) => listeners.push(fn) } },
       storage: { onChanged: { addListener: () => {} } },
     };
     window.__thDispatch = (msg) => listeners.forEach((fn) => fn(msg, {}, () => {}));
 
-    // Load the content script AFTER the shim is in place.
-    const s = document.createElement('script');
-    s.src = '../content/content.js';
-    document.body.appendChild(s);
-    s.onload = () => {
-      document.title = 'content-ready';
-      if (new URLSearchParams(location.search).get('auto')) {
-        const p = document.querySelector('#ai-paragraph');
-        const range = document.createRange();
-        range.selectNodeContents(p);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-        window.__thDispatch({ type: 'th-action', action: 'humanize', selectionText: '' });
+    // Build a Stable-Diffusion-tagged PNG and a clean PNG as data URLs.
+    function crc32(b){let c=~0;for(let i=0;i<b.length;i++){c^=b[i];for(let k=0;k<8;k++)c=(c>>>1)^(0xEDB88320&-(c&1));}return(~c)>>>0;}
+    function chunk(type,data){const t=new TextEncoder().encode(type);const body=new Uint8Array(t.length+data.length);body.set(t);body.set(data,t.length);const out=new Uint8Array(4+body.length+4);const dv=new DataView(out.buffer);dv.setUint32(0,data.length);out.set(body,4);dv.setUint32(4+body.length,crc32(body));return out;}
+    function png(text){const sig=new Uint8Array([137,80,78,71,13,10,26,10]);const ihdr=new Uint8Array(13);const dv=new DataView(ihdr.buffer);dv.setUint32(0,1);dv.setUint32(4,1);ihdr[8]=8;ihdr[9]=6;const parts=[sig,chunk('IHDR',ihdr)];if(text)parts.push(chunk('tEXt',new TextEncoder().encode(text)));parts.push(chunk('IEND',new Uint8Array(0)));const n=parts.reduce((a,p)=>a+p.length,0);const out=new Uint8Array(n);let off=0;for(const p of parts){out.set(p,off);off+=p.length;}let bin='';for(const b of out)bin+=String.fromCharCode(b);return 'data:image/png;base64,'+btoa(bin);}
+    document.getElementById('img-ai').src = png('parameters\x00masterpiece, Stable Diffusion, steps: 30, sampler: Euler a');
+    document.getElementById('img-clean').src = png(null);
+
+    // Load content scripts in manifest order.
+    const files = ['shared', 'panel', 'editors', 'images', 'content'];
+    (async () => {
+      for (const f of files) {
+        await new Promise((res) => { const s = document.createElement('script'); s.src = `../content/${f}.js`; s.onload = res; s.onerror = res; document.body.appendChild(s); });
       }
-    };
+      document.title = 'content-ready';
+    })();
   </script>
 </body>
 </html>

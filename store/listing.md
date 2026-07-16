@@ -25,35 +25,36 @@ Productivity → Tools (or "Workflow & Planning")
 ## Detailed description — EN
 
 ```
-TextHumanize brings a full offline text-naturalization engine into your browser. Select text on any page and instantly:
+TextHumanize brings a full offline text engine into your browser — and puts it right where you write. Select text or focus an editor and instantly:
 
-✨ HUMANIZE — reduce AI-typical style signals: formulaic connectors ("Furthermore", "Moreover"), bureaucratic vocabulary, uniform sentence rhythm. Replace the text right on the page (works in inputs, textareas and rich editors) or copy the result.
+✨ HUMANIZE — reduce AI-typical style signals: formulaic connectors ("Furthermore", "Moreover"), bureaucratic vocabulary, uniform sentence rhythm. Replace the text right on the page (inputs, textareas and rich editors like Gmail, X, LinkedIn, Notion, ChatGPT) or copy it.
 
-🔍 CHECK — get an honest AI-style score (0–100%) from a 15-metric statistical detector: sentence burstiness, entropy, AI-pattern density, passive voice, rhythm, perplexity and more — with a breakdown of the top signals.
+🔍 CHECK — get an honest AI-style score (0–100%) from a 15-metric statistical detector: burstiness, entropy, AI-pattern density, passive voice, rhythm, perplexity and more.
 
-🧹 CLEAN — strip hidden watermarks: zero-width characters, Unicode steganography, homoglyph substitutions (Cyrillic "о" in Latin words), trailing-space patterns. Includes a Kirchenbauer-style statistical watermark test.
+🎭 TONE · 📖 READABILITY · 🔀 PARAPHRASE · 🧬 STYLE DNA — analyze and shift formality, measure Flesch/Gunning-Fog/SMOG readability, reword text, and read its stylometric fingerprint.
+
+🧹 CLEAN — strip hidden watermarks: zero-width characters, Unicode steganography, homoglyphs, trailing-space patterns, plus a Kirchenbauer-style statistical test.
+
+🖼️ IMAGE AI CHECK (opt-in) — hover any image to check it for AI-generation markers (C2PA / XMP / EXIF / generator signatures: Midjourney, DALL·E, Stable Diffusion, Firefly…). Scanned 100% on your device. Honest verdicts — "AI-generated", "Authentic (C2PA)", or "No markers (not a guarantee)".
+
+WHERE YOU WORK
+• In-editor chip with quick actions and in-place replace.
+• Selection bubble on any page. • Popup + full-page workspace with word-level diff.
+• Tasteful effects (sparkles, count-up) — auto-off under reduced motion.
 
 WHY TEXTHUMANIZE
-
-🔒 100% offline & private. Your text NEVER leaves the browser: no servers, no accounts, no analytics, no network requests at all. Check the source — it's open.
+🔒 Private by design. Every text tool runs locally; image scanning reads bytes on-device. Your text is NEVER sent anywhere. The only thing that can leave is anonymous, content-free usage counts (which tools are used, never your text) — on by default, one-click off.
 ⚡ Fast. 20–300 ms per paragraph. Pure algorithms, no model downloads.
-🌍 25 languages. Full dictionaries for English, Russian, Ukrainian, German, French, Spanish, Polish, Italian, Portuguese and 16 more, with automatic language detection. Interface in 10 languages.
-🎛 Precise control. Intensity 0–100, 9 style profiles (web, chat, academic, marketing…), reproducible output, word-level diff of every change.
-🆓 Free and open source (MIT). Built on the open TextHumanize library.
-
-HOW TO USE
-
-1. Select text on any page → click the ✨ bubble or right-click → TextHumanize.
-2. Review the before/after AI score and the result in the floating panel.
-3. Replace on page or copy. Use the toolbar popup or the full-page workspace for long texts.
+🌍 25 languages, automatic detection. Interface in 10 languages.
+🎛 Intensity 0–100, 9 style profiles, reproducible output.
+🆓 Free and open source (MIT).
 
 Shortcuts: Ctrl/Cmd+Shift+H — humanize selection · Ctrl/Cmd+Shift+U — check selection.
 
 HONEST NOTE
+TextHumanize is a style-normalization tool, not an "AI detector bypass". It reports its own internal score honestly — when it can't improve a text, it says so instead of making things worse. Image detection identifies declared AI provenance (metadata); the absence of markers is not proof an image is human-made, and robust in-content watermarks like SynthID are not detectable. Results of external AI detectors are not guaranteed.
 
-TextHumanize is a style-normalization tool, not an "AI detector bypass". It reduces AI-like patterns and reports its own internal score honestly — when it can't improve a text, it says so instead of making things worse. Results of external AI detectors are not guaranteed.
-
-Made by Alexandr Krikun. Powered by the TextHumanize library (github.com/ksanyok/TextHumanize) — 240K+ lines, 38-stage pipeline, 2,269 tests. The extension is completely free; commercial licensing of the library for business integrations is available separately.
+Made by Alexandr Krikun. Powered by the TextHumanize library (github.com/ksanyok/TextHumanize). The extension is completely free.
 ```
 
 ## Detailed description — RU
@@ -98,16 +99,18 @@ Local, offline text processing of user-selected text: style naturalization, AI-s
 
 ## Permission justifications
 
-- **contextMenus** — provides the right-click "Humanize / Check / Clean selection" actions, the extension's primary entry point.
-- **storage** — stores user settings (intensity, profile, UI language options). No text is stored.
+- **contextMenus** — right-click "Humanize / Check / Tone / Clean" actions and the image check.
+- **storage** — stores user settings and local usage counts. No text is stored.
 - **activeTab** — lets the toolbar/context-menu action interact with the tab the user invoked it on.
-- **scripting** — re-injects the panel content script into tabs that were already open before installation, only when the user invokes the extension there.
-- **Host access (content script on all sites)** — the selection bubble and floating panel must be available on any page where the user selects text. The script reads only the user's selection when the user explicitly triggers an action; it never scrapes pages or sends data anywhere (there is no network code in the extension).
+- **scripting** — re-injects the panel content scripts into tabs open before installation, only when the user invokes the extension there.
+- **Content script on all sites** — the selection bubble, in-editor chip and image badge must be available where the user works. They read a selection or image only when the user explicitly triggers an action; pages are never scraped.
+- **optional host permission `<all_urls>`** — requested **only** if the user enables "Image AI-provenance on hover", so the service worker can fetch image bytes to inspect metadata locally. Not requested otherwise.
+- **optional `clipboardWrite`** — copying results to the clipboard.
 
 ## Privacy
 
 - Privacy policy URL: `https://github.com/ksanyok/texthumanize-extension/blob/main/PRIVACY.md`
-- Data collection: **none**.
+- Data collection: **anonymous usage events only** (which tools are used; never text, URLs or page content). On by default, disclosed, one-click off. Text and image processing are fully on-device.
 
 ## Assets
 

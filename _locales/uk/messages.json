@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Смислові повтори"
+ },
+ "actTone": {
+  "message": "Тон"
+ },
+ "actParaphrase": {
+  "message": "Парафраз"
+ },
+ "actReadability": {
+  "message": "Читабельність"
+ },
+ "actStylometry": {
+  "message": "ДНК стилю"
+ },
+ "actImage": {
+  "message": "ШІ на зображенні"
+ },
+ "menuTone": {
+  "message": "🎭 Проаналізувати тон"
+ },
+ "menuImage": {
+  "message": "🖼️ Перевірити зображення на ШІ"
+ },
+ "formality": {
+  "message": "Формальність"
+ },
+ "toneLevel": {
+  "message": "Тон"
+ },
+ "toneAdjust": {
+  "message": "Змінити тон"
+ },
+ "toneMoreFormal": {
+  "message": "Формальніше"
+ },
+ "toneMoreCasual": {
+  "message": "Простіше/жвавіше"
+ },
+ "tone_very_formal": {
+  "message": "Дуже формальний"
+ },
+ "tone_formal": {
+  "message": "Формальний"
+ },
+ "tone_neutral": {
+  "message": "Нейтральний"
+ },
+ "tone_informal": {
+  "message": "Неформальний"
+ },
+ "tone_very_informal": {
+  "message": "Дуже розмовний"
+ },
+ "readingLevel": {
+  "message": "Рівень читання"
+ },
+ "grade": {
+  "message": "Клас"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Легкість читання (Flesch)"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Клас Flesch–Kincaid"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "Індекс SMOG"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Сканую…"
+ },
+ "imgAi": {
+  "message": "Згенеровано ШІ"
+ },
+ "imgAuthentic": {
+  "message": "Справжнє (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Маркерів ШІ немає"
+ },
+ "imgNotGuarantee": {
+  "message": "(не гарантія)"
+ },
+ "imgEnableHint": {
+  "message": "Увімкніть перевірку зображень у налаштуваннях"
+ },
+ "optChip": {
+  "message": "Чип дій у редакторі"
+ },
+ "optChipDesc": {
+  "message": "Показувати швидкі дії при фокусі на полі чи редакторі"
+ },
+ "optImageHover": {
+  "message": "ШІ-провенанс зображень при наведенні"
+ },
+ "optImageHoverDesc": {
+  "message": "Наведіть на зображення для перевірки маркерів ШІ (потрібен доступ до зображень)"
+ },
+ "optEffects": {
+  "message": "Візуальні ефекти"
+ },
+ "optEffectsDesc": {
+  "message": "Іскри та плавні анімації (авто-вимк при «зменшити рух»)"
+ },
+ "optTelemetry": {
+  "message": "Анонімна статистика використання"
+ },
+ "optTelemetryDesc": {
+  "message": "Ділитися тим, які інструменти використовуються (ніколи текст). Увімк. за умовч."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Ласкаво просимо до TextHumanize"
  }
 }

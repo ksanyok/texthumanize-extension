@@ -135,3 +135,6 @@ h1 { font-size: 20px; font-weight: 700; }
 .links a:hover { text-decoration: underline; }
 
 .credit { margin-top: 12px; font-size: 12px; }
+
+.usage { margin-top: 12px; font-size: 12px; line-height: 1.7; }
+.usage b { color: var(--fg); text-transform: uppercase; letter-spacing: .4px; font-size: 10.5px; }

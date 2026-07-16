@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/engine.test.js",
+    "test": "node --test tests/engine.test.js tests/v2.test.js",
     "package": "bash scripts/package.sh"
   },
   "author": "Alexandr Krikun (https://github.com/ksanyok)",

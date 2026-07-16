@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Anlamsal tekrar"
+ },
+ "actTone": {
+  "message": "Üslup"
+ },
+ "actParaphrase": {
+  "message": "Başka sözcüklerle"
+ },
+ "actReadability": {
+  "message": "Okunabilirlik"
+ },
+ "actStylometry": {
+  "message": "Stil DNA'sı"
+ },
+ "actImage": {
+  "message": "Görselde YZ"
+ },
+ "menuTone": {
+  "message": "🎭 Üslubu çözümle"
+ },
+ "menuImage": {
+  "message": "🖼️ Görseli YZ için kontrol et"
+ },
+ "formality": {
+  "message": "Resmiyet"
+ },
+ "toneLevel": {
+  "message": "Üslup"
+ },
+ "toneAdjust": {
+  "message": "Üslubu ayarla"
+ },
+ "toneMoreFormal": {
+  "message": "Daha resmi"
+ },
+ "toneMoreCasual": {
+  "message": "Daha samimi"
+ },
+ "tone_very_formal": {
+  "message": "Çok resmi"
+ },
+ "tone_formal": {
+  "message": "Resmi"
+ },
+ "tone_neutral": {
+  "message": "Nötr"
+ },
+ "tone_informal": {
+  "message": "Resmi olmayan"
+ },
+ "tone_very_informal": {
+  "message": "Çok samimi"
+ },
+ "readingLevel": {
+  "message": "Okuma düzeyi"
+ },
+ "grade": {
+  "message": "Sınıf"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Flesch okuma kolaylığı"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Flesch–Kincaid seviyesi"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "SMOG indeksi"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Taranıyor…"
+ },
+ "imgAi": {
+  "message": "YZ üretimi"
+ },
+ "imgAuthentic": {
+  "message": "Özgün (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "YZ işareti yok"
+ },
+ "imgNotGuarantee": {
+  "message": "(garanti değil)"
+ },
+ "imgEnableHint": {
+  "message": "Görsel kontrolünü ayarlardan açın"
+ },
+ "optChip": {
+  "message": "Editör içi eylem çipi"
+ },
+ "optChipDesc": {
+  "message": "Bir metin alanına odaklanınca hızlı eylemleri göster"
+ },
+ "optImageHover": {
+  "message": "Görselde YZ kaynağını üzerine gelince göster"
+ },
+ "optImageHoverDesc": {
+  "message": "YZ işaretlerini kontrol için görselin üzerine gelin (izin gerekir)"
+ },
+ "optEffects": {
+  "message": "Görsel efektler"
+ },
+ "optEffectsDesc": {
+  "message": "Kıvılcımlar ve akıcı animasyonlar (hareket azaltmada kapanır)"
+ },
+ "optTelemetry": {
+  "message": "Anonim kullanım istatistikleri"
+ },
+ "optTelemetryDesc": {
+  "message": "Hangi araçların kullanıldığını paylaş (metniniz asla). Varsayılan açık."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "TextHumanize'e hoş geldiniz"
  }
 }

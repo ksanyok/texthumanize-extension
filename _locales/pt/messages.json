@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Repetição semântica"
+ },
+ "actTone": {
+  "message": "Tom"
+ },
+ "actParaphrase": {
+  "message": "Parafrasear"
+ },
+ "actReadability": {
+  "message": "Legibilidade"
+ },
+ "actStylometry": {
+  "message": "DNA do estilo"
+ },
+ "actImage": {
+  "message": "IA na imagem"
+ },
+ "menuTone": {
+  "message": "🎭 Analisar o tom"
+ },
+ "menuImage": {
+  "message": "🖼️ Verificar imagem (IA)"
+ },
+ "formality": {
+  "message": "Formalidade"
+ },
+ "toneLevel": {
+  "message": "Tom"
+ },
+ "toneAdjust": {
+  "message": "Ajustar o tom"
+ },
+ "toneMoreFormal": {
+  "message": "Mais formal"
+ },
+ "toneMoreCasual": {
+  "message": "Mais informal"
+ },
+ "tone_very_formal": {
+  "message": "Muito formal"
+ },
+ "tone_formal": {
+  "message": "Formal"
+ },
+ "tone_neutral": {
+  "message": "Neutro"
+ },
+ "tone_informal": {
+  "message": "Informal"
+ },
+ "tone_very_informal": {
+  "message": "Muito informal"
+ },
+ "readingLevel": {
+  "message": "Nível de leitura"
+ },
+ "grade": {
+  "message": "Série"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Facilidade Flesch"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Grau Flesch–Kincaid"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "Índice SMOG"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Analisando…"
+ },
+ "imgAi": {
+  "message": "Gerado por IA"
+ },
+ "imgAuthentic": {
+  "message": "Autêntico (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Sem marcas de IA"
+ },
+ "imgNotGuarantee": {
+  "message": "(sem garantia)"
+ },
+ "imgEnableHint": {
+  "message": "Ative a verificação de imagens"
+ },
+ "optChip": {
+  "message": "Chip de ações no editor"
+ },
+ "optChipDesc": {
+  "message": "Mostrar ações rápidas ao focar um campo de texto"
+ },
+ "optImageHover": {
+  "message": "Proveniência IA de imagens ao passar"
+ },
+ "optImageHoverDesc": {
+  "message": "Passe sobre uma imagem para verificar marcas de IA (requer permissão)"
+ },
+ "optEffects": {
+  "message": "Efeitos visuais"
+ },
+ "optEffectsDesc": {
+  "message": "Brilhos e animações suaves (desliga com movimento reduzido)"
+ },
+ "optTelemetry": {
+  "message": "Estatísticas anônimas de uso"
+ },
+ "optTelemetryDesc": {
+  "message": "Compartilhar quais ferramentas são usadas (nunca seu texto). Ligado por padrão."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Bem-vindo ao TextHumanize"
  }
 }

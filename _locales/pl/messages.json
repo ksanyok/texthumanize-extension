@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Powtórzenia semantyczne"
+ },
+ "actTone": {
+  "message": "Ton"
+ },
+ "actParaphrase": {
+  "message": "Parafraza"
+ },
+ "actReadability": {
+  "message": "Czytelność"
+ },
+ "actStylometry": {
+  "message": "DNA stylu"
+ },
+ "actImage": {
+  "message": "AI na obrazie"
+ },
+ "menuTone": {
+  "message": "🎭 Analizuj ton"
+ },
+ "menuImage": {
+  "message": "🖼️ Sprawdź obraz (AI)"
+ },
+ "formality": {
+  "message": "Formalność"
+ },
+ "toneLevel": {
+  "message": "Ton"
+ },
+ "toneAdjust": {
+  "message": "Dostosuj ton"
+ },
+ "toneMoreFormal": {
+  "message": "Bardziej formalnie"
+ },
+ "toneMoreCasual": {
+  "message": "Bardziej swobodnie"
+ },
+ "tone_very_formal": {
+  "message": "Bardzo formalny"
+ },
+ "tone_formal": {
+  "message": "Formalny"
+ },
+ "tone_neutral": {
+  "message": "Neutralny"
+ },
+ "tone_informal": {
+  "message": "Nieformalny"
+ },
+ "tone_very_informal": {
+  "message": "Bardzo swobodny"
+ },
+ "readingLevel": {
+  "message": "Poziom czytania"
+ },
+ "grade": {
+  "message": "Klasa"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Łatwość Flescha"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Poziom Flesch–Kincaid"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "Indeks SMOG"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Skanowanie…"
+ },
+ "imgAi": {
+  "message": "Wygenerowane przez AI"
+ },
+ "imgAuthentic": {
+  "message": "Autentyczne (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Brak znaczników AI"
+ },
+ "imgNotGuarantee": {
+  "message": "(bez gwarancji)"
+ },
+ "imgEnableHint": {
+  "message": "Włącz sprawdzanie obrazów"
+ },
+ "optChip": {
+  "message": "Chip akcji w edytorze"
+ },
+ "optChipDesc": {
+  "message": "Pokazuj szybkie akcje po zaznaczeniu pola tekstowego"
+ },
+ "optImageHover": {
+  "message": "Pochodzenie AI obrazów po najechaniu"
+ },
+ "optImageHoverDesc": {
+  "message": "Najedź na obraz, aby sprawdzić znaczniki AI (wymaga uprawnień)"
+ },
+ "optEffects": {
+  "message": "Efekty wizualne"
+ },
+ "optEffectsDesc": {
+  "message": "Iskry i płynne animacje (wył. przy ograniczonym ruchu)"
+ },
+ "optTelemetry": {
+  "message": "Anonimowe statystyki użycia"
+ },
+ "optTelemetryDesc": {
+  "message": "Udostępniaj, które narzędzia są używane (nigdy tekst). Domyślnie wł."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Witaj w TextHumanize"
  }
 }

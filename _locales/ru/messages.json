@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Смысловые повторы"
+ },
+ "actTone": {
+  "message": "Тон"
+ },
+ "actParaphrase": {
+  "message": "Парафраз"
+ },
+ "actReadability": {
+  "message": "Читабельность"
+ },
+ "actStylometry": {
+  "message": "ДНК стиля"
+ },
+ "actImage": {
+  "message": "ИИ на картинке"
+ },
+ "menuTone": {
+  "message": "🎭 Проанализировать тон"
+ },
+ "menuImage": {
+  "message": "🖼️ Проверить картинку на ИИ"
+ },
+ "formality": {
+  "message": "Формальность"
+ },
+ "toneLevel": {
+  "message": "Тон"
+ },
+ "toneAdjust": {
+  "message": "Изменить тон"
+ },
+ "toneMoreFormal": {
+  "message": "Формальнее"
+ },
+ "toneMoreCasual": {
+  "message": "Проще/живее"
+ },
+ "tone_very_formal": {
+  "message": "Очень формальный"
+ },
+ "tone_formal": {
+  "message": "Формальный"
+ },
+ "tone_neutral": {
+  "message": "Нейтральный"
+ },
+ "tone_informal": {
+  "message": "Неформальный"
+ },
+ "tone_very_informal": {
+  "message": "Очень разговорный"
+ },
+ "readingLevel": {
+  "message": "Уровень чтения"
+ },
+ "grade": {
+  "message": "Класс"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Лёгкость чтения (Flesch)"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Класс Flesch–Kincaid"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "Индекс SMOG"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Сканирую…"
+ },
+ "imgAi": {
+  "message": "Сгенерировано ИИ"
+ },
+ "imgAuthentic": {
+  "message": "Подлинное (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Маркеров ИИ нет"
+ },
+ "imgNotGuarantee": {
+  "message": "(не гарантия)"
+ },
+ "imgEnableHint": {
+  "message": "Включите проверку картинок в настройках"
+ },
+ "optChip": {
+  "message": "Чип действий в редакторе"
+ },
+ "optChipDesc": {
+  "message": "Показывать быстрые действия при фокусе на поле ввода или редакторе"
+ },
+ "optImageHover": {
+  "message": "ИИ-провенанс картинок при наведении"
+ },
+ "optImageHoverDesc": {
+  "message": "Наведите на картинку для проверки маркеров ИИ (нужен доступ к чтению изображений)"
+ },
+ "optEffects": {
+  "message": "Визуальные эффекты"
+ },
+ "optEffectsDesc": {
+  "message": "Искры и плавные анимации (авто-выкл при «уменьшить движение»)"
+ },
+ "optTelemetry": {
+  "message": "Анонимная статистика использования"
+ },
+ "optTelemetryDesc": {
+  "message": "Делиться тем, какие инструменты используются (никогда текст) для развития. Вкл. по умолчанию."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Добро пожаловать в TextHumanize"
  }
 }

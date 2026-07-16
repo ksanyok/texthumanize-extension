@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Semantic repetition"
+ },
+ "actTone": {
+  "message": "Tone"
+ },
+ "actParaphrase": {
+  "message": "Paraphrase"
+ },
+ "actReadability": {
+  "message": "Readability"
+ },
+ "actStylometry": {
+  "message": "Style DNA"
+ },
+ "actImage": {
+  "message": "Image AI check"
+ },
+ "menuTone": {
+  "message": "🎭 Analyze tone"
+ },
+ "menuImage": {
+  "message": "🖼️ Check image for AI"
+ },
+ "formality": {
+  "message": "Formality"
+ },
+ "toneLevel": {
+  "message": "Tone"
+ },
+ "toneAdjust": {
+  "message": "Adjust tone"
+ },
+ "toneMoreFormal": {
+  "message": "More formal"
+ },
+ "toneMoreCasual": {
+  "message": "More casual"
+ },
+ "tone_very_formal": {
+  "message": "Very formal"
+ },
+ "tone_formal": {
+  "message": "Formal"
+ },
+ "tone_neutral": {
+  "message": "Neutral"
+ },
+ "tone_informal": {
+  "message": "Informal"
+ },
+ "tone_very_informal": {
+  "message": "Very casual"
+ },
+ "readingLevel": {
+  "message": "Reading level"
+ },
+ "grade": {
+  "message": "Grade"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Flesch Reading Ease"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Flesch–Kincaid grade"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "SMOG index"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Scanning…"
+ },
+ "imgAi": {
+  "message": "AI-generated"
+ },
+ "imgAuthentic": {
+  "message": "Authentic (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "No AI markers"
+ },
+ "imgNotGuarantee": {
+  "message": "(not a guarantee)"
+ },
+ "imgEnableHint": {
+  "message": "Enable image checks in settings"
+ },
+ "optChip": {
+  "message": "In-editor action chip"
+ },
+ "optChipDesc": {
+  "message": "Show quick actions when you focus a text field or editor on a page"
+ },
+ "optImageHover": {
+  "message": "Image AI-provenance on hover"
+ },
+ "optImageHoverDesc": {
+  "message": "Hover an image to check for AI-generation markers (needs permission to read images)"
+ },
+ "optEffects": {
+  "message": "Visual effects"
+ },
+ "optEffectsDesc": {
+  "message": "Sparkles and smooth animations (auto-off if you prefer reduced motion)"
+ },
+ "optTelemetry": {
+  "message": "Anonymous usage stats"
+ },
+ "optTelemetryDesc": {
+  "message": "Share which tools are used (never your text) to guide new features. On by default."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Welcome to TextHumanize"
  }
 }

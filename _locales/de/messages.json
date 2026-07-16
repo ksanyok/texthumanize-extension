@@ -246,5 +246,125 @@
  },
  "metric_semantic_rep": {
   "message": "Semantische Wiederholung"
+ },
+ "actTone": {
+  "message": "Ton"
+ },
+ "actParaphrase": {
+  "message": "Umformulieren"
+ },
+ "actReadability": {
+  "message": "Lesbarkeit"
+ },
+ "actStylometry": {
+  "message": "Stil-DNA"
+ },
+ "actImage": {
+  "message": "Bild-KI-Check"
+ },
+ "menuTone": {
+  "message": "🎭 Ton analysieren"
+ },
+ "menuImage": {
+  "message": "🖼️ Bild auf KI prüfen"
+ },
+ "formality": {
+  "message": "Förmlichkeit"
+ },
+ "toneLevel": {
+  "message": "Ton"
+ },
+ "toneAdjust": {
+  "message": "Ton anpassen"
+ },
+ "toneMoreFormal": {
+  "message": "Förmlicher"
+ },
+ "toneMoreCasual": {
+  "message": "Lockerer"
+ },
+ "tone_very_formal": {
+  "message": "Sehr förmlich"
+ },
+ "tone_formal": {
+  "message": "Förmlich"
+ },
+ "tone_neutral": {
+  "message": "Neutral"
+ },
+ "tone_informal": {
+  "message": "Informell"
+ },
+ "tone_very_informal": {
+  "message": "Sehr locker"
+ },
+ "readingLevel": {
+  "message": "Leseniveau"
+ },
+ "grade": {
+  "message": "Klasse"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Flesch-Lesbarkeit"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Flesch–Kincaid-Stufe"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "SMOG-Index"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Prüfe…"
+ },
+ "imgAi": {
+  "message": "KI-generiert"
+ },
+ "imgAuthentic": {
+  "message": "Echt (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "Keine KI-Marker"
+ },
+ "imgNotGuarantee": {
+  "message": "(keine Garantie)"
+ },
+ "imgEnableHint": {
+  "message": "Bildprüfung in den Einstellungen aktivieren"
+ },
+ "optChip": {
+  "message": "Aktions-Chip im Editor"
+ },
+ "optChipDesc": {
+  "message": "Schnellaktionen anzeigen, wenn ein Textfeld fokussiert ist"
+ },
+ "optImageHover": {
+  "message": "Bild-KI-Herkunft beim Überfahren"
+ },
+ "optImageHoverDesc": {
+  "message": "Bild überfahren, um KI-Marker zu prüfen (Berechtigung nötig)"
+ },
+ "optEffects": {
+  "message": "Visuelle Effekte"
+ },
+ "optEffectsDesc": {
+  "message": "Funkeln und sanfte Animationen (aus bei reduzierter Bewegung)"
+ },
+ "optTelemetry": {
+  "message": "Anonyme Nutzungsstatistik"
+ },
+ "optTelemetryDesc": {
+  "message": "Teilen, welche Tools genutzt werden (nie Ihr Text). Standardmäßig an."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Willkommen bei TextHumanize"
  }
 }
