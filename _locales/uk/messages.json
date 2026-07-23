@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — гуманізація тексту, перевірка на ШІ та очищення міток"
+  "message": "TextHumanize — гуманізатор ШІ-тексту"
  },
  "extDesc": {
   "message": "Повністю офлайн: робить текст природнішим, оцінює ймовірність ШІ та видаляє приховані мітки — на будь-якій сторінці. 25 мов."
@@ -68,8 +68,11 @@
  "rerollHint": {
   "message": "Згенерувати інший варіант"
  },
+ "poweredBy": {
+  "message": "За підтримки TextHumanize"
+ },
  "credit": {
-  "message": "Автор: Alexandr Krikun · Працює на TextHumanize"
+  "message": "Автор: Alexandr Krikun · За підтримки бібліотеки TextHumanize"
  },
  "creditExt": {
   "message": "Код розширення"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Наведіть на зображення для перевірки маркерів ШІ (потрібен доступ до зображень)"
  },
+ "optSiteBadge": {
+  "message": "Оцінка ШІ на іконці"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Показувати оцінку «чи зроблено ШІ» на іконці (червона точка = детектор блоків тут вимкнено)."
+ },
+ "optScanSites": {
+  "message": "Сайти з підсвічуванням ШІ-блоків"
+ },
+ "optScanSitesDesc": {
+  "message": "Підсвічування ШІ-блоків працює лише на доданих сайтах. Приберіть зайві."
+ },
+ "siteListEmpty": {
+  "message": "Поки порожньо — увімкніть на потрібному сайті через попап."
+ },
+ "siteRemove": {
+  "message": "Прибрати"
+ },
+ "siteClearAll": {
+  "message": "Очистити все"
+ },
  "optEffects": {
   "message": "Візуальні ефекти"
  },
@@ -383,7 +407,7 @@
   "message": "Ласкаво просимо до TextHumanize"
  },
  "tabText": {
-  "message": "Текст"
+  "message": "Мій текст"
  },
  "tabPage": {
   "message": "Сторінка"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Видаляє лише метадані/провенанс. Внутрішньоконтентні мітки (напр. SynthID) прибрати не можна."
+ },
+ "modulesLabel": {
+  "message": "Модулі"
+ },
+ "customize": {
+  "message": "налаштувати ⚙"
+ },
+ "useText": {
+  "message": "У поле"
+ },
+ "actMediaWm": {
+  "message": "Медіа-мітки"
+ },
+ "actSiteAi": {
+  "message": "ШІ-сайт"
+ },
+ "actSentiment": {
+  "message": "Тональність"
+ },
+ "actHealth": {
+  "message": "Здоров'я"
+ },
+ "actUniqueness": {
+  "message": "Унікальність"
+ },
+ "actPerplexity": {
+  "message": "Перплексія"
+ },
+ "actKeywords": {
+  "message": "Ключові"
+ },
+ "actStatistics": {
+  "message": "Статистика"
+ },
+ "actSummarize": {
+  "message": "Резюме"
+ },
+ "actFormalize": {
+  "message": "Формальніше"
+ },
+ "actSimplify": {
+  "message": "Спростити"
+ },
+ "actMediaClean": {
+  "message": "Чистка медіа"
+ },
+ "orbHint": {
+  "message": "Вставте або виділіть текст — покажу ШІ-скор"
+ },
+ "descCheck": {
+  "message": "Оцінка ймовірності ШІ в тексті"
+ },
+ "descReadability": {
+  "message": "Наскільки легко читається текст (рівень)"
+ },
+ "descTone": {
+  "message": "Формальність тону — зі швидким налаштуванням"
+ },
+ "descSentiment": {
+  "message": "Позитивний / негативний тон"
+ },
+ "descHealth": {
+  "message": "Загальна оцінка якості тексту (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Перевірка на повтори та самоповтори"
+ },
+ "descPerplexity": {
+  "message": "Передбачуваність і «вибуховість» — ШІ рівний"
+ },
+ "descStylometry": {
+  "message": "Метрики стилю письма"
+ },
+ "descKeywords": {
+  "message": "Ключові слова та їх частота"
+ },
+ "descStatistics": {
+  "message": "Слова, речення, різноманітність, час читання"
+ },
+ "descHumanize": {
+  "message": "Переписати текст, щоб звучав по-людськи"
+ },
+ "descParaphrase": {
+  "message": "Перефразувати, зберігши зміст"
+ },
+ "descSummarize": {
+  "message": "Скоротити до головних речень"
+ },
+ "descFormalize": {
+  "message": "Зробити тон більш формальним"
+ },
+ "descSimplify": {
+  "message": "Спростити формулювання"
+ },
+ "descClean": {
+  "message": "Прибрати невидимі символи та водяні знаки"
+ },
+ "descImage": {
+  "message": "Перевірити зображення на ШІ та C2PA"
+ },
+ "descMediaClean": {
+  "message": "Прибрати метадані та водяні знаки з медіа"
+ },
+ "descMediaWm": {
+  "message": "Перевірити фото, аудіо чи відео на водяні знаки — прибрати в один тап"
+ },
+ "descSiteAi": {
+  "message": "Визначити, чи зроблено весь сайт за допомогою ШІ"
+ },
+ "needText": {
+  "message": "Спочатку вставте або виділіть текст — інструмент працює з текстом."
+ },
+ "pageAiTextShort": {
+  "message": "Текст схожий на ШІ"
+ },
+ "siteLikelyAi": {
+  "message": "Схоже, сайт зроблено ШІ"
+ },
+ "siteSomeAi": {
+  "message": "Можливо, зроблено ШІ або конструктором"
+ },
+ "siteLikelyHuman": {
+  "message": "Схоже, зроблено вручну"
+ },
+ "siteHandcoded": {
+  "message": "Без слідів конструктора (вручну)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ зображень з ШІ-водяним знаком (C2PA/метадані)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ текстових блоків схожі на ШІ",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Розміщено на $COUNT$ — хостинг, популярний у ШІ/vibe-coding інструментів",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "Стек shadcn/ui + Radix + Lucide — його видають ШІ-інструменти (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Іконки Lucide + шрифт Geist (почерк v0)"
+ },
+ "sig_shadcnTokens": {
+  "message": "Дизайн-токени shadcn (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Фірмовий ШІ-градієнт фіолетовий→ціан"
+ },
+ "sig_radix": {
+  "message": "Примітиви Radix UI"
+ },
+ "sig_geist": {
+  "message": "Шрифт Geist (типовий для Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Зроблено ШІ?"
+ },
+ "siteFbAi": {
+  "message": "Так"
+ },
+ "siteFbHuman": {
+  "message": "Ні"
+ },
+ "siteFbThanks": {
+  "message": "Враховано, дякую!"
+ },
+ "siteFbReset": {
+  "message": "скинути"
+ },
+ "optFeedback": {
+  "message": "Зворотний зв'язок детекції"
+ },
+ "optFeedbackDesc": {
+  "message": "Ваші 👍/👎 зберігаються на пристрої (без контенту). Експортуйте, щоб покращити модель."
+ },
+ "optFeedbackCount": {
+  "message": "Зібрано міток: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Копіювати мітки"
+ },
+ "siteEvidence": {
+  "message": "Докази з коду сторінки"
+ },
+ "onboardTitle": {
+  "message": "Вітаємо в TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Три вкладки: Сайт (чи зроблено ШІ?), Мій текст (перевірити/гуманізувати), Медіа. Червона точка на іконці = детектор блоків вимкнено — увімкніть на сайті у вкладці «Сайт»."
+ },
+ "onboardOk": {
+  "message": "Зрозуміло"
+ },
+ "showDiff": {
+  "message": "Зміни"
+ },
+ "showText": {
+  "message": "Текст"
+ },
+ "supportLike": {
+  "message": "Подобається?"
+ },
+ "supportStar": {
+  "message": "Зірка на GitHub"
+ },
+ "supportDonate": {
+  "message": "Підтримати"
+ },
+ "supportRate": {
+  "message": "Оцінити"
+ },
+ "supportTitle": {
+  "message": "Підтримати проєкт"
+ },
+ "supportText": {
+  "message": "TextHumanize безкоштовний і офлайн. Зірка чи невеликий донат дуже допомагають — дякую!"
+ },
+ "tabSite": {
+  "message": "Сайт"
+ },
+ "orbPctSite": {
+  "message": "ШІ САЙТУ"
+ },
+ "orbPctText": {
+  "message": "ШІ ТЕКСТУ"
+ },
+ "scanInviteTitle": {
+  "message": "Підсвітити ШІ-блоки на цьому сайті?"
+ },
+ "scanInviteText": {
+  "message": "Наведіть на будь-який блок — побачите ймовірність ШІ. Лише тут."
+ },
+ "scanOnTitle": {
+  "message": "Підсвічування блоків увімкнено тут"
+ },
+ "scanDisable": {
+  "message": "Вимкнути"
+ },
+ "badgeScanOn": {
+  "message": "детекція блоків УВІМК"
+ },
+ "badgeScanOff": {
+  "message": "детекція блоків вимк"
+ },
+ "sbInvite": {
+  "message": "Схоже, сайт зроблено ШІ. Підсвітити ШІ-блоки тут?"
+ },
+ "sbScanEnable": {
+  "message": "Увімкнути сканер блоків"
+ },
+ "sbScanOn": {
+  "message": "Скануємо цей сайт ✓"
+ },
+ "scanThisSite": {
+  "message": "Підсвічувати ШІ-блоки на цьому сайті"
+ },
+ "kind_ai_builder": {
+  "message": "ШІ-конструктор сайтів"
+ },
+ "kind_builder": {
+  "message": "візуальний конструктор"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "платформа магазину"
+ },
+ "kind_framework": {
+  "message": "фреймворк (вручну)"
+ },
+ "kind_docs": {
+  "message": "генератор документації"
+ },
+ "kind_unknown": {
+  "message": "невідома платформа"
  }
 }

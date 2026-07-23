@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "TextHumanize",
   "description": "__MSG_extDesc__",
-  "version": "2.1.0",
+  "version": "3.3.0",
   "default_locale": "en",
   "author": "Alexandr Krikun",
   "homepage_url": "https://github.com/ksanyok/TextHumanize",
@@ -35,6 +35,7 @@
         "content/panel.js",
         "content/editors.js",
         "content/images.js",
+        "content/hover.js",
         "content/content.js"
       ],
       "run_at": "document_idle",
@@ -42,9 +43,13 @@
       "match_about_blank": true
     }
   ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
   "optional_permissions": ["clipboardWrite"],
-  "optional_host_permissions": ["<all_urls>"],
+  "host_permissions": ["<all_urls>"],
   "commands": {
     "humanize-selection": {
       "suggested_key": { "default": "Ctrl+Shift+H", "mac": "Command+Shift+H" },

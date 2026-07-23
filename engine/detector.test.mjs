@@ -156,5 +156,20 @@ check(
   rAiEn.explanations.some((e) => e.textKey === 'ai.pattern'),
 );
 
+// Anti-evasion: homoglyph + zero-width insertion must not collapse the score.
+const attacked = AI_EN
+  .replace(/o/g, 'о').replace(/a/g, 'а').replace(/e/g, 'е')
+  .replace(/ /g, '​ ');
+const rClean = new AIDetector().detect(AI_EN, { lang: 'en' });
+const rAttacked = new AIDetector().detect(attacked, { lang: 'en' });
+check(
+  `homoglyph evasion resisted (clean ${rClean.aiProbability.toFixed(2)} vs attacked ${rAttacked.aiProbability.toFixed(2)})`,
+  Math.abs(rClean.aiProbability - rAttacked.aiProbability) < 0.08,
+);
+check(
+  'genuine Cyrillic text is not corrupted by normalization',
+  new AIDetector().detect(AI_RU, { lang: 'ru' }).aiProbability > 0.6,
+);
+
 console.log(failures === 0 ? '\nAll checks passed.' : `\n${failures} check(s) FAILED.`);
 process.exit(failures === 0 ? 0 : 1);

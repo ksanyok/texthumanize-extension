@@ -19,17 +19,17 @@
   "de": {
    "name": "Deutsch",
    "tier": 1,
-   "bytes": 39153
+   "bytes": 40629
   },
   "en": {
    "name": "English",
    "tier": 1,
-   "bytes": 72097
+   "bytes": 75555
   },
   "es": {
    "name": "Español",
    "tier": 2,
-   "bytes": 32077
+   "bytes": 33445
   },
   "fr": {
    "name": "Français",
@@ -79,7 +79,7 @@
   "pl": {
    "name": "Polski",
    "tier": 2,
-   "bytes": 35643
+   "bytes": 36954
   },
   "pt": {
    "name": "Português",
@@ -94,7 +94,7 @@
   "ru": {
    "name": "Русский",
    "tier": 1,
-   "bytes": 90841
+   "bytes": 95123
   },
   "sv": {
    "name": "Swedish",
@@ -114,7 +114,7 @@
   "uk": {
    "name": "Українська",
    "tier": 1,
-   "bytes": 76072
+   "bytes": 78441
   },
   "vi": {
    "name": "Vietnamese",

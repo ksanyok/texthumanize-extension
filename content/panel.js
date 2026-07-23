@@ -80,7 +80,8 @@
         <button class="th-btn th-reroll" hidden>↻ ${esc(t('reroll'))}</button>
       </div>
       <div class="th-foot">
-        <a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener">${esc(t('credit'))}</a>
+        <a href="${window.THX.libUrl}" target="_blank" rel="noopener">${esc(t('credit'))}</a>
+        <span class="th-ver">v${esc(window.THX.version)}</span>
       </div>`;
     shadow.appendChild(panel);
 
@@ -160,6 +161,18 @@
   }
 
   function cls(pct) { return pct >= 60 ? 'red' : pct >= 35 ? 'yellow' : 'green'; }
+  function hueFor(pct) { return Math.max(2, Math.round(130 - pct * 1.7)); }
+
+  /** The living Aura score orb — hero element for the check view. */
+  function orb(prob, verdict) {
+    const pct = Math.round(prob * 100);
+    return `<div class="th-orbwrap">
+      <div class="th-orb2" style="--h:${hueFor(pct)}">
+        <b><span data-count="${pct}" data-suffix="">0</span><i>%</i></b>
+      </div>
+      <div class="th-orb-verdict th-c-${cls(pct)}">${esc(t(`verdict_${verdict}`) || verdict)}</div>
+    </div>`;
+  }
 
   function meter(label, prob, verdict) {
     const pct = Math.round(prob * 100);
@@ -178,7 +191,7 @@
       requestAnimationFrame(() => { el.style.width = `${el.dataset.w}%`; });
     });
     panel.querySelectorAll('[data-count]').forEach((el) => {
-      fx.countUp(el, 0, Number(el.dataset.count), '%');
+      fx.countUp(el, 0, Number(el.dataset.count), el.dataset.suffix ?? '%');
     });
   }
 
@@ -225,8 +238,8 @@
       const top = Object.entries(d.scores || {}).sort((a, b) => b[1] - a[1]).slice(0, 4)
         .map(([k, v]) => `<li>${esc(t(`metric_${k}`) || k)} — <b>${Math.round(v * 100)}%</b></li>`).join('');
       content.innerHTML = `
-        ${meter(t('aiScore'), d.aiProbability, d.verdict)}
-        <div class="th-kv"><span>${esc(t('confidence'))}: <b>${Math.round(d.confidence * 100)}%</b></span>
+        ${orb(d.aiProbability, d.verdict)}
+        <div class="th-kv" style="justify-content:center"><span>${esc(t('confidence'))}: <b>${Math.round(d.confidence * 100)}%</b></span>
         <span>${esc(t('words'))}: <b>${d.wordCount}</b></span></div>
         ${top ? `<div class="th-sub">${esc(t('topSignals'))}</div><ul class="th-list">${top}</ul>` : ''}
         ${wm.hasWatermarks ? `<div class="th-warn">⚠ ${esc(t('watermarksFound', [String(wm.removed)]))}</div>`

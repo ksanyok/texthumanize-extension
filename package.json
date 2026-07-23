@@ -1,12 +1,18 @@
 {
   "name": "texthumanize-extension",
-  "version": "2.1.0",
-  "description": "TextHumanize for Chrome — offline text naturalization, AI-style check and hidden-watermark cleaning on any page",
+  "version": "3.3.0",
+  "description": "TextHumanize — offline AI-text humanizer/checker, AI-built-site detector and hidden-watermark cleaner for Chrome, Edge & Firefox",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/engine.test.js tests/v2.test.js",
-    "package": "bash scripts/package.sh"
+    "test": "node --test",
+    "locales": "python3 scripts/build_locales.py",
+    "package": "bash scripts/package.sh",
+    "package:firefox": "python3 scripts/build_firefox.py",
+    "smoke": "node scripts/e2e-smoke.mjs",
+    "prepackage": "node --test && node scripts/bench-humanize.mjs && node scripts/e2e-smoke.mjs",
+    "bench": "node scripts/bench-humanize.mjs",
+    "bench:detector": "node scripts/bench-detector.mjs"
   },
   "author": "Alexandr Krikun (https://github.com/ksanyok)",
   "license": "MIT",

@@ -115,7 +115,9 @@ export function humanize(text, options = {}) {
       }
     }
 
-    return { result: restore(processed), stageChanges };
+    let out = restore(processed);
+    if (lang === 'en' && level > 0) out = fixEnArticles(out);
+    return { result: out, stageChanges };
   };
 
   let { result, stageChanges } = run(intensity);
@@ -214,6 +216,16 @@ function emptyResult(text, opts) {
     before: null,
     after: null,
   };
+}
+
+/** Fix "a"→"an" before a vowel-letter word (skip 'u': "a unique" is correct).
+ *  Word-swaps can create "a all-round"; this repairs the common cases only. */
+function fixEnArticles(text) {
+  return text
+    .replace(/\bA (?=[aeioAEIO])/g, 'An ')
+    .replace(/\ba (?=[aeioAEIO])/g, 'an ')
+    .replace(/\bAn (?=[bcdfgjklmnpqrstvwxz])/g, 'A ')
+    .replace(/\ban (?=[bcdfgjklmnpqrstvwxzBCDFGJKLMNPQRSTVWXZ])/g, 'a ');
 }
 
 function summarizeDetection(d) {

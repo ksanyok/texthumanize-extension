@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>promo tile</title>
+<style>
+  /* Two store promo tiles, rendered at their exact required sizes.
+     ?n=small   → 440×280  (small promo tile)
+     ?n=marquee → 1400×560 (marquee promo tile)
+     Both must end up JPEG or 24-bit PNG with NO alpha — see store/listing.md. */
+
+  :root { --hue: 8; --glow: hsla(var(--hue), 90%, 55%, .5); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(120% 95% at 8% -15%, #262a34 0%, transparent 55%),
+      radial-gradient(85% 80% at 105% 115%, #1b1e26 0%, transparent 58%),
+      #0b0c10;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    color: #f4f5f9;
+    display: flex;
+    align-items: center;
+  }
+  /* Screenshots freeze at an arbitrary frame — keep everything static. */
+  * { animation: none !important; transition: none !important; }
+
+  /* ── The orb, matching popup.css (.orb / .orb.l2 / .orb.l3).
+     popup.css hard-codes its shadows in px for a 138px orb; here the orb is drawn
+     at 108px and 300px, so every radius is expressed as a fraction of --d instead —
+     otherwise the sphere shading flattens out at the larger size. ── */
+  .orb-wrap { position: relative; display: grid; place-items: center; flex: 0 0 auto;
+    width: var(--d); height: var(--d); }
+  .halo { position: absolute; inset: -35%; border-radius: 50%;
+    background: radial-gradient(circle, var(--glow), transparent 62%);
+    filter: blur(calc(var(--d) * .16)); opacity: .5; }
+  .orb { position: absolute; inset: 0; border-radius: 47% 53% 52% 48% / 50% 47% 53% 50%;
+    background:
+      radial-gradient(58% 52% at 36% 30%, hsla(var(--hue),100%,82%,.95), transparent 58%),
+      conic-gradient(from 130deg, hsl(var(--hue),88%,56%), hsl(calc(var(--hue) + 24),82%,50%), hsl(var(--hue),88%,56%));
+    box-shadow: 0 0 calc(var(--d) * .46) var(--glow),
+      inset 0 calc(var(--d) * -.10) calc(var(--d) * .22) hsla(var(--hue),90%,34%,.62),
+      inset 0 calc(var(--d) * .087) calc(var(--d) * .19) hsla(var(--hue),100%,88%,.4); }
+  .orb.l2 { inset: 11%; opacity: .34; mix-blend-mode: screen;
+    border-radius: 53% 47% 48% 52% / 47% 52% 48% 53%; }
+  .orb.l3 { inset: 22%; opacity: .24; filter: blur(calc(var(--d) * .022)); mix-blend-mode: screen;
+    border-radius: 50% 50% 45% 55% / 55% 45% 55% 45%; }
+  .orb-core { position: relative; z-index: 2; text-align: center; text-shadow: 0 2px 22px rgba(0,0,0,.5); }
+  .orb-core .num { font-weight: 800; line-height: 1; letter-spacing: -2px; font-variant-numeric: tabular-nums; }
+  .orb-core .pc { font-weight: 700; opacity: .82; }
+
+  .pill { font-weight: 650; border-radius: 999px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.11); color: #dfe2ec; white-space: nowrap; }
+
+  /* ── Small tile: 440×280, centered, brand-forward ── */
+  body.small { width: 440px; height: 280px; flex-direction: column; justify-content: center; gap: 0;
+    --d: 96px; }
+  body.small .wordmark { font-size: 30px; font-weight: 800; letter-spacing: -1px; margin-top: 22px; }
+  body.small .tag { font-size: 14px; color: #a9aebe; margin-top: 9px; font-weight: 500; }
+  body.small .row { display: flex; gap: 7px; margin-top: 16px; }
+  body.small .pill { font-size: 11px; padding: 5px 11px; }
+
+  /* ── Marquee: 1400×560, copy left / orb right ── */
+  body.marquee { width: 1400px; height: 560px; padding: 0 88px; gap: 64px; --d: 300px; }
+  body.marquee .copy { flex: 1; min-width: 0; }
+  body.marquee .kicker { font-size: 15px; letter-spacing: 3.4px; text-transform: uppercase;
+    color: #868c9d; font-weight: 700; margin-bottom: 22px; }
+  body.marquee h1 { font-size: 66px; line-height: 1.06; letter-spacing: -2.4px; font-weight: 800; margin: 0; }
+  body.marquee h1 em { font-style: normal; color: hsl(var(--hue), 92%, 68%); }
+  body.marquee .sub { font-size: 21px; line-height: 1.45; color: #aeb3c4; margin: 22px 0 0; max-width: 620px; }
+  body.marquee .row { display: flex; gap: 11px; margin-top: 32px; flex-wrap: wrap; }
+  body.marquee .pill { font-size: 15px; padding: 10px 18px; }
+  body.marquee .stage { flex: 0 0 auto; display: grid; place-items: center; }
+  body.marquee .orb-core .num { font-size: 92px; }
+  body.marquee .orb-core .pc { font-size: 15px; letter-spacing: 4px; margin-top: 8px; }
+  body.marquee .verdict { margin-top: 30px; font-size: 15px; font-weight: 800; letter-spacing: 3.4px;
+    color: hsl(var(--hue), 92%, 72%); text-align: center; }
+</style>
+</head>
+<body>
+<script>
+const N = new URLSearchParams(location.search).get('n') || 'small';
+const b = document.body;
+
+function orb(inner) {
+  return `<div class="orb-wrap"><div class="halo"></div>
+    <div class="orb"></div><div class="orb l2"></div><div class="orb l3"></div>
+    <div class="orb-core">${inner}</div></div>`;
+}
+const pills = (list) => `<div class="row">${list.map((p) => `<span class="pill">${p}</span>`).join('')}</div>`;
+
+if (N === 'marquee') {
+  b.className = 'marquee';
+  // Hot hue — the tile leads with the detection moment.
+  document.documentElement.style.setProperty('--hue', 8);
+  b.innerHTML = `
+    <div class="copy">
+      <div class="kicker">Offline · Private · Free</div>
+      <h1>See the AI.<br>Then <em>sound human</em> again.</h1>
+      <p class="sub">Score any page or passage, find out whether a whole site was built with AI,
+        strip hidden watermarks — and rewrite AI-flavoured text so it reads naturally.</p>
+      ${pills(['Nothing ever leaves your device', '25 text languages', 'Open source'])}
+    </div>
+    <div class="stage">
+      ${orb('<div class="num">93</div><div class="pc">SITE AI</div>')}
+      <div class="verdict">LIKELY BUILT WITH AI</div>
+    </div>`;
+} else {
+  b.className = 'small';
+  // Warm amber — same family as the marquee's hue-8 orb, but without the
+  // alarm-red reading a bare mark would otherwise get.
+  document.documentElement.style.setProperty('--hue', 24);
+  b.innerHTML = `
+    ${orb('')}
+    <div class="wordmark">TextHumanize</div>
+    <div class="tag">AI check &amp; humanizer that runs offline</div>
+    ${pills(['Text', 'Images', 'Whole sites'])}`;
+}
+document.title = 'promo-ready';
+</script>
+</body>
+</html>

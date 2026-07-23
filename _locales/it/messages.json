@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — umanizza testo IA, verifica e pulizia filigrane"
+  "message": "TextHumanize — umanizza il testo IA"
  },
  "extDesc": {
   "message": "100% offline: rende il testo più naturale, stima la probabilità di IA e rimuove filigrane nascoste — su ogni pagina. 25 lingue."
@@ -67,6 +67,9 @@
  },
  "rerollHint": {
   "message": "Genera un'altra variante"
+ },
+ "poweredBy": {
+  "message": "Basato su TextHumanize"
  },
  "credit": {
   "message": "Di Alexandr Krikun · Basato su TextHumanize"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Passa su un'immagine per verificare i marcatori IA (richiede permesso)"
  },
+ "optSiteBadge": {
+  "message": "Punteggio IA sull'icona"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Mostra il punteggio “creato con IA?” sull'icona (punto rosso = rilevatore di blocchi qui spento)."
+ },
+ "optScanSites": {
+  "message": "Siti con evidenziazione blocchi"
+ },
+ "optScanSitesDesc": {
+  "message": "Il rilevamento dei blocchi IA funziona solo sui siti attivati. Rimuovili qui."
+ },
+ "siteListEmpty": {
+  "message": "Ancora nessun sito — attivalo dal popup su un sito."
+ },
+ "siteRemove": {
+  "message": "Rimuovi"
+ },
+ "siteClearAll": {
+  "message": "Cancella tutto"
+ },
  "optEffects": {
   "message": "Effetti visivi"
  },
@@ -383,7 +407,7 @@
   "message": "Benvenuto in TextHumanize"
  },
  "tabText": {
-  "message": "Testo"
+  "message": "Il mio testo"
  },
  "tabPage": {
   "message": "Pagina"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Rimuove solo metadati/provenienza. Le filigrane nel contenuto (es. SynthID) no."
+ },
+ "modulesLabel": {
+  "message": "Moduli"
+ },
+ "customize": {
+  "message": "personalizza ⚙"
+ },
+ "useText": {
+  "message": "Usa"
+ },
+ "actMediaWm": {
+  "message": "Media WM"
+ },
+ "actSiteAi": {
+  "message": "Sito IA"
+ },
+ "actSentiment": {
+  "message": "Sentiment"
+ },
+ "actHealth": {
+  "message": "Salute"
+ },
+ "actUniqueness": {
+  "message": "Unicità"
+ },
+ "actPerplexity": {
+  "message": "Perplessità"
+ },
+ "actKeywords": {
+  "message": "Parole chiave"
+ },
+ "actStatistics": {
+  "message": "Statistiche"
+ },
+ "actSummarize": {
+  "message": "Riassumi"
+ },
+ "actFormalize": {
+  "message": "Formalizza"
+ },
+ "actSimplify": {
+  "message": "Semplifica"
+ },
+ "actMediaClean": {
+  "message": "Pulisci media"
+ },
+ "orbHint": {
+  "message": "Incolla o seleziona testo per il punteggio IA"
+ },
+ "descCheck": {
+  "message": "Probabilità di IA per questo testo"
+ },
+ "descReadability": {
+  "message": "Quanto è facile da leggere (livello)"
+ },
+ "descTone": {
+  "message": "Tono formale o informale — regolabile"
+ },
+ "descSentiment": {
+  "message": "Tono emotivo positivo / negativo"
+ },
+ "descHealth": {
+  "message": "Punteggio complessivo di qualità (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Controllo delle ripetizioni"
+ },
+ "descPerplexity": {
+  "message": "Prevedibilità e variazione — l'IA è piatta"
+ },
+ "descStylometry": {
+  "message": "Metriche dello stile di scrittura"
+ },
+ "descKeywords": {
+  "message": "Termini principali e loro frequenza"
+ },
+ "descStatistics": {
+  "message": "Parole, frasi, diversità, tempo di lettura"
+ },
+ "descHumanize": {
+  "message": "Riscrivi il testo IA per renderlo umano"
+ },
+ "descParaphrase": {
+  "message": "Riformula mantenendo il significato"
+ },
+ "descSummarize": {
+  "message": "Riduci alle frasi chiave"
+ },
+ "descFormalize": {
+  "message": "Rendi il tono più formale"
+ },
+ "descSimplify": {
+  "message": "Semplifica il testo"
+ },
+ "descClean": {
+  "message": "Rimuovi caratteri invisibili e filigrane"
+ },
+ "descImage": {
+  "message": "Verifica se un'immagine è IA e C2PA"
+ },
+ "descMediaClean": {
+  "message": "Rimuovi metadati e filigrane dai media"
+ },
+ "descMediaWm": {
+  "message": "Controlla immagine, audio o video — rimuovi in un tap"
+ },
+ "descSiteAi": {
+  "message": "Rileva se l'intero sito è stato creato con IA"
+ },
+ "needText": {
+  "message": "Prima incolla o seleziona del testo — questo strumento lavora sul testo."
+ },
+ "pageAiTextShort": {
+  "message": "Testo tipo IA"
+ },
+ "siteLikelyAi": {
+  "message": "Probabilmente creato con IA"
+ },
+ "siteSomeAi": {
+  "message": "Forse IA / builder di siti"
+ },
+ "siteLikelyHuman": {
+  "message": "Sembra fatto a mano"
+ },
+ "siteHandcoded": {
+  "message": "Nessun builder rilevato (a mano)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ immagini con filigrana IA (C2PA/metadati)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ blocchi di testo sembrano IA",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Ospitato su $COUNT$ — piattaforma diffusa tra gli strumenti IA/vibe-coding",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "Stack shadcn/ui + Radix + Lucide — tipico degli strumenti IA (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Icone Lucide + font Geist (stile v0)"
+ },
+ "sig_shadcnTokens": {
+  "message": "Token di design shadcn (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Palette gradiente viola→ciano da startup IA"
+ },
+ "sig_radix": {
+  "message": "Primitive Radix UI"
+ },
+ "sig_geist": {
+  "message": "Font Geist (predefinito Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Fatto con IA?"
+ },
+ "siteFbAi": {
+  "message": "Sì"
+ },
+ "siteFbHuman": {
+  "message": "No"
+ },
+ "siteFbThanks": {
+  "message": "Salvato — grazie!"
+ },
+ "siteFbReset": {
+  "message": "reimposta"
+ },
+ "optFeedback": {
+  "message": "Feedback rilevamento"
+ },
+ "optFeedbackDesc": {
+  "message": "I tuoi 👍/👎 sono salvati sul dispositivo (senza contenuto). Esportali per migliorare il modello."
+ },
+ "optFeedbackCount": {
+  "message": "$COUNT$ etichette raccolte",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Copia etichette"
+ },
+ "siteEvidence": {
+  "message": "Prove dal codice della pagina"
+ },
+ "onboardTitle": {
+  "message": "Benvenuto in TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Tre schede: Sito (creato con IA?), Il mio testo (verifica/umanizza), Media. Punto rosso sull'icona = rilevamento blocchi spento — attivalo per sito nella scheda Sito."
+ },
+ "onboardOk": {
+  "message": "Capito"
+ },
+ "showDiff": {
+  "message": "Modifiche"
+ },
+ "showText": {
+  "message": "Testo"
+ },
+ "supportLike": {
+  "message": "Ti piace?"
+ },
+ "supportStar": {
+  "message": "Star su GitHub"
+ },
+ "supportDonate": {
+  "message": "Dona"
+ },
+ "supportRate": {
+  "message": "Valuta"
+ },
+ "supportTitle": {
+  "message": "Sostieni il progetto"
+ },
+ "supportText": {
+  "message": "TextHumanize è gratis e offline. Una stella o una piccola donazione aiuta molto — grazie!"
+ },
+ "tabSite": {
+  "message": "Sito"
+ },
+ "orbPctSite": {
+  "message": "IA SITO"
+ },
+ "orbPctText": {
+  "message": "IA TESTO"
+ },
+ "scanInviteTitle": {
+  "message": "Evidenziare i blocchi IA su questo sito?"
+ },
+ "scanInviteText": {
+  "message": "Passa su un blocco per vedere il punteggio IA. Solo qui."
+ },
+ "scanOnTitle": {
+  "message": "Evidenziazione blocchi attiva qui"
+ },
+ "scanDisable": {
+  "message": "Disattiva"
+ },
+ "badgeScanOn": {
+  "message": "scansione blocchi ON"
+ },
+ "badgeScanOff": {
+  "message": "scansione blocchi off"
+ },
+ "sbInvite": {
+  "message": "Questo sito sembra fatto con IA. Evidenziare i blocchi IA qui?"
+ },
+ "sbScanEnable": {
+  "message": "Attiva scansione blocchi qui"
+ },
+ "sbScanOn": {
+  "message": "Sto scansionando questo sito ✓"
+ },
+ "scanThisSite": {
+  "message": "Evidenzia blocchi IA su questo sito"
+ },
+ "kind_ai_builder": {
+  "message": "builder di siti IA"
+ },
+ "kind_builder": {
+  "message": "builder visivo"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "piattaforma e-commerce"
+ },
+ "kind_framework": {
+  "message": "framework (a mano)"
+ },
+ "kind_docs": {
+  "message": "generatore di docs"
+ },
+ "kind_unknown": {
+  "message": "piattaforma sconosciuta"
  }
 }

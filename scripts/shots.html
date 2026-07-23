@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>store shot</title>
+<style>
+  html, body { margin: 0; padding: 0; width: 1280px; height: 800px; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(120% 90% at 12% -10%, #23262f 0%, transparent 55%),
+      radial-gradient(90% 80% at 100% 110%, #1b1d24 0%, transparent 60%),
+      #0c0d11;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    color: #f3f4f8; display: flex; align-items: center; gap: 56px; padding: 0 72px; box-sizing: border-box;
+  }
+  .copy { flex: 1; max-width: 430px; }
+  .kicker { font-size: 13px; letter-spacing: 2.4px; text-transform: uppercase; color: #8b90a0; font-weight: 700; margin-bottom: 18px; }
+  h1 { font-size: 40px; line-height: 1.12; margin: 0 0 18px; font-weight: 800; letter-spacing: -1px; }
+  p { font-size: 17px; line-height: 1.5; color: #aeb3c4; margin: 0; }
+  .badges { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+  .badge { font-size: 12.5px; font-weight: 650; padding: 7px 13px; border-radius: 20px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: #d7dae4; }
+  .frame { flex: 0 0 auto; width: 470px; height: 720px; border-radius: 22px; overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08); background: #0e0f14; }
+  .frame.wide { width: 640px; height: 700px; }
+  iframe { width: 100%; height: 100%; border: 0; display: block; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="kicker" id="kicker"></div>
+    <h1 id="title"></h1>
+    <p id="sub"></p>
+    <div class="badges" id="badges"></div>
+  </div>
+  <div class="frame" id="frame"><iframe id="f"></iframe></div>
+
+<script>
+const N = new URLSearchParams(location.search).get('n') || '1';
+
+const SHOTS = {
+  1: {
+    kicker: 'Site check',
+    title: 'See if a whole site was built with AI',
+    sub: 'One glance at the score orb. The evidence comes from the page’s own code — and you can correct the verdict yourself.',
+    badges: ['80+ builders recognised', 'Runs on your device', 'You can correct it'],
+    src: '../popup/popup.html?page=1&uiLang=en',
+    render: 'site',
+  },
+  2: {
+    kicker: 'Humanize',
+    title: 'Make AI-sounding text read naturally',
+    sub: 'Cut formulaic phrasing and flat sentence rhythm — then see exactly what changed, word by word.',
+    badges: ['Before/after diff', 'Adjustable intensity', 'Replace in place'],
+    src: '../popup/popup.html?page=1&uiLang=en',
+    render: 'text',
+  },
+  3: {
+    kicker: 'Images & media',
+    title: 'Check images for AI provenance',
+    sub: 'Reads C2PA, XMP and EXIF metadata locally, then strips hidden markers from a copy you can download.',
+    badges: ['Nothing is uploaded', 'Honest verdicts', 'One-tap cleanup'],
+    src: '../popup/popup.html?page=1&uiLang=en',
+    render: 'media',
+  },
+  4: {
+    kicker: 'Your control',
+    title: 'Everything is off until you turn it on',
+    sub: 'On-page highlighting is per-site and opt-in. Manage the list, the toolbar score and privacy in one place.',
+    badges: ['Per-site opt-in', 'No text ever leaves', 'Free & open source'],
+    src: '../options/options.html?uiLang=en',
+    render: 'options',
+    wide: true,
+  },
+};
+
+const S = SHOTS[N] || SHOTS[1];
+document.getElementById('kicker').textContent = S.kicker;
+document.getElementById('title').textContent = S.title;
+document.getElementById('sub').textContent = S.sub;
+document.getElementById('badges').innerHTML = S.badges.map((b) => `<span class="badge">${b}</span>`).join('');
+if (S.wide) document.getElementById('frame').classList.add('wide');
+
+const f = document.getElementById('f');
+f.src = S.src;
+
+f.addEventListener('load', () => {
+  const d = f.contentDocument;
+  const w = f.contentWindow;
+  // Give the popup's own init a beat, then paint the demo state.
+  setTimeout(() => { try { paint(d, w, S.render); } catch (e) { console.error(e); } document.title = 'shot-ready'; }, 450);
+});
+
+function orb(d, pct, label, verdict, color) {
+  const hue = Math.max(2, Math.round(130 - pct * 1.7));
+  d.documentElement.style.setProperty('--hue', hue);
+  d.documentElement.style.setProperty('--glow', `hsla(${hue},90%,55%,.5)`);
+  const stage = d.querySelector('#stage');
+  if (!stage) return;
+  stage.hidden = false;
+  stage.classList.remove('empty');
+  d.querySelector('#orb-wrap').classList.remove('orb-empty');
+  d.querySelector('#num').textContent = String(pct);
+  d.querySelector('#pc').textContent = label;
+  const v = d.querySelector('#verdict');
+  v.textContent = verdict; v.style.color = color;
+}
+
+function tabs(d, active) {
+  d.querySelectorAll('.sw').forEach((s) => { s.hidden = false; s.classList.toggle('on', s.dataset.view === active); });
+  d.querySelectorAll('.view').forEach((v) => { v.hidden = v.id !== 'view-' + active; });
+}
+
+function paint(d, w, kind) {
+  if (kind === 'options') {
+    // Show a populated allow-list so the card isn't empty.
+    const list = d.querySelector('#scan-sites-list');
+    const card = d.querySelector('#scan-sites-card');
+    if (card) card.hidden = false;
+    if (list) list.innerHTML = ['example-blog.com', 'docs.example.org', 'shop.example.net']
+      .map((h) => `<div class="site-item"><span class="site-host">${h}</span><button class="site-remove">✕</button></div>`).join('');
+    const c = d.querySelector('#fb-count'); if (c) c.textContent = '18 labels collected';
+    // Scroll to the per-site allow-list — that's what this shot is about.
+    if (card) w.scrollTo(0, Math.max(0, card.offsetTop - 24));
+    return;
+  }
+
+  // The support row would be clipped by the frame edge — drop it from shots.
+  const sup = d.querySelector('#support'); if (sup) sup.hidden = true;
+  const foot = d.querySelector('.foot'); if (foot) foot.hidden = true;
+
+  tabs(d, kind);
+
+  if (kind === 'site') {
+    orb(d, 93, 'SITE AI', 'LIKELY BUILT WITH AI', '#ff9a7a');
+    d.querySelector('#site-result').innerHTML = `
+      <div class="result">
+        <b class="site-head" style="color:#ff9a7a">Likely built with AI</b>
+        <div class="site-plat">No builder fingerprint (hand-coded)</div>
+        <div class="kv" style="margin-top:8px">
+          <span class="pill2">🖼 <b>3</b>/3</span>
+          <span class="pill2">📝 AI-like text: <b>0%</b> · 0/15</span>
+          <span class="pill2">316 words</span>
+        </div>
+        <div class="hint" style="margin-top:8px">Evidence from the page code</div>
+        <ul class="signals">
+          <li>No builder fingerprint (hand-coded)</li>
+          <li>3/3 images carry an AI watermark (C2PA/metadata)</li>
+          <li>0/15 text blocks look AI-written</li>
+        </ul>
+        <div class="fb-row"><span>Made with AI?</span><span class="grow"></span>
+          <button class="fb-btn">👍 Yes</button><button class="fb-btn">👤 No</button></div>
+        <div class="scan-invite"><div class="si-txt"><b>Highlight AI blocks on this site?</b>
+          <small>Hover any block to see its AI score. Enabled only here — off everywhere else.</small></div>
+          <button class="btn solid">Enable block scan here</button></div>
+      </div>`;
+    return;
+  }
+
+  if (kind === 'text') {
+    const before = "In today's rapidly evolving digital landscape, it is important to note that leveraging synergistic solutions can significantly enhance productivity. Furthermore, organizations must carefully consider the multifaceted implications of these transformative technologies.";
+    const after = 'These days, note that using joined-up solutions can boost productivity a lot. Organizations also have to weigh what these major technologies really mean.';
+    const input = d.querySelector('#input');
+    if (input) input.value = before;
+    const meta = d.querySelector('#count'); if (meta) meta.textContent = '38 words';
+    const lb = d.querySelector('#lang-badge'); if (lb) { lb.textContent = 'EN'; lb.hidden = false; }
+    orb(d, 33, 'TEXT AI', 'MIXED', '#ffd27a');
+    const res = d.querySelector('#result');
+    res.hidden = false;
+    res.innerHTML = `
+      <h4>Humanize</h4><p class="res-sub">Rewrite AI-style text to sound human</p>
+      <div class="out-text diff-view"><del>In today's rapidly evolving digital landscape, it is important to</del><ins>These days,</ins> note that <del>leveraging synergistic</del><ins>using joined-up</ins> solutions can <del>significantly enhance</del><ins>boost</ins> productivity<ins> a lot</ins>. <del>Furthermore, organizations must carefully consider the multifaceted implications of these transformative technologies.</del><ins>Organizations also have to weigh what these major technologies really mean.</ins></div>
+      <div class="row"><span class="hint">9 changes</span><span class="grow"></span>
+        <button class="btn">⇄ Text</button><button class="btn">↻ Reroll</button>
+        <button class="btn solid">Copy</button><button class="btn">Use</button></div>`;
+    return;
+  }
+
+  if (kind === 'media') {
+    orb(d, 88, 'IMAGE AI', 'AI-GENERATED', '#ff9a7a');
+    const drop = d.querySelector('#drop'); if (drop) drop.hidden = true;
+    d.querySelector('#media-result').innerHTML = `
+      <div class="result">
+        <div class="row"><span class="pill2">PNG</span><span class="note-warn">AI-generated · metadata signature</span></div>
+        <div class="note-ok" style="margin-top:8px">✓ Cleaned · 4 metadata blocks removed</div>
+        <div class="hint" style="margin-top:6px">Drop an image, audio or video file — everything is inspected on your device.</div>
+        <a class="cta" style="text-decoration:none;margin-top:10px">⬇ Download clean copy</a>
+        <div class="hint" style="margin-top:8px">Absence of markers is not proof an image is human-made.</div>
+      </div>`;
+    return;
+  }
+}
+</script>
+</body>
+</html>

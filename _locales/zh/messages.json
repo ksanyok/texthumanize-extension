@@ -1,0 +1,786 @@
+{
+ "extName": {
+  "message": "TextHumanize — AI 文本人性化"
+ },
+ "extDesc": {
+  "message": "100% offline text naturalizer: humanize AI-style writing, check AI probability, strip hidden watermarks — on any page. 25 languages."
+ },
+ "cmdHumanizeSelection": {
+  "message": "Humanize selected text"
+ },
+ "cmdCheckSelection": {
+  "message": "Check selected text (AI score)"
+ },
+ "menuHumanize": {
+  "message": "✨ Humanize selection"
+ },
+ "menuCheck": {
+  "message": "🔍 Check for AI style"
+ },
+ "menuClean": {
+  "message": "🧹 Remove hidden characters"
+ },
+ "menuWorkspace": {
+  "message": "Open TextHumanize workspace"
+ },
+ "offlineBadge": {
+  "message": "离线"
+ },
+ "close": {
+  "message": "关闭"
+ },
+ "processing": {
+  "message": "处理中…"
+ },
+ "intensity": {
+  "message": "Intensity"
+ },
+ "profile": {
+  "message": "Profile"
+ },
+ "actHumanize": {
+  "message": "人性化"
+ },
+ "actCheck": {
+  "message": "检测"
+ },
+ "actClean": {
+  "message": "清理"
+ },
+ "cleanHint": {
+  "message": "Remove invisible characters, homoglyphs and hidden watermarks"
+ },
+ "replaceInPage": {
+  "message": "替换到页面"
+ },
+ "copy": {
+  "message": "复制"
+ },
+ "copied": {
+  "message": "Copied"
+ },
+ "replaced": {
+  "message": "Replaced"
+ },
+ "reroll": {
+  "message": "重试"
+ },
+ "rerollHint": {
+  "message": "Generate another variant"
+ },
+ "poweredBy": {
+  "message": "Powered by TextHumanize"
+ },
+ "credit": {
+  "message": "作者：Alexandr Krikun · 由 TextHumanize 库支持"
+ },
+ "creditExt": {
+  "message": "Extension source"
+ },
+ "noSelection": {
+  "message": "Select some text on the page first (15+ characters)."
+ },
+ "aiScore": {
+  "message": "AI score"
+ },
+ "confidence": {
+  "message": "Confidence"
+ },
+ "words": {
+  "message": "词"
+ },
+ "topSignals": {
+  "message": "Top signals"
+ },
+ "watermarksFound": {
+  "message": "Hidden marks found: $COUNT$ characters removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "noWatermarks": {
+  "message": "No hidden watermarks detected"
+ },
+ "beforeLabel": {
+  "message": "Before"
+ },
+ "afterLabel": {
+  "message": "After"
+ },
+ "improvedBy": {
+  "message": "AI-style signals reduced by $COUNT$ points",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "changesCount": {
+  "message": "$COUNT$ changes applied",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "hiddenRemoved": {
+  "message": "$COUNT$ hidden characters removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "verdict_ai": {
+  "message": "疑似AI"
+ },
+ "verdict_human": {
+  "message": "疑似真人"
+ },
+ "verdict_mixed": {
+  "message": "混合"
+ },
+ "verdict_unknown": {
+  "message": "未知"
+ },
+ "inputPlaceholder": {
+  "message": "Paste or type text — or select text on any page and use the ✨ button / right-click menu…"
+ },
+ "paste": {
+  "message": "粘贴"
+ },
+ "clear": {
+  "message": "清除"
+ },
+ "viewResult": {
+  "message": "Result"
+ },
+ "viewChanges": {
+  "message": "Changes"
+ },
+ "openWorkspace": {
+  "message": "Open as full page"
+ },
+ "settings": {
+  "message": "Settings"
+ },
+ "saved": {
+  "message": "Saved"
+ },
+ "optTitle": {
+  "message": "TextHumanize settings"
+ },
+ "optDefaults": {
+  "message": "Processing defaults"
+ },
+ "optLanguage": {
+  "message": "Text language"
+ },
+ "optLangAuto": {
+  "message": "Auto-detect (recommended)"
+ },
+ "optBubble": {
+  "message": "Selection bubble"
+ },
+ "optBubbleDesc": {
+  "message": "Show the ✨ button next to selected text on pages"
+ },
+ "optCleanWm": {
+  "message": "Clean hidden marks while humanizing"
+ },
+ "optCleanWmDesc": {
+  "message": "Strip zero-width characters, homoglyphs and other invisible marks automatically"
+ },
+ "optShortcuts": {
+  "message": "Keyboard shortcuts"
+ },
+ "optShortcutsDesc": {
+  "message": "Configure at chrome://extensions/shortcuts"
+ },
+ "optAbout": {
+  "message": "About"
+ },
+ "optAboutText": {
+  "message": "Free and open-source. Built on the TextHumanize library — a 100% offline text naturalization engine (Python · TypeScript · PHP, 25 languages). Your text never leaves your device."
+ },
+ "metric_pattern": {
+  "message": "AI words & phrases"
+ },
+ "metric_burstiness": {
+  "message": "Uniform sentence lengths"
+ },
+ "metric_stylometry": {
+  "message": "Formal style"
+ },
+ "metric_voice": {
+  "message": "Passive voice"
+ },
+ "metric_entity": {
+  "message": "Generic references"
+ },
+ "metric_opening": {
+  "message": "Repetitive openings"
+ },
+ "metric_grammar": {
+  "message": "Too-perfect grammar"
+ },
+ "metric_entropy": {
+  "message": "Predictable wording"
+ },
+ "metric_discourse": {
+  "message": "Rigid structure"
+ },
+ "metric_rhythm": {
+  "message": "Monotonous rhythm"
+ },
+ "metric_vocabulary": {
+  "message": "Limited vocabulary"
+ },
+ "metric_perplexity": {
+  "message": "Low perplexity"
+ },
+ "metric_punctuation": {
+  "message": "AI-typical punctuation"
+ },
+ "metric_readability": {
+  "message": "Uniform readability"
+ },
+ "metric_semantic_rep": {
+  "message": "Semantic repetition"
+ },
+ "actTone": {
+  "message": "语气"
+ },
+ "actParaphrase": {
+  "message": "改写"
+ },
+ "actReadability": {
+  "message": "可读性"
+ },
+ "actStylometry": {
+  "message": "Style DNA"
+ },
+ "actImage": {
+  "message": "Image AI check"
+ },
+ "menuTone": {
+  "message": "🎭 Analyze tone"
+ },
+ "menuImage": {
+  "message": "🖼️ Check image for AI"
+ },
+ "formality": {
+  "message": "Formality"
+ },
+ "toneLevel": {
+  "message": "Tone"
+ },
+ "toneAdjust": {
+  "message": "Adjust tone"
+ },
+ "toneMoreFormal": {
+  "message": "More formal"
+ },
+ "toneMoreCasual": {
+  "message": "More casual"
+ },
+ "tone_very_formal": {
+  "message": "Very formal"
+ },
+ "tone_formal": {
+  "message": "Formal"
+ },
+ "tone_neutral": {
+  "message": "Neutral"
+ },
+ "tone_informal": {
+  "message": "Informal"
+ },
+ "tone_very_informal": {
+  "message": "Very casual"
+ },
+ "tone_academic": {
+  "message": "Academic"
+ },
+ "tone_professional": {
+  "message": "Professional"
+ },
+ "tone_friendly": {
+  "message": "Friendly"
+ },
+ "tone_casual": {
+  "message": "Casual"
+ },
+ "tone_marketing": {
+  "message": "Marketing"
+ },
+ "readingLevel": {
+  "message": "Reading level"
+ },
+ "grade": {
+  "message": "Grade"
+ },
+ "metric_fleschReadingEase": {
+  "message": "Flesch Reading Ease"
+ },
+ "metric_fleschKincaidGrade": {
+  "message": "Flesch–Kincaid grade"
+ },
+ "metric_gunningFog": {
+  "message": "Gunning Fog"
+ },
+ "metric_smog": {
+  "message": "SMOG index"
+ },
+ "metric_colemanLiau": {
+  "message": "Coleman–Liau"
+ },
+ "imgScanning": {
+  "message": "Scanning…"
+ },
+ "imgAi": {
+  "message": "AI-generated"
+ },
+ "imgAuthentic": {
+  "message": "Authentic (C2PA)"
+ },
+ "imgNoMarkers": {
+  "message": "No AI markers"
+ },
+ "imgNotGuarantee": {
+  "message": "(not a guarantee)"
+ },
+ "imgEnableHint": {
+  "message": "Enable image checks in settings"
+ },
+ "optChip": {
+  "message": "In-editor action chip"
+ },
+ "optChipDesc": {
+  "message": "Show quick actions when you focus a text field or editor on a page"
+ },
+ "optImageHover": {
+  "message": "Image AI-provenance on hover"
+ },
+ "optImageHoverDesc": {
+  "message": "Hover an image to check for AI-generation markers (needs permission to read images)"
+ },
+ "optSiteBadge": {
+  "message": "AI score on the toolbar icon"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Show the “built with AI?” score as a badge on the extension icon (red dot = block detector off here)."
+ },
+ "optScanSites": {
+  "message": "Sites with block highlighting"
+ },
+ "optScanSitesDesc": {
+  "message": "On-page AI-block detection runs only on the sites you enabled. Remove any here."
+ },
+ "siteListEmpty": {
+  "message": "No sites yet — enable it from the popup on any site."
+ },
+ "siteRemove": {
+  "message": "Remove"
+ },
+ "siteClearAll": {
+  "message": "Clear all"
+ },
+ "optEffects": {
+  "message": "Visual effects"
+ },
+ "optEffectsDesc": {
+  "message": "Sparkles and smooth animations (auto-off if you prefer reduced motion)"
+ },
+ "optTelemetry": {
+  "message": "Anonymous usage stats"
+ },
+ "optTelemetryDesc": {
+  "message": "Share which tools are used (never your text) to guide new features. On by default."
+ },
+ "proBadge": {
+  "message": "PRO"
+ },
+ "welcomeTitle": {
+  "message": "Welcome to TextHumanize"
+ },
+ "tabText": {
+  "message": "My text"
+ },
+ "tabPage": {
+  "message": "Page"
+ },
+ "tabMedia": {
+  "message": "Media"
+ },
+ "inputPlaceholder2": {
+  "message": "粘贴或输入文本——或在任意页面选择文本…"
+ },
+ "humanizeCta": {
+  "message": "✨ Humanize"
+ },
+ "pageLead": {
+  "message": "Scan the open tab: how much text looks AI-written, AI-generated images, and readability."
+ },
+ "scanPage": {
+  "message": "🔍 Scan this page"
+ },
+ "scanning": {
+  "message": "Scanning the page…"
+ },
+ "pageAiText": {
+  "message": "AI-like text · $COUNT$ blocks",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageAiImages": {
+  "message": "AI images · of $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "pageTopAi": {
+  "message": "Most AI-like passages"
+ },
+ "pageScanUnavailable": {
+  "message": "Page scan needs the extension (open it on a normal web page)."
+ },
+ "heatTitle": {
+  "message": "AI heatmap by sentence"
+ },
+ "human": {
+  "message": "human"
+ },
+ "aiLike": {
+  "message": "AI"
+ },
+ "dropTitle": {
+  "message": "Drop an image or media file"
+ },
+ "dropHint": {
+  "message": "Check for AI markers and download it without hidden metadata"
+ },
+ "choose": {
+  "message": "选择"
+ },
+ "mediaCleaned": {
+  "message": "Cleaned · $COUNT$ metadata blocks removed",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "mediaNothing": {
+  "message": "No removable metadata found — file is already clean"
+ },
+ "downloadClean": {
+  "message": "Download clean file"
+ },
+ "mediaHonest": {
+  "message": "Removes metadata/provenance only. In-content watermarks (e.g. SynthID) can't be stripped."
+ },
+ "modulesLabel": {
+  "message": "模块"
+ },
+ "customize": {
+  "message": "自定义"
+ },
+ "useText": {
+  "message": "使用"
+ },
+ "actMediaWm": {
+  "message": "媒体水印"
+ },
+ "actSiteAi": {
+  "message": "AI网站"
+ },
+ "actSentiment": {
+  "message": "Sentiment"
+ },
+ "actHealth": {
+  "message": "质量"
+ },
+ "actUniqueness": {
+  "message": "独特性"
+ },
+ "actPerplexity": {
+  "message": "Perplexity"
+ },
+ "actKeywords": {
+  "message": "关键词"
+ },
+ "actStatistics": {
+  "message": "Stats"
+ },
+ "actSummarize": {
+  "message": "Summarize"
+ },
+ "actFormalize": {
+  "message": "Formalize"
+ },
+ "actSimplify": {
+  "message": "Simplify"
+ },
+ "actMediaClean": {
+  "message": "Media clean"
+ },
+ "orbHint": {
+  "message": "粘贴或选择文本以查看AI评分"
+ },
+ "descCheck": {
+  "message": "AI-probability score for this text"
+ },
+ "descReadability": {
+  "message": "How easy the text is to read (grade level)"
+ },
+ "descTone": {
+  "message": "Formal vs casual tone — with one-tap adjust"
+ },
+ "descSentiment": {
+  "message": "Positive / negative emotional tone"
+ },
+ "descHealth": {
+  "message": "Overall content-quality score (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Repetition and self-similarity check"
+ },
+ "descPerplexity": {
+  "message": "Predictability & burstiness — AI writes flat"
+ },
+ "descStylometry": {
+  "message": "Writing-style fingerprint metrics"
+ },
+ "descKeywords": {
+  "message": "Top terms and their frequency"
+ },
+ "descStatistics": {
+  "message": "Words, sentences, diversity, reading time"
+ },
+ "descHumanize": {
+  "message": "Rewrite AI-style text to sound human"
+ },
+ "descParaphrase": {
+  "message": "Reword while keeping the meaning"
+ },
+ "descSummarize": {
+  "message": "Shorten to the key sentences"
+ },
+ "descFormalize": {
+  "message": "Make the tone more formal"
+ },
+ "descSimplify": {
+  "message": "Make the wording simpler and lighter"
+ },
+ "descClean": {
+  "message": "Strip invisible characters & hidden watermarks"
+ },
+ "descImage": {
+  "message": "Check an image for AI generation & C2PA"
+ },
+ "descMediaClean": {
+  "message": "Strip metadata & watermarks from media"
+ },
+ "descMediaWm": {
+  "message": "Check image, audio or video for watermarks — remove in one tap"
+ },
+ "descSiteAi": {
+  "message": "Detect if this whole site was built or written with AI"
+ },
+ "needText": {
+  "message": "请先粘贴或选择文本——此工具用于文本。"
+ },
+ "pageAiTextShort": {
+  "message": "AI-like text"
+ },
+ "siteLikelyAi": {
+  "message": "疑似AI生成"
+ },
+ "siteSomeAi": {
+  "message": "可能用AI或建站工具"
+ },
+ "siteLikelyHuman": {
+  "message": "疑似手工制作"
+ },
+ "siteHandcoded": {
+  "message": "无建站工具痕迹（手工）"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ images carry an AI watermark (C2PA/metadata)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ text blocks look AI-written",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Hosted on $COUNT$ — a deploy host favoured by AI/vibe-coding tools",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "shadcn/ui + Radix + Lucide — the stack AI tools (v0/Lovable/Bolt) emit"
+ },
+ "sig_lucideGeist": {
+  "message": "Lucide icons + Geist font (v0-style output)"
+ },
+ "sig_shadcnTokens": {
+  "message": "shadcn design tokens (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "AI-startup violet→cyan gradient palette"
+ },
+ "sig_radix": {
+  "message": "Radix UI headless primitives"
+ },
+ "sig_geist": {
+  "message": "Geist font (Vercel / v0 default)"
+ },
+ "siteFbQ": {
+  "message": "由AI制作？"
+ },
+ "siteFbAi": {
+  "message": "是"
+ },
+ "siteFbHuman": {
+  "message": "否"
+ },
+ "siteFbThanks": {
+  "message": "Saved — thanks!"
+ },
+ "siteFbReset": {
+  "message": "reset"
+ },
+ "optFeedback": {
+  "message": "Detection feedback"
+ },
+ "optFeedbackDesc": {
+  "message": "Your 👍/👎 on site detection is stored on-device (content-free). Export it to help improve the model."
+ },
+ "optFeedbackCount": {
+  "message": "$COUNT$ labels collected",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Copy labels"
+ },
+ "siteEvidence": {
+  "message": "来自页面代码的线索"
+ },
+ "onboardTitle": {
+  "message": "Welcome to TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Three tabs: Site (was it built with AI?), My text (check/humanize), Media (watermarks). A red dot on the icon means on-page block detection is off — turn it on per site from the Site tab."
+ },
+ "onboardOk": {
+  "message": "Got it"
+ },
+ "showDiff": {
+  "message": "Changes"
+ },
+ "showText": {
+  "message": "Text"
+ },
+ "supportLike": {
+  "message": "喜欢吗？"
+ },
+ "supportStar": {
+  "message": "GitHub加星"
+ },
+ "supportDonate": {
+  "message": "捐赠"
+ },
+ "supportRate": {
+  "message": "评分"
+ },
+ "supportTitle": {
+  "message": "Support the project"
+ },
+ "supportText": {
+  "message": "TextHumanize is free & offline. A star or a small donation helps a lot — thank you!"
+ },
+ "tabSite": {
+  "message": "网站"
+ },
+ "orbPctSite": {
+  "message": "网站AI"
+ },
+ "orbPctText": {
+  "message": "文本AI"
+ },
+ "scanInviteTitle": {
+  "message": "在此网站高亮AI段落？"
+ },
+ "scanInviteText": {
+  "message": "Hover any block to see its AI score. Enabled only here — off everywhere else."
+ },
+ "scanOnTitle": {
+  "message": "Block highlighting is on here"
+ },
+ "scanDisable": {
+  "message": "Turn off"
+ },
+ "badgeScanOn": {
+  "message": "block scan ON"
+ },
+ "badgeScanOff": {
+  "message": "block scan off"
+ },
+ "sbInvite": {
+  "message": "This site looks AI-built. Highlight the AI-written blocks here?"
+ },
+ "sbScanEnable": {
+  "message": "启用块扫描"
+ },
+ "sbScanOn": {
+  "message": "Scanning this site ✓"
+ },
+ "scanThisSite": {
+  "message": "Highlight AI blocks on this site"
+ },
+ "kind_ai_builder": {
+  "message": "AI website builder"
+ },
+ "kind_builder": {
+  "message": "visual site builder"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "e-commerce platform"
+ },
+ "kind_framework": {
+  "message": "framework (hand-built)"
+ },
+ "kind_docs": {
+  "message": "docs generator"
+ },
+ "kind_unknown": {
+  "message": "unknown platform"
+ }
+}

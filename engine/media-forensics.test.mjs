@@ -203,6 +203,46 @@ console.log('Test 5: robustness on truncated / garbage bytes');
   eq(r3.format, 'png', 'accepts ArrayBuffer input');
 }
 
+console.log('Test 6: ComfyUI workflow chunk → AI');
+{
+  const tEXt = concat([enc.encode('workflow'), new Uint8Array([0]), enc.encode('{"nodes":[{"class_type":"KSampler"}]}')]);
+  const r = detectMediaWatermarks(buildPng([['tEXt', tEXt]]));
+  eq(r.isAiGenerated, true, 'ComfyUI workflow → AI');
+  ok(r.signals.some((s) => s.kind === 'generation_params'), 'has generation_params signal');
+}
+
+console.log('Test 7: ComfyUI prompt chunk with class_type in value → AI');
+{
+  const tEXt = concat([enc.encode('prompt'), new Uint8Array([0]), enc.encode('{"3":{"class_type":"KSampler","inputs":{"seed":42}}}')]);
+  const r = detectMediaWatermarks(buildPng([['tEXt', tEXt]]));
+  eq(r.isAiGenerated, true, 'ComfyUI prompt+class_type → AI');
+}
+
+console.log('Test 8: InvokeAI / SwarmUI strong keys → AI');
+{
+  for (const [key, val] of [['invokeai_metadata', '{"model":"sdxl"}'], ['sui_image_params', '{"prompt":"x"}']]) {
+    const tEXt = concat([enc.encode(key), new Uint8Array([0]), enc.encode(val)]);
+    const r = detectMediaWatermarks(buildPng([['tEXt', tEXt]]));
+    eq(r.isAiGenerated, true, `${key} → AI`);
+  }
+}
+
+console.log('Test 9: human captions must NOT be flagged AI (false-positive guard)');
+{
+  const cases = [
+    ['Description', 'Family photo from our trip to the lake, summer 2019'],
+    ['Title', 'Sunset over the bay'],
+    ['Comment', 'Shot on Canon EOS R6, edited in Lightroom'],
+    ['Software', 'Adobe Photoshop 26.0'],
+    ['Author', 'Jane Photographer'],
+  ];
+  for (const [key, val] of cases) {
+    const tEXt = concat([enc.encode(key), new Uint8Array([0]), enc.encode(val)]);
+    const r = detectMediaWatermarks(buildPng([['tEXt', tEXt]]));
+    eq(r.isAiGenerated, null, `human ${key} → unknown, not AI`);
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────
 console.log(`\n${passed} passed, ${failed} failed`);
 if (failed > 0) process.exitCode = 1;
