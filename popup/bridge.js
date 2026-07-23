@@ -15,6 +15,7 @@ const COMPUTE_OPS = new Set([
   'humanize', 'analyze', 'clean', 'tone', 'tone-adjust', 'readability',
   'paraphrase', 'stylometry', 'classify', 'heatmap', 'detect-language',
   'detect-media', 'clean-media',
+  'health', 'uniqueness', 'perplexity', 'sentiment', 'statistics', 'keywords', 'summarize',
 ]);
 
 let enginePromise = null;
@@ -125,6 +126,34 @@ async function computeLocally(message) {
       const { engine, lang, langPack } = await resolve(message.text, o);
       return { lang, ...engine.classifyContent(message.text, { lang, langPack }) };
     }
+    case 'health': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      return { lang, ...engine.contentHealth(message.text, { lang, langPack }) };
+    }
+    case 'uniqueness': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      return { lang, ...engine.uniquenessScore(message.text, { lang, langPack }) };
+    }
+    case 'perplexity': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      return { lang, ...engine.perplexityScore(message.text, { lang, langPack }) };
+    }
+    case 'sentiment': {
+      const { engine, lang } = await resolve(message.text, o);
+      return { lang, ...engine.analyzeSentiment(message.text, { lang }) };
+    }
+    case 'statistics': {
+      const engine = await loadEngine();
+      return engine.textStatistics(message.text);
+    }
+    case 'keywords': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      return { lang, ...engine.extractKeywords(message.text, { lang, langPack }) };
+    }
+    case 'summarize': {
+      const { engine, lang, langPack } = await resolve(message.text, o);
+      return { lang, ...engine.summarize(message.text, { lang, langPack, sentences: o.sentences || 3 }) };
+    }
     case 'detect-media': {
       const engine = await loadEngine();
       return engine.detectMediaWatermarks(message.bytes, {});
@@ -187,14 +216,27 @@ if (!IS_EXTENSION) {
   if (forced && FALLBACK_MESSAGES[forced]) webLocale = forced;
 }
 
-/** @param {string} key @param {string[]} [subs] */
+/**
+ * Look up a UI string.
+ *
+ * chrome.i18n.getMessage throws "No matching signature" on a non-string key or
+ * non-string substitutions, and an optional chain upstream (`t(mod?.i18n)`)
+ * easily hands it `undefined`. The web fallback path silently tolerates that,
+ * so such a call only ever blows up in a real extension — which is how a broken
+ * Humanize button reached store review. Normalize the arguments here so a bad
+ * key degrades to a missing string instead of taking a feature down.
+ *
+ * @param {string} key @param {(string|number)[]} [subs]
+ */
 export function t(key, subs) {
+  if (typeof key !== 'string' || !key) return '';
+  const args = Array.isArray(subs) ? subs.map((s) => String(s)) : undefined;
   let msg = '';
   if (IS_EXTENSION) {
-    msg = chrome.i18n.getMessage(key, subs);
+    try { msg = args ? chrome.i18n.getMessage(key, args) : chrome.i18n.getMessage(key); } catch { msg = ''; }
   } else {
     msg = FALLBACK_MESSAGES[webLocale]?.[key] ?? FALLBACK_MESSAGES.en[key] ?? '';
-    if (msg && subs) subs.forEach((s, i) => { msg = msg.replace(`$${i + 1}`, s); });
+    if (msg && args) args.forEach((s, i) => { msg = msg.replace(`$${i + 1}`, s); });
   }
   return msg || key;
 }

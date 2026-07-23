@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — humanizacja tekstu AI, sprawdzanie i czyszczenie znaków"
+  "message": "TextHumanize — humanizacja tekstu AI"
  },
  "extDesc": {
   "message": "100% offline: czyni tekst naturalniejszym, ocenia prawdopodobieństwo AI i usuwa ukryte znaki — na każdej stronie. 25 języków."
@@ -67,6 +67,9 @@
  },
  "rerollHint": {
   "message": "Wygeneruj inny wariant"
+ },
+ "poweredBy": {
+  "message": "Oparte na TextHumanize"
  },
  "credit": {
   "message": "Autor: Alexandr Krikun · Oparte na TextHumanize"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Najedź na obraz, aby sprawdzić znaczniki AI (wymaga uprawnień)"
  },
+ "optSiteBadge": {
+  "message": "Wynik AI na ikonie"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Pokaż wynik „zrobione z AI?” na ikonie (czerwona kropka = detektor bloków tu wyłączony)."
+ },
+ "optScanSites": {
+  "message": "Strony z podświetlaniem bloków"
+ },
+ "optScanSitesDesc": {
+  "message": "Wykrywanie bloków AI działa tylko na włączonych stronach. Usuń je tutaj."
+ },
+ "siteListEmpty": {
+  "message": "Brak stron — włącz w popupie na dowolnej stronie."
+ },
+ "siteRemove": {
+  "message": "Usuń"
+ },
+ "siteClearAll": {
+  "message": "Wyczyść wszystko"
+ },
  "optEffects": {
   "message": "Efekty wizualne"
  },
@@ -383,7 +407,7 @@
   "message": "Witaj w TextHumanize"
  },
  "tabText": {
-  "message": "Tekst"
+  "message": "Mój tekst"
  },
  "tabPage": {
   "message": "Strona"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Usuwa tylko metadane/pochodzenie. Znaków w treści (np. SynthID) nie."
+ },
+ "modulesLabel": {
+  "message": "Moduły"
+ },
+ "customize": {
+  "message": "dostosuj ⚙"
+ },
+ "useText": {
+  "message": "Użyj"
+ },
+ "actMediaWm": {
+  "message": "Media WM"
+ },
+ "actSiteAi": {
+  "message": "Strona AI"
+ },
+ "actSentiment": {
+  "message": "Wydźwięk"
+ },
+ "actHealth": {
+  "message": "Kondycja"
+ },
+ "actUniqueness": {
+  "message": "Unikalność"
+ },
+ "actPerplexity": {
+  "message": "Perpleksja"
+ },
+ "actKeywords": {
+  "message": "Słowa kluczowe"
+ },
+ "actStatistics": {
+  "message": "Statystyki"
+ },
+ "actSummarize": {
+  "message": "Streść"
+ },
+ "actFormalize": {
+  "message": "Sformalizuj"
+ },
+ "actSimplify": {
+  "message": "Uprość"
+ },
+ "actMediaClean": {
+  "message": "Czyść media"
+ },
+ "orbHint": {
+  "message": "Wklej lub zaznacz tekst, aby zobaczyć wynik AI"
+ },
+ "descCheck": {
+  "message": "Ocena prawdopodobieństwa AI w tekście"
+ },
+ "descReadability": {
+  "message": "Jak łatwo się czyta (poziom)"
+ },
+ "descTone": {
+  "message": "Ton formalny czy swobodny — szybka zmiana"
+ },
+ "descSentiment": {
+  "message": "Ton emocjonalny pozytywny / negatywny"
+ },
+ "descHealth": {
+  "message": "Ogólna ocena jakości treści (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Sprawdzanie powtórzeń"
+ },
+ "descPerplexity": {
+  "message": "Przewidywalność i zmienność — AI jest płaskie"
+ },
+ "descStylometry": {
+  "message": "Metryki stylu pisania"
+ },
+ "descKeywords": {
+  "message": "Najważniejsze terminy i ich częstość"
+ },
+ "descStatistics": {
+  "message": "Słowa, zdania, różnorodność, czas czytania"
+ },
+ "descHumanize": {
+  "message": "Przepisz tekst AI, by brzmiał ludzko"
+ },
+ "descParaphrase": {
+  "message": "Przeformułuj, zachowując sens"
+ },
+ "descSummarize": {
+  "message": "Skróć do kluczowych zdań"
+ },
+ "descFormalize": {
+  "message": "Nadaj bardziej formalny ton"
+ },
+ "descSimplify": {
+  "message": "Uprość sformułowania"
+ },
+ "descClean": {
+  "message": "Usuń niewidoczne znaki i znaki wodne"
+ },
+ "descImage": {
+  "message": "Sprawdź obraz pod kątem AI i C2PA"
+ },
+ "descMediaClean": {
+  "message": "Usuń metadane i znaki wodne z mediów"
+ },
+ "descMediaWm": {
+  "message": "Sprawdź obraz, audio lub wideo — usuń znaki wodne jednym tapnięciem"
+ },
+ "descSiteAi": {
+  "message": "Wykryj, czy cała strona powstała z AI"
+ },
+ "needText": {
+  "message": "Najpierw wklej lub zaznacz tekst — to narzędzie działa na tekście."
+ },
+ "pageAiTextShort": {
+  "message": "Tekst jak AI"
+ },
+ "siteLikelyAi": {
+  "message": "Prawdopodobnie zbudowany z AI"
+ },
+ "siteSomeAi": {
+  "message": "Może AI / kreator stron"
+ },
+ "siteLikelyHuman": {
+  "message": "Wygląda na ręcznie zrobiony"
+ },
+ "siteHandcoded": {
+  "message": "Brak śladów kreatora (ręcznie)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ obrazów ze znakiem wodnym AI (C2PA/metadane)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ bloków tekstu wygląda na AI",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Hostowane na $COUNT$ — platforma popularna wśród narzędzi AI/vibe-coding",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "Stack shadcn/ui + Radix + Lucide — generują go narzędzia AI (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Ikony Lucide + font Geist (styl v0)"
+ },
+ "sig_shadcnTokens": {
+  "message": "Tokeny shadcn (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Gradient fiolet→cyjan typowy dla startupów AI"
+ },
+ "sig_radix": {
+  "message": "Prymitywy Radix UI"
+ },
+ "sig_geist": {
+  "message": "Font Geist (Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Zrobione z AI?"
+ },
+ "siteFbAi": {
+  "message": "Tak"
+ },
+ "siteFbHuman": {
+  "message": "Nie"
+ },
+ "siteFbThanks": {
+  "message": "Zapisano — dzięki!"
+ },
+ "siteFbReset": {
+  "message": "resetuj"
+ },
+ "optFeedback": {
+  "message": "Opinie o wykrywaniu"
+ },
+ "optFeedbackDesc": {
+  "message": "Twoje 👍/👎 są zapisywane lokalnie (bez treści). Wyeksportuj, aby ulepszyć model."
+ },
+ "optFeedbackCount": {
+  "message": "Zebrano etykiet: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Kopiuj etykiety"
+ },
+ "siteEvidence": {
+  "message": "Dowody z kodu strony"
+ },
+ "onboardTitle": {
+  "message": "Witaj w TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Trzy karty: Strona (zrobiona z AI?), Mój tekst (sprawdź/humanizuj), Media. Czerwona kropka na ikonie = wykrywanie bloków wyłączone — włącz per strona w karcie Strona."
+ },
+ "onboardOk": {
+  "message": "Rozumiem"
+ },
+ "showDiff": {
+  "message": "Zmiany"
+ },
+ "showText": {
+  "message": "Tekst"
+ },
+ "supportLike": {
+  "message": "Podoba się?"
+ },
+ "supportStar": {
+  "message": "Gwiazdka na GitHub"
+ },
+ "supportDonate": {
+  "message": "Wesprzyj"
+ },
+ "supportRate": {
+  "message": "Oceń"
+ },
+ "supportTitle": {
+  "message": "Wesprzyj projekt"
+ },
+ "supportText": {
+  "message": "TextHumanize jest darmowy i offline. Gwiazdka lub mały datek bardzo pomaga — dziękuję!"
+ },
+ "tabSite": {
+  "message": "Strona"
+ },
+ "orbPctSite": {
+  "message": "AI STRONY"
+ },
+ "orbPctText": {
+  "message": "AI TEKSTU"
+ },
+ "scanInviteTitle": {
+  "message": "Podświetlić bloki AI na tej stronie?"
+ },
+ "scanInviteText": {
+  "message": "Najedź na blok, aby zobaczyć wynik AI. Tylko tutaj."
+ },
+ "scanOnTitle": {
+  "message": "Podświetlanie bloków włączone tutaj"
+ },
+ "scanDisable": {
+  "message": "Wyłącz"
+ },
+ "badgeScanOn": {
+  "message": "skan bloków WŁ"
+ },
+ "badgeScanOff": {
+  "message": "skan bloków wył"
+ },
+ "sbInvite": {
+  "message": "Ta strona wygląda na zrobioną przez AI. Podświetlić bloki AI tutaj?"
+ },
+ "sbScanEnable": {
+  "message": "Włącz skan bloków tutaj"
+ },
+ "sbScanOn": {
+  "message": "Skanuję tę stronę ✓"
+ },
+ "scanThisSite": {
+  "message": "Podświetlaj bloki AI na tej stronie"
+ },
+ "kind_ai_builder": {
+  "message": "kreator stron AI"
+ },
+ "kind_builder": {
+  "message": "kreator wizualny"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "platforma e-commerce"
+ },
+ "kind_framework": {
+  "message": "framework (ręcznie)"
+ },
+ "kind_docs": {
+  "message": "generator dokumentacji"
+ },
+ "kind_unknown": {
+  "message": "nieznana platforma"
  }
 }

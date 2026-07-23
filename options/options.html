@@ -14,7 +14,7 @@
         <path d="M7 8.2h10M12 8.2V17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
         <circle cx="17.4" cy="15.8" r="2.6" fill="#fff" opacity=".9"/>
         <defs><linearGradient id="thg" x1="0" y1="0" x2="24" y2="24">
-          <stop stop-color="#6d5efc"/><stop offset="1" stop-color="#22b8cf"/>
+          <stop stop-color="#2a2d36"/><stop offset="1" stop-color="#0d0e12"/>
         </linearGradient></defs>
       </svg>
       <h1 data-i18n="optTitle"></h1>
@@ -58,6 +58,13 @@
       </label>
       <label class="toggle-row">
         <div>
+          <b data-i18n="optSiteBadge"></b>
+          <p class="dim" data-i18n="optSiteBadgeDesc"></p>
+        </div>
+        <input type="checkbox" id="site-badge">
+      </label>
+      <label class="toggle-row">
+        <div>
           <b data-i18n="optEffects"></b>
           <p class="dim" data-i18n="optEffectsDesc"></p>
         </div>
@@ -83,9 +90,38 @@
       <div id="usage" class="usage dim"></div>
     </section>
 
+    <section class="card" id="scan-sites-card" hidden>
+      <div class="scan-head">
+        <h2 data-i18n="optScanSites"></h2>
+        <button id="scan-clear" class="ghost-btn" data-i18n="siteClearAll"></button>
+      </div>
+      <p class="dim" data-i18n="optScanSitesDesc"></p>
+      <div id="scan-sites-list" class="site-list"></div>
+    </section>
+
+    <section class="card" id="feedback-card">
+      <div class="scan-head">
+        <h2 data-i18n="optFeedback"></h2>
+        <button id="fb-clear" class="ghost-btn" data-i18n="siteClearAll"></button>
+      </div>
+      <p class="dim" data-i18n="optFeedbackDesc"></p>
+      <p class="dim" id="fb-count"></p>
+      <button id="fb-copy" class="ghost-btn" data-i18n="optFeedbackCopy"></button>
+    </section>
+
     <section class="card">
       <h2 data-i18n="optShortcuts"></h2>
       <p class="dim" data-i18n="optShortcutsDesc"></p>
+    </section>
+
+    <section class="card support-card">
+      <h2 data-i18n="supportTitle"></h2>
+      <p class="dim" data-i18n="supportText"></p>
+      <p class="support-links">
+        <a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener">⭐ <span data-i18n="supportStar"></span></a>
+        <a class="donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ksanyok%40me.com&item_name=TextHumanize&currency_code=USD" target="_blank" rel="noopener">💛 <span data-i18n="supportDonate"></span></a>
+        <a id="opt-rate" href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener">★ <span data-i18n="supportRate"></span></a>
+      </p>
     </section>
 
     <section class="card about">
@@ -93,10 +129,9 @@
       <p class="dim" data-i18n="optAboutText"></p>
       <p class="links">
         <a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener">TextHumanize library</a>
-        <a href="https://github.com/ksanyok/texthumanize-extension" target="_blank" rel="noopener">Extension source</a>
         <a href="https://texthumanize.link" target="_blank" rel="noopener">texthumanize.link</a>
       </p>
-      <p class="dim credit" data-i18n="credit"></p>
+      <p class="dim credit"><span data-i18n="credit"></span> · <span id="opt-ver"></span></p>
     </section>
   </main>
   <script src="options.js" type="module"></script>

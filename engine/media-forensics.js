@@ -63,6 +63,15 @@ export const MEDIA_GENERATOR_SIGNATURES = {
   'elevenlabs': 'ElevenLabs (audio)',
   'suno': 'Suno (audio)',
   'udio': 'Udio (audio)',
+  // 2026 additions — distinctive tokens only (see research/site-media-traces-2026.md)
+  'recraft': 'Recraft',
+  'seedream': 'Seedream (ByteDance)',
+  'seedance': 'Seedance (ByteDance)',
+  'hunyuanvideo': 'Hunyuan (Tencent)',
+  'nano-banana': 'Gemini Nano Banana (Google)',
+  'reve.art': 'Reve',
+  'stable-signature': 'Meta Stable Signature (declared)',
+  'trainedalgorithmic': 'AI-generated (IPTC digitalSourceType)',
 };
 
 const TEXT_ENCODER = new TextEncoder();
@@ -355,11 +364,27 @@ function* iterPngChunks(data) {
 }
 
 const PNG_TEXT_CHUNKS = new Set(['tEXt', 'zTXt', 'iTXt']);
-const PNG_AI_TEXT_KEYS = new Set([
-  'parameters', 'prompt', 'workflow', 'negative prompt', 'comment',
-  'software', 'sd-metadata', 'dream', 'title', 'description',
-]);
-const PNG_PARAM_HINTS = ['steps:', 'sampler', 'cfg scale', 'seed:', 'model hash'];
+
+// Chunk keywords that are essentially unique to image-generation tooling — the
+// key name alone is conclusive. Maps key → the tool it identifies.
+const PNG_STRONG_KEYS = {
+  parameters: 'AUTOMATIC1111 / Forge / Fooocus (Stable Diffusion)',
+  workflow: 'ComfyUI (Stable Diffusion)',
+  'sd-metadata': 'InvokeAI (Stable Diffusion)',
+  invokeai_metadata: 'InvokeAI (Stable Diffusion)',
+  sui_image_params: 'SwarmUI (Stable Diffusion)',
+  dream: 'InvokeAI (Stable Diffusion)',
+  'negative prompt': 'Stable Diffusion',
+};
+// NB: generic keywords (prompt/comment/software/title/description/author) are
+// deliberately NOT treated as AI evidence on the key name alone — a camera
+// caption in Description or a Photoshop Comment used to be misread as AI. They
+// count only when the VALUE carries an actual generation-parameter hint below.
+// Substrings that only appear in real generation-parameter strings / node graphs.
+const PNG_PARAM_HINTS = [
+  'steps:', 'sampler', 'cfg scale', 'model hash', 'denoising_strength',
+  'class_type', 'sampler_name', '"scheduler"', 'negative prompt:',
+];
 
 /**
  * @param {Uint8Array} data
@@ -375,12 +400,19 @@ function parsePng(data) {
       const key = (text.split(' ', 1)[0] || '').trim().toLowerCase();
       meta.textChunks.push(text.slice(0, 200));
       const lowText = text.toLowerCase();
-      if (PNG_AI_TEXT_KEYS.has(key) || PNG_PARAM_HINTS.some((k) => lowText.includes(k))) {
+      const strongKey = PNG_STRONG_KEYS[key];
+      const hasHint = PNG_PARAM_HINTS.some((k) => lowText.includes(k));
+      // Strong key → conclusive. Weak/any key → only when the value actually
+      // contains generation parameters (so a human caption isn't misread as AI).
+      if (strongKey || hasHint) {
         findings.push({
           type: 'embedded_generation_parameters',
           category: 'generation_params',
           severity: 'high',
-          detail: `PNG ${ctype} chunk with generation metadata ('${key}')`,
+          detail: strongKey
+            ? `PNG ${ctype} '${key}' chunk — ${strongKey}`
+            : `PNG ${ctype} chunk with Stable Diffusion generation parameters`,
+          ...(strongKey ? { generator: strongKey } : {}),
         });
       }
       pushAll(findings, scanMarkers(payload));

@@ -56,7 +56,10 @@
           const bytes = /;base64/i.test(m.src.slice(5, comma)) ? Uint8Array.from(atob(body), c => c.charCodeAt(0)) : new TextEncoder().encode(decodeURIComponent(body));
           return engine.detectMediaWatermarks(bytes, {});
         }
-        case 'get-settings': return { intensity: 60, profile: 'web', selectionBubble: true, editorChip: true, imageHover: true, effects: true, cleanWatermarks: true, telemetry: true };
+        case 'quick-score': { const lang = engine.detectLanguage(m.text); const pk = await loadPack(lang); return { lang, ...engine.quickScore(m.text, { lang, langPack: pk }) }; }
+        case 'site-badge': return { platform: 'Framer', platformId: 'framer', kind: 'builder', aiBuilder: false, aiBuilt: 0.62, verdict: 'ai', signals: [{ code: 'platform', name: 'Framer', kind: 'builder', hits: ['generator “framer”', 'host framerusercontent.com'] }] };
+        case 'get-settings': return { intensity: 65, profile: 'web', selectionBubble: true, editorChip: true, imageHover: true, hoverAnalyze: true, scanSites: [], siteBubble: true, effects: true, cleanWatermarks: true, telemetry: true };
+        case 'set-settings': return m.patch || {};
         case 'track': case 'get-usage': return {};
         default: throw new Error('unknown ' + m.type);
       }
@@ -80,7 +83,7 @@
     document.getElementById('img-clean').src = png(null);
 
     // Load content scripts in manifest order.
-    const files = ['shared', 'panel', 'editors', 'images', 'content'];
+    const files = ['shared', 'panel', 'editors', 'images', 'hover', 'content'];
     (async () => {
       for (const f of files) {
         await new Promise((res) => { const s = document.createElement('script'); s.src = `../content/${f}.js`; s.onload = res; s.onerror = res; document.body.appendChild(s); });

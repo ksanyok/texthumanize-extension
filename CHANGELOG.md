@@ -2,6 +2,87 @@
 
 All notable changes to TextHumanize for Chrome.
 
+## [3.3.0] — 2026-07-21
+
+Evidence-driven detection overhaul (see `research/` for the 2026 catalogs) plus
+a self-improving-weights story shared with the library.
+
+### Site detection
+- **Reads the page's own default subdomain** — the cheapest, most certain
+  signal. A site still on `*.lovable.app`, `v0-*.vercel.app`, `*.framer.website`,
+  `*.wixsite.com`, … is identified from the hostname alone (dot-bounded match,
+  `v0-` prefix special-cased). Previously the hostname was collected but unused.
+- **Free-tier badges** (`#lovable-badge`, `.w-webflow-badge`, …) and
+  live-verified 2026 code markers confirm platforms on custom domains.
+- **New builders** — Base44, Emergent — and a separate weak **"vibe-host"** tier
+  for generic deploy hosts (`netlify.app`, `pages.dev`, …) that only matters
+  stacked with a code smell.
+
+### Image / media
+- **Fixed a false-positive class** — a human photo carrying a `Description` /
+  `Title` / `Comment` / `Software` metadata chunk was reported as AI. Generic
+  keys now require a real generation-parameter value; only tool-unique keys
+  (`parameters`, `workflow`, `sd-metadata`, `invokeai_metadata`,
+  `sui_image_params`, `dream`) are conclusive on the key name alone.
+- **Wider coverage** — ComfyUI `class_type`/`sampler_name`, SwarmUI, and 2026
+  generator signatures (Recraft, Seedream/Seedance, Hunyuan, Reve).
+
+### Text detection
+- **New `structure` metric** — enumeration / list-intro / participial-tail /
+  negative-parallelism scaffolding. Paraphrase-robust; the 2025-2026 chat
+  "assistant register" (scored ~40% human before) is now caught.
+- **Two inverted signals fixed** — `voice` no longer scores passive as AI;
+  `punctuation` no longer scores `;` `:` `—` `« »` as AI (they were firing on
+  well-edited human prose — the em-dash/quote false positives you reported).
+- **Anti-evasion normalization** — strips zero-width, folds homoglyphs in
+  Latin-majority words (genuine Cyrillic/Greek preserved).
+- **Weights rebalanced** off dead metrics; AI-cliché dictionary gains the
+  assistant register (feeds both detection and humanization).
+
+### Tooling
+- `npm run bench:detector` (per-metric separation, evasion resistance, FP audit)
+  joins `bench-humanize` and `e2e-smoke` in the `npm run package` gate.
+
+## [3.2.0] — 2026-07-21
+
+- **Humanization quality** — a ~250-phrase AI-cliché dictionary (en/ru/uk/de/es/
+  pl) that finally removes the openers the detector penalises ("In today's…",
+  "В современном мире…"); phrases replace at near-certainty; sentence-merge runs
+  before connector replacement; grammar guards (case-government in RU/UK/PL/DE,
+  no bare-preposition swaps, no `help` + gerund, whitespace/caps on deletion).
+  Corpus result: mean AI 64→49, surviving markers 20/116 → 2/116, 0 mechanical
+  faults. New `npm run bench` measures it.
+
+## [3.1.10] — 2026-07-19
+
+### Fixed
+- **Popup Humanize button crashed in the real extension** (`i18n.getMessage(…):
+  No matching signature`) — `t()` received a non-string key via an optional
+  chain. Hardened `t()` in `popup/bridge.js` + `content/shared.js` and resolved
+  the module from the op. This caused a Chrome Web Store rejection ("functionality
+  could not be reproduced"); it only reproduced in-extension, so a new
+  `scripts/e2e-smoke.mjs` now drives the real loaded extension in the package gate.
+
+## [3.1.0] — 2026-07-18
+
+### Added
+- **AI-built-site detection** — a living score orb tells you whether a whole page
+  was likely made with AI, from the page's own code (generator, asset hosts,
+  data-* attributes, class stacks, fonts, palette): 80+ builders/CMS + the
+  shadcn/Radix/Geist stacks AI coding tools emit. Evidence listed openly; 👍/👎
+  corrects the verdict per site (content-free, on-device).
+- **Per-site opt-in** on-page block highlighting (off by default) + a red dot on
+  the toolbar icon when the detector is off; the icon shows the site AI score.
+- **Right-click image AI check**, before/after humanize word-diff, 14 UI
+  languages (incl. RTL Arabic), Firefox/Edge packages.
+
+## [3.0.0] — 2026-07-17
+
+### Added
+- Hover AI-score on text and images; on-page counters of AI text/images in the
+  toolbar; module registry (all modules free); popup redesign with quick
+  check/fix of a selection or an image inside editors.
+
 ## [2.1.0] — 2026-07-17
 
 A usability + reliability pass answering real feedback.

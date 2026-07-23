@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — yapay zekâ metnini doğallaştırma, kontrol ve temizlik"
+  "message": "TextHumanize — yapay zekâ metnini doğallaştır"
  },
  "extDesc": {
   "message": "%100 çevrimdışı: metni doğallaştırır, yapay zekâ olasılığını ölçer ve gizli işaretleri kaldırır — her sayfada. 25 dil."
@@ -67,6 +67,9 @@
  },
  "rerollHint": {
   "message": "Başka bir varyant üret"
+ },
+ "poweredBy": {
+  "message": "TextHumanize ile"
  },
  "credit": {
   "message": "Alexandr Krikun · TextHumanize altyapısıyla"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "YZ işaretlerini kontrol için görselin üzerine gelin (izin gerekir)"
  },
+ "optSiteBadge": {
+  "message": "Simgede YZ puanı"
+ },
+ "optSiteBadgeDesc": {
+  "message": "“YZ ile mi yapıldı?” puanını simgede göster (kırmızı nokta = blok dedektörü burada kapalı)."
+ },
+ "optScanSites": {
+  "message": "Blok vurgulamalı siteler"
+ },
+ "optScanSitesDesc": {
+  "message": "Sayfa içi YZ blok algılama yalnızca etkinleştirdiğin sitelerde çalışır. Buradan kaldır."
+ },
+ "siteListEmpty": {
+  "message": "Henüz site yok — herhangi bir sitede açılır pencereden etkinleştir."
+ },
+ "siteRemove": {
+  "message": "Kaldır"
+ },
+ "siteClearAll": {
+  "message": "Tümünü temizle"
+ },
  "optEffects": {
   "message": "Görsel efektler"
  },
@@ -383,7 +407,7 @@
   "message": "TextHumanize'e hoş geldiniz"
  },
  "tabText": {
-  "message": "Metin"
+  "message": "Metnim"
  },
  "tabPage": {
   "message": "Sayfa"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Yalnızca meta veri/kaynağı kaldırır. İçiçe işaretler (ör. SynthID) kaldırılamaz."
+ },
+ "modulesLabel": {
+  "message": "Modüller"
+ },
+ "customize": {
+  "message": "özelleştir ⚙"
+ },
+ "useText": {
+  "message": "Kullan"
+ },
+ "actMediaWm": {
+  "message": "Medya WM"
+ },
+ "actSiteAi": {
+  "message": "Site YZ"
+ },
+ "actSentiment": {
+  "message": "Duygu"
+ },
+ "actHealth": {
+  "message": "Sağlık"
+ },
+ "actUniqueness": {
+  "message": "Özgünlük"
+ },
+ "actPerplexity": {
+  "message": "Şaşkınlık"
+ },
+ "actKeywords": {
+  "message": "Anahtar"
+ },
+ "actStatistics": {
+  "message": "İstatistik"
+ },
+ "actSummarize": {
+  "message": "Özetle"
+ },
+ "actFormalize": {
+  "message": "Resmileştir"
+ },
+ "actSimplify": {
+  "message": "Basitleştir"
+ },
+ "actMediaClean": {
+  "message": "Medya temizle"
+ },
+ "orbHint": {
+  "message": "YZ puanı için metin yapıştırın veya seçin"
+ },
+ "descCheck": {
+  "message": "Bu metin için YZ olasılığı"
+ },
+ "descReadability": {
+  "message": "Metnin okunabilirliği (seviye)"
+ },
+ "descTone": {
+  "message": "Resmi mi samimi mi ton — ayarlanabilir"
+ },
+ "descSentiment": {
+  "message": "Olumlu / olumsuz duygu tonu"
+ },
+ "descHealth": {
+  "message": "Genel içerik kalitesi puanı (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Tekrar kontrolü"
+ },
+ "descPerplexity": {
+  "message": "Öngörülebilirlik ve değişkenlik — YZ düz yazar"
+ },
+ "descStylometry": {
+  "message": "Yazım stili ölçümleri"
+ },
+ "descKeywords": {
+  "message": "En sık geçen terimler"
+ },
+ "descStatistics": {
+  "message": "Kelime, cümle, çeşitlilik, okuma süresi"
+ },
+ "descHumanize": {
+  "message": "YZ metnini insana benzet"
+ },
+ "descParaphrase": {
+  "message": "Anlamı koruyarak yeniden ifade et"
+ },
+ "descSummarize": {
+  "message": "Anahtar cümlelere indir"
+ },
+ "descFormalize": {
+  "message": "Tonu daha resmi yap"
+ },
+ "descSimplify": {
+  "message": "İfadeyi sadeleştir"
+ },
+ "descClean": {
+  "message": "Görünmez karakterleri ve filigranları temizle"
+ },
+ "descImage": {
+  "message": "Görseli YZ ve C2PA için kontrol et"
+ },
+ "descMediaClean": {
+  "message": "Medyadan meta veri ve filigranı temizle"
+ },
+ "descMediaWm": {
+  "message": "Görsel, ses veya videoyu kontrol et — tek dokunuşla kaldır"
+ },
+ "descSiteAi": {
+  "message": "Tüm sitenin YZ ile yapılıp yapılmadığını tespit et"
+ },
+ "needText": {
+  "message": "Önce metin yapıştırın veya seçin — bu araç metinle çalışır."
+ },
+ "pageAiTextShort": {
+  "message": "YZ benzeri metin"
+ },
+ "siteLikelyAi": {
+  "message": "Muhtemelen YZ ile yapıldı"
+ },
+ "siteSomeAi": {
+  "message": "Belki YZ / site oluşturucu"
+ },
+ "siteLikelyHuman": {
+  "message": "Elle yapılmış görünüyor"
+ },
+ "siteHandcoded": {
+  "message": "Oluşturucu izi yok (elle)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ görselde YZ filigranı (C2PA/meta veri)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ metin bloğu YZ yazımı görünüyor",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "$COUNT$ üzerinde barındırılıyor — YZ/vibe-coding araçlarının tercih ettiği host",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "shadcn/ui + Radix + Lucide — YZ araçlarının yığını (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Lucide ikonları + Geist yazı tipi (v0 tarzı)"
+ },
+ "sig_shadcnTokens": {
+  "message": "shadcn tasarım token'ları (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "YZ girişimlerinin mor→camgöbeği degradesi"
+ },
+ "sig_radix": {
+  "message": "Radix UI ilkelleri"
+ },
+ "sig_geist": {
+  "message": "Geist yazı tipi (Vercel / v0 varsayılanı)"
+ },
+ "siteFbQ": {
+  "message": "YZ ile mi?"
+ },
+ "siteFbAi": {
+  "message": "Evet"
+ },
+ "siteFbHuman": {
+  "message": "Hayır"
+ },
+ "siteFbThanks": {
+  "message": "Kaydedildi — teşekkürler!"
+ },
+ "siteFbReset": {
+  "message": "sıfırla"
+ },
+ "optFeedback": {
+  "message": "Algılama geri bildirimi"
+ },
+ "optFeedbackDesc": {
+  "message": "👍/👎 cihazda saklanır (içeriksiz). Modeli geliştirmek için dışa aktar."
+ },
+ "optFeedbackCount": {
+  "message": "$COUNT$ etiket toplandı",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Etiketleri kopyala"
+ },
+ "siteEvidence": {
+  "message": "Sayfa kodundan kanıtlar"
+ },
+ "onboardTitle": {
+  "message": "TextHumanize'a hoş geldin 👋"
+ },
+ "onboardText": {
+  "message": "Üç sekme: Site (YZ ile mi yapıldı?), Metnim (kontrol/insanlaştır), Medya. Simgedeki kırmızı nokta = blok algılama kapalı — Site sekmesinden siteye göre aç."
+ },
+ "onboardOk": {
+  "message": "Anladım"
+ },
+ "showDiff": {
+  "message": "Değişiklikler"
+ },
+ "showText": {
+  "message": "Metin"
+ },
+ "supportLike": {
+  "message": "Beğendin mi?"
+ },
+ "supportStar": {
+  "message": "GitHub'da yıldız"
+ },
+ "supportDonate": {
+  "message": "Bağış"
+ },
+ "supportRate": {
+  "message": "Puan ver"
+ },
+ "supportTitle": {
+  "message": "Projeyi destekle"
+ },
+ "supportText": {
+  "message": "TextHumanize ücretsiz ve çevrimdışı. Bir yıldız ya da küçük bir bağış çok yardımcı olur — teşekkürler!"
+ },
+ "tabSite": {
+  "message": "Site"
+ },
+ "orbPctSite": {
+  "message": "SITE YZ"
+ },
+ "orbPctText": {
+  "message": "METİN YZ"
+ },
+ "scanInviteTitle": {
+  "message": "Bu sitede YZ bloklarını vurgula?"
+ },
+ "scanInviteText": {
+  "message": "Herhangi bir bloğun üzerine gelin, YZ puanını görün. Sadece burada."
+ },
+ "scanOnTitle": {
+  "message": "Blok vurgulama burada açık"
+ },
+ "scanDisable": {
+  "message": "Kapat"
+ },
+ "badgeScanOn": {
+  "message": "blok tarama AÇIK"
+ },
+ "badgeScanOff": {
+  "message": "blok tarama kapalı"
+ },
+ "sbInvite": {
+  "message": "Bu site YZ ile yapılmış görünüyor. YZ bloklarını burada vurgula?"
+ },
+ "sbScanEnable": {
+  "message": "Blok taramasını burada aç"
+ },
+ "sbScanOn": {
+  "message": "Bu site taranıyor ✓"
+ },
+ "scanThisSite": {
+  "message": "Bu sitede YZ bloklarını vurgula"
+ },
+ "kind_ai_builder": {
+  "message": "YZ site oluşturucu"
+ },
+ "kind_builder": {
+  "message": "görsel oluşturucu"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "e-ticaret platformu"
+ },
+ "kind_framework": {
+  "message": "framework (elle)"
+ },
+ "kind_docs": {
+  "message": "belge oluşturucu"
+ },
+ "kind_unknown": {
+  "message": "bilinmeyen platform"
  }
 }

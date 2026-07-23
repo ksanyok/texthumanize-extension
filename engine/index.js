@@ -10,7 +10,7 @@
  */
 
 export { humanize } from './pipeline.js';
-export { AIDetector, detectAi, sentenceScores } from './detector.js';
+export { AIDetector, detectAi, sentenceScores, quickScore } from './detector.js';
 export { detectLanguage } from './lang-detect.js';
 export { WatermarkDetector, detectWatermarks, cleanWatermarks } from './watermark.js';
 export { TypographyNormalizer } from './normalizer.js';
@@ -23,9 +23,20 @@ export { analyzeTone, adjustTone, ToneAnalyzer, ToneAdjuster } from './tone.js';
 export { analyzeReadability, ReadabilityAnalyzer } from './readability.js';
 export { paraphrase, ParaphraseEngine } from './paraphrase.js';
 export { fingerprint, compareStyle, Stylometry } from './stylometry.js';
+export { contentHealth, gradeFromScore } from './health.js';
+export { uniquenessScore, compareTexts } from './uniqueness.js';
+export { perplexityScore } from './perplexity.js';
+export { textStatistics } from './statistics.js';
+export { extractKeywords } from './keywords.js';
+export { analyzeSentiment } from './sentiment.js';
+export { summarize } from './summarize.js';
 export { classifyContent } from './content-type.js';
 export { detectMediaWatermarks, mediaFormat, mediaWatermarkReport, cleanMediaWatermarks, mediaCleanReport } from './media-forensics.js';
-export { TOOLS, getTool, isUnlocked, inlineTools, MONETIZATION_ENABLED } from './entitlements.js';
+export { siteForensics, FINGERPRINTS } from './site-forensics.js';
+export {
+  MODULES, getModule, moduleForOp, modulesIn, inlineModules,
+  TOOLS, getTool, isUnlocked, inlineTools, MONETIZATION_ENABLED,
+} from './entitlements.js';
 
 export const ENGINE_VERSION = '2.0.0';
 export const LIBRARY_VERSION = '0.34.0';

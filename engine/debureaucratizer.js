@@ -5,6 +5,7 @@
  */
 
 import { Rng, escapeRegex, matchCase } from './util.js';
+import { AI_MARKER_SYNONYMS } from './ai-markers-syn.js';
 
 /**
  * Rough gender/number class of a Cyrillic noun by its ending.
@@ -70,11 +71,27 @@ export class Debureaucratizer {
     if (prob < 0.05) return text;
 
     const wordCount = text.split(/\s+/).length;
-    this.maxChanges = Math.max(2, Math.floor(wordCount * 0.15));
+    // Scale the change budget with intensity so raising it actually rewrites
+    // more (was a flat 15% cap that made high intensity indistinguishable).
+    this.maxChanges = Math.max(2, Math.floor(wordCount * (0.15 + prob * 0.25)));
     this.changesMade = 0;
 
+    // Kill the exact AI-marker buzzwords first — they carry the most detector
+    // weight and the language packs don't cover them.
+    const aiSyn = AI_MARKER_SYNONYMS[this.langPack.code];
+    if (aiSyn) text = this._replaceFromDict(text, aiSyn, Math.max(prob, 0.85), 'de_ai_marker');
+
     // Phrases first (longest match wins), then single words.
-    text = this._replaceFromDict(text, this.langPack.bureaucratic_phrases, prob, 'decancel_phrase');
+    //
+    // Phrases run at near-certainty rather than at `prob`. A multi-word match
+    // like "it is important to note that" or "у сучасному світі" is an
+    // unambiguous AI tell, so leaving it in on a coin flip is simply a miss —
+    // on a short text that was enough to keep several markers and make
+    // humanizing look like it did nothing. Variety comes from *which*
+    // alternative is drawn, not from whether we act. Single words stay at
+    // `prob`: those are where blanket replacement starts to read mechanical.
+    text = this._replaceFromDict(
+      text, this.langPack.bureaucratic_phrases, Math.max(prob, 0.92), 'decancel_phrase');
     text = this._replaceFromDict(text, this.langPack.bureaucratic, prob, 'decancel_word');
     return text;
   }
@@ -118,6 +135,17 @@ export class Debureaucratizer {
           candidates = candidates.filter((c) => !/^(make|makes|making)\s+\w+$/i.test(c));
           if (candidates.length === 0) continue;
         }
+        // help/make/let take a bare infinitive, so they can't stand in front of
+        // a gerund. De-nominalization runs first and turns "the optimization
+        // of X" into "improving X", after which "facilitates" → "helps" gave
+        // "helps improving X". Drop those candidates when a gerund follows.
+        const nextWord = (text.slice(match.index + original.length)
+          .match(/^\s+([\p{L}']+)/u) || [])[1] || '';
+        if (/^\p{Ll}+ing$/u.test(nextWord)) {
+          candidates = candidates.filter(
+            (c) => !/^(help|helps|helped|make|makes|made|let|lets)$/i.test(c));
+          if (candidates.length === 0) continue;
+        }
         // Avoid determiner collisions: «the aforementioned» → «the this».
         if (/^(the|a|an|this|that|these|those)$/i.test(prevWord)) {
           candidates = replacements.filter(
@@ -126,6 +154,32 @@ export class Debureaucratizer {
         }
         const picked = this._pickReplacement(original, candidates);
         if (picked === null) continue;
+
+        // An empty replacement means "this phrase is best simply deleted" —
+        // the most human edit for an opening cliché. Deleting text needs more
+        // care than swapping it: without this, dropping "It is worth noting
+        // that " left a double space and a lower-case sentence start
+        // ("…daily lives.  these powerful tools…").
+        if (picked === '') {
+          const head = text.slice(0, match.index).replace(/[ \t]+$/, '');
+          let tail = text.slice(match.index + original.length)
+            .replace(/^[\s,;:]+/, '');
+          if (!tail) continue;
+          const startsText = head === '';
+          if (startsText || /[.!?…]["»']?$/u.test(head)) {
+            tail = tail[0].toLocaleUpperCase() + tail.slice(1);
+          }
+          text = (startsText ? '' : `${head} `) + tail;
+          this.changesMade++;
+          this.changes.push({
+            type: changeType,
+            description: `${original} → ∅`,
+            from: original,
+            to: '',
+          });
+          continue;
+        }
+
         const replacement = matchCase(original, picked);
 
         text = text.slice(0, match.index) + replacement +

@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — KI-Text natürlicher machen, prüfen & Wasserzeichen entfernen"
+  "message": "TextHumanize — KI-Text natürlicher machen"
  },
  "extDesc": {
   "message": "100 % offline: macht Texte natürlicher, schätzt KI-Wahrscheinlichkeit und entfernt versteckte Wasserzeichen — auf jeder Seite. 25 Sprachen."
@@ -67,6 +67,9 @@
  },
  "rerollHint": {
   "message": "Weitere Variante erzeugen"
+ },
+ "poweredBy": {
+  "message": "Basiert auf TextHumanize"
  },
  "credit": {
   "message": "Von Alexandr Krikun · Basiert auf TextHumanize"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Bild überfahren, um KI-Marker zu prüfen (Berechtigung nötig)"
  },
+ "optSiteBadge": {
+  "message": "KI-Score auf dem Symbol"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Den „mit KI erstellt?“-Score als Badge am Symbol zeigen (roter Punkt = Blockdetektor hier aus)."
+ },
+ "optScanSites": {
+  "message": "Seiten mit Block-Markierung"
+ },
+ "optScanSitesDesc": {
+  "message": "Die KI-Block-Erkennung läuft nur auf den aktivierten Seiten. Hier entfernen."
+ },
+ "siteListEmpty": {
+  "message": "Noch keine Seiten — im Popup auf einer Seite aktivieren."
+ },
+ "siteRemove": {
+  "message": "Entfernen"
+ },
+ "siteClearAll": {
+  "message": "Alle löschen"
+ },
  "optEffects": {
   "message": "Visuelle Effekte"
  },
@@ -383,7 +407,7 @@
   "message": "Willkommen bei TextHumanize"
  },
  "tabText": {
-  "message": "Text"
+  "message": "Mein Text"
  },
  "tabPage": {
   "message": "Seite"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Entfernt nur Metadaten/Provenienz. In-Content-Wasserzeichen (z. B. SynthID) nicht."
+ },
+ "modulesLabel": {
+  "message": "Module"
+ },
+ "customize": {
+  "message": "anpassen ⚙"
+ },
+ "useText": {
+  "message": "Übernehmen"
+ },
+ "actMediaWm": {
+  "message": "Medien-WZ"
+ },
+ "actSiteAi": {
+  "message": "Seite-KI"
+ },
+ "actSentiment": {
+  "message": "Stimmung"
+ },
+ "actHealth": {
+  "message": "Qualität"
+ },
+ "actUniqueness": {
+  "message": "Einzigartig"
+ },
+ "actPerplexity": {
+  "message": "Perplexität"
+ },
+ "actKeywords": {
+  "message": "Keywords"
+ },
+ "actStatistics": {
+  "message": "Statistik"
+ },
+ "actSummarize": {
+  "message": "Zusammenfassen"
+ },
+ "actFormalize": {
+  "message": "Formalisieren"
+ },
+ "actSimplify": {
+  "message": "Vereinfachen"
+ },
+ "actMediaClean": {
+  "message": "Medien säubern"
+ },
+ "orbHint": {
+  "message": "Text einfügen/markieren für den KI-Score"
+ },
+ "descCheck": {
+  "message": "KI-Wahrscheinlichkeit für diesen Text"
+ },
+ "descReadability": {
+  "message": "Wie leicht der Text zu lesen ist (Niveau)"
+ },
+ "descTone": {
+  "message": "Formaler vs. lockerer Ton — schnell anpassbar"
+ },
+ "descSentiment": {
+  "message": "Positive / negative Stimmung"
+ },
+ "descHealth": {
+  "message": "Gesamtqualität des Inhalts (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Prüfung auf Wiederholungen"
+ },
+ "descPerplexity": {
+  "message": "Vorhersagbarkeit & Varianz — KI schreibt flach"
+ },
+ "descStylometry": {
+  "message": "Kennzahlen zum Schreibstil"
+ },
+ "descKeywords": {
+  "message": "Top-Begriffe und ihre Häufigkeit"
+ },
+ "descStatistics": {
+  "message": "Wörter, Sätze, Vielfalt, Lesezeit"
+ },
+ "descHumanize": {
+  "message": "KI-Text menschlich umschreiben"
+ },
+ "descParaphrase": {
+  "message": "Umformulieren bei gleicher Bedeutung"
+ },
+ "descSummarize": {
+  "message": "Auf die Kernsätze kürzen"
+ },
+ "descFormalize": {
+  "message": "Ton förmlicher machen"
+ },
+ "descSimplify": {
+  "message": "Formulierung vereinfachen"
+ },
+ "descClean": {
+  "message": "Unsichtbare Zeichen & Wasserzeichen entfernen"
+ },
+ "descImage": {
+  "message": "Bild auf KI-Erzeugung & C2PA prüfen"
+ },
+ "descMediaClean": {
+  "message": "Metadaten & Wasserzeichen aus Medien entfernen"
+ },
+ "descMediaWm": {
+  "message": "Bild, Audio oder Video auf Wasserzeichen prüfen — mit einem Tipp entfernen"
+ },
+ "descSiteAi": {
+  "message": "Erkennen, ob die ganze Seite mit KI erstellt wurde"
+ },
+ "needText": {
+  "message": "Zuerst Text einfügen oder markieren — dieses Tool arbeitet mit Text."
+ },
+ "pageAiTextShort": {
+  "message": "KI-verdächtiger Text"
+ },
+ "siteLikelyAi": {
+  "message": "Wahrscheinlich mit KI erstellt"
+ },
+ "siteSomeAi": {
+  "message": "Evtl. mit KI/Baukasten erstellt"
+ },
+ "siteLikelyHuman": {
+  "message": "Wirkt handgemacht"
+ },
+ "siteHandcoded": {
+  "message": "Kein Baukasten erkannt (handcodiert)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ Bilder mit KI-Wasserzeichen (C2PA/Metadaten)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ Textblöcke wirken KI-geschrieben",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Gehostet auf $COUNT$ — bei KI-/Vibe-Coding-Tools beliebt",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "shadcn/ui + Radix + Lucide — der Stack von KI-Tools (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Lucide-Icons + Geist-Schrift (v0-Stil)"
+ },
+ "sig_shadcnTokens": {
+  "message": "shadcn-Design-Tokens (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Violett→Cyan-Verlauf im KI-Startup-Look"
+ },
+ "sig_radix": {
+  "message": "Radix-UI-Primitive"
+ },
+ "sig_geist": {
+  "message": "Geist-Schrift (Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Mit KI erstellt?"
+ },
+ "siteFbAi": {
+  "message": "Ja"
+ },
+ "siteFbHuman": {
+  "message": "Nein"
+ },
+ "siteFbThanks": {
+  "message": "Gespeichert — danke!"
+ },
+ "siteFbReset": {
+  "message": "zurücksetzen"
+ },
+ "optFeedback": {
+  "message": "Erkennungs-Feedback"
+ },
+ "optFeedbackDesc": {
+  "message": "Dein 👍/👎 wird lokal gespeichert (ohne Inhalt). Exportiere es, um das Modell zu verbessern."
+ },
+ "optFeedbackCount": {
+  "message": "$COUNT$ Labels gesammelt",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Labels kopieren"
+ },
+ "siteEvidence": {
+  "message": "Belege aus dem Seitencode"
+ },
+ "onboardTitle": {
+  "message": "Willkommen bei TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Drei Tabs: Seite (mit KI erstellt?), Mein Text (prüfen/humanisieren), Medien. Roter Punkt am Symbol = Blockerkennung aus — pro Seite im Tab „Seite“ aktivieren."
+ },
+ "onboardOk": {
+  "message": "Verstanden"
+ },
+ "showDiff": {
+  "message": "Änderungen"
+ },
+ "showText": {
+  "message": "Text"
+ },
+ "supportLike": {
+  "message": "Gefällt es dir?"
+ },
+ "supportStar": {
+  "message": "Auf GitHub sternen"
+ },
+ "supportDonate": {
+  "message": "Spenden"
+ },
+ "supportRate": {
+  "message": "Bewerten"
+ },
+ "supportTitle": {
+  "message": "Projekt unterstützen"
+ },
+ "supportText": {
+  "message": "TextHumanize ist kostenlos & offline. Ein Stern oder eine kleine Spende hilft sehr — danke!"
+ },
+ "tabSite": {
+  "message": "Seite"
+ },
+ "orbPctSite": {
+  "message": "KI SEITE"
+ },
+ "orbPctText": {
+  "message": "KI TEXT"
+ },
+ "scanInviteTitle": {
+  "message": "KI-Blöcke auf dieser Seite markieren?"
+ },
+ "scanInviteText": {
+  "message": "Zeige den KI-Score beim Überfahren jedes Blocks. Nur hier aktiv."
+ },
+ "scanOnTitle": {
+  "message": "Block-Markierung ist hier aktiv"
+ },
+ "scanDisable": {
+  "message": "Aus"
+ },
+ "badgeScanOn": {
+  "message": "Blockscan AN"
+ },
+ "badgeScanOff": {
+  "message": "Blockscan aus"
+ },
+ "sbInvite": {
+  "message": "Diese Seite wirkt KI-erstellt. KI-Blöcke hier markieren?"
+ },
+ "sbScanEnable": {
+  "message": "Blockscan hier aktivieren"
+ },
+ "sbScanOn": {
+  "message": "Diese Seite wird gescannt ✓"
+ },
+ "scanThisSite": {
+  "message": "KI-Blöcke auf dieser Seite markieren"
+ },
+ "kind_ai_builder": {
+  "message": "KI-Website-Baukasten"
+ },
+ "kind_builder": {
+  "message": "visueller Baukasten"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "E-Commerce-Plattform"
+ },
+ "kind_framework": {
+  "message": "Framework (handgebaut)"
+ },
+ "kind_docs": {
+  "message": "Doku-Generator"
+ },
+ "kind_unknown": {
+  "message": "unbekannte Plattform"
  }
 }

@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — гуманизация текста, проверка на ИИ и очистка меток"
+  "message": "TextHumanize — гуманизатор ИИ-текста"
  },
  "extDesc": {
   "message": "Полностью офлайн: делает текст естественнее, оценивает вероятность ИИ и удаляет скрытые метки — на любой странице. 25 языков."
@@ -68,8 +68,11 @@
  "rerollHint": {
   "message": "Сгенерировать другой вариант"
  },
+ "poweredBy": {
+  "message": "При поддержке TextHumanize"
+ },
  "credit": {
-  "message": "Автор: Alexandr Krikun · Работает на TextHumanize"
+  "message": "Автор: Alexandr Krikun · При поддержке библиотеки TextHumanize"
  },
  "creditExt": {
   "message": "Код расширения"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Наведите на картинку для проверки маркеров ИИ (нужен доступ к чтению изображений)"
  },
+ "optSiteBadge": {
+  "message": "Оценка ИИ на иконке расширения"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Показывать оценку «сделан ли сайт ИИ» на иконке (красная точка = детектор блоков здесь выключен)."
+ },
+ "optScanSites": {
+  "message": "Сайты с подсветкой ИИ-блоков"
+ },
+ "optScanSitesDesc": {
+  "message": "Подсветка ИИ-блоков на странице работает только на добавленных сайтах. Уберите лишние."
+ },
+ "siteListEmpty": {
+  "message": "Пока пусто — включите на нужном сайте через попап."
+ },
+ "siteRemove": {
+  "message": "Убрать"
+ },
+ "siteClearAll": {
+  "message": "Очистить всё"
+ },
  "optEffects": {
   "message": "Визуальные эффекты"
  },
@@ -383,7 +407,7 @@
   "message": "Добро пожаловать в TextHumanize"
  },
  "tabText": {
-  "message": "Текст"
+  "message": "Мой текст"
  },
  "tabPage": {
   "message": "Страница"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Удаляет только метаданные/провенанс. Внутриконтентные метки (напр. SynthID) убрать нельзя."
+ },
+ "modulesLabel": {
+  "message": "Модули"
+ },
+ "customize": {
+  "message": "настроить ⚙"
+ },
+ "useText": {
+  "message": "В поле"
+ },
+ "actMediaWm": {
+  "message": "Медиа-метки"
+ },
+ "actSiteAi": {
+  "message": "ИИ-сайт"
+ },
+ "actSentiment": {
+  "message": "Тональность"
+ },
+ "actHealth": {
+  "message": "Здоровье"
+ },
+ "actUniqueness": {
+  "message": "Уникальность"
+ },
+ "actPerplexity": {
+  "message": "Перплексия"
+ },
+ "actKeywords": {
+  "message": "Ключевые"
+ },
+ "actStatistics": {
+  "message": "Статистика"
+ },
+ "actSummarize": {
+  "message": "Резюме"
+ },
+ "actFormalize": {
+  "message": "Формальнее"
+ },
+ "actSimplify": {
+  "message": "Упростить"
+ },
+ "actMediaClean": {
+  "message": "Чистка медиа"
+ },
+ "orbHint": {
+  "message": "Вставьте или выделите текст — покажу ИИ-скор"
+ },
+ "descCheck": {
+  "message": "Оценка вероятности ИИ в тексте"
+ },
+ "descReadability": {
+  "message": "Насколько легко читается текст (уровень)"
+ },
+ "descTone": {
+  "message": "Формальность тона — с быстрой правкой"
+ },
+ "descSentiment": {
+  "message": "Позитивный / негативный тон"
+ },
+ "descHealth": {
+  "message": "Общая оценка качества текста (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Проверка на повторы и самоповторы"
+ },
+ "descPerplexity": {
+  "message": "Предсказуемость и «взрывность» — ИИ ровный"
+ },
+ "descStylometry": {
+  "message": "Метрики стиля письма"
+ },
+ "descKeywords": {
+  "message": "Ключевые слова и их частота"
+ },
+ "descStatistics": {
+  "message": "Слова, предложения, разнообразие, время чтения"
+ },
+ "descHumanize": {
+  "message": "Переписать текст, чтобы звучал по-человечески"
+ },
+ "descParaphrase": {
+  "message": "Перефразировать, сохранив смысл"
+ },
+ "descSummarize": {
+  "message": "Сжать до главных предложений"
+ },
+ "descFormalize": {
+  "message": "Сделать тон более формальным"
+ },
+ "descSimplify": {
+  "message": "Упростить формулировки"
+ },
+ "descClean": {
+  "message": "Убрать невидимые символы и водяные знаки"
+ },
+ "descImage": {
+  "message": "Проверить изображение на ИИ и C2PA"
+ },
+ "descMediaClean": {
+  "message": "Убрать метаданные и водяные знаки из медиа"
+ },
+ "descMediaWm": {
+  "message": "Проверить фото, аудио или видео на водяные знаки — убрать в один тап"
+ },
+ "descSiteAi": {
+  "message": "Определить, сделан ли весь сайт с помощью ИИ"
+ },
+ "needText": {
+  "message": "Сначала вставьте или выделите текст — инструмент работает с текстом."
+ },
+ "pageAiTextShort": {
+  "message": "Текст похож на ИИ"
+ },
+ "siteLikelyAi": {
+  "message": "Похоже, сайт собран ИИ"
+ },
+ "siteSomeAi": {
+  "message": "Возможно, собран ИИ или конструктором"
+ },
+ "siteLikelyHuman": {
+  "message": "Похоже, сделан вручную"
+ },
+ "siteHandcoded": {
+  "message": "Без следов конструктора (вручную)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ изображений с ИИ-водяным знаком (C2PA/метаданные)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ текстовых блоков похожи на ИИ",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Захостен на $COUNT$ — площадка, популярная у ИИ/vibe-coding инструментов",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "Стек shadcn/ui + Radix + Lucide — его выдают ИИ-инструменты (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Иконки Lucide + шрифт Geist (почерк v0)"
+ },
+ "sig_shadcnTokens": {
+  "message": "Дизайн-токены shadcn (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Фирменный ИИ-градиент фиолетовый→циан"
+ },
+ "sig_radix": {
+  "message": "Примитивы Radix UI"
+ },
+ "sig_geist": {
+  "message": "Шрифт Geist (по умолчанию у Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Сделан ИИ?"
+ },
+ "siteFbAi": {
+  "message": "Да"
+ },
+ "siteFbHuman": {
+  "message": "Нет"
+ },
+ "siteFbThanks": {
+  "message": "Учтено, спасибо!"
+ },
+ "siteFbReset": {
+  "message": "сбросить"
+ },
+ "optFeedback": {
+  "message": "Обратная связь по детекции"
+ },
+ "optFeedbackDesc": {
+  "message": "Ваши 👍/👎 по детекции сайтов хранятся на устройстве (без контента). Экспортируйте, чтобы помочь улучшить модель."
+ },
+ "optFeedbackCount": {
+  "message": "Собрано меток: $COUNT$",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Скопировать метки"
+ },
+ "siteEvidence": {
+  "message": "Улики из кода страницы"
+ },
+ "onboardTitle": {
+  "message": "Добро пожаловать в TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Три вкладки: Сайт (сделан ли ИИ?), Мой текст (проверить/гуманизировать), Медиа (водяные знаки). Красная точка на иконке = детектор блоков выключен — включите на нужном сайте во вкладке «Сайт»."
+ },
+ "onboardOk": {
+  "message": "Понятно"
+ },
+ "showDiff": {
+  "message": "Изменения"
+ },
+ "showText": {
+  "message": "Текст"
+ },
+ "supportLike": {
+  "message": "Нравится?"
+ },
+ "supportStar": {
+  "message": "Звезда на GitHub"
+ },
+ "supportDonate": {
+  "message": "Поддержать"
+ },
+ "supportRate": {
+  "message": "Оценить"
+ },
+ "supportTitle": {
+  "message": "Поддержать проект"
+ },
+ "supportText": {
+  "message": "TextHumanize бесплатный и офлайн. Звезда или небольшой донат очень помогают — спасибо!"
+ },
+ "tabSite": {
+  "message": "Сайт"
+ },
+ "orbPctSite": {
+  "message": "ИИ САЙТА"
+ },
+ "orbPctText": {
+  "message": "ИИ ТЕКСТА"
+ },
+ "scanInviteTitle": {
+  "message": "Подсветить ИИ-блоки на этом сайте?"
+ },
+ "scanInviteText": {
+  "message": "Наведите на любой блок — увидите вероятность ИИ. Включается только здесь, на других сайтах выключено."
+ },
+ "scanOnTitle": {
+  "message": "Подсветка блоков включена здесь"
+ },
+ "scanDisable": {
+  "message": "Выключить"
+ },
+ "badgeScanOn": {
+  "message": "детекция блоков ВКЛ"
+ },
+ "badgeScanOff": {
+  "message": "детекция блоков выкл"
+ },
+ "sbInvite": {
+  "message": "Похоже, сайт собран ИИ. Подсветить ИИ-блоки на этой странице?"
+ },
+ "sbScanEnable": {
+  "message": "Включить сканер блоков"
+ },
+ "sbScanOn": {
+  "message": "Сканирую этот сайт ✓"
+ },
+ "scanThisSite": {
+  "message": "Подсвечивать ИИ-блоки на этом сайте"
+ },
+ "kind_ai_builder": {
+  "message": "ИИ-конструктор сайтов"
+ },
+ "kind_builder": {
+  "message": "визуальный конструктор"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "платформа интернет-магазина"
+ },
+ "kind_framework": {
+  "message": "фреймворк (вручную)"
+ },
+ "kind_docs": {
+  "message": "генератор документации"
+ },
+ "kind_unknown": {
+  "message": "неизвестная платформа"
  }
 }

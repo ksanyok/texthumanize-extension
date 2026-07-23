@@ -132,6 +132,53 @@ function countMatches(text, re) {
 
 const clamp01 = (x) => Math.max(0, Math.min(1, x));
 
+// ── Anti-evasion input normalization ──────────────────────────
+// Homoglyph and zero-width insertion break token-frequency detectors badly
+// (−42…−76 pp in the RAID benchmark), so normalize BEFORE any metric runs.
+
+// Invisible / format characters used to pad or split tokens.
+const INVISIBLES = new RegExp(
+  '[\\u00AD\\u200B-\\u200F\\u202A-\\u202E\\u2060-\\u2064\\u2066-\\u206F\\uFEFF]', 'g');
+
+// Confusable Cyrillic/Greek letters → their Latin look-alike. Applied ONLY to a
+// word that is majority-Latin, so genuine Cyrillic/Greek words are untouched.
+const CONFUSABLE_TO_LATIN = {
+  а: 'a', е: 'e', о: 'o', р: 'p', с: 'c', у: 'y', х: 'x', і: 'i', ј: 'j',
+  ѕ: 's', һ: 'h', к: 'k', м: 'm', т: 't', в: 'b', н: 'h', ё: 'e',
+  А: 'A', Е: 'E', О: 'O', Р: 'P', С: 'C', У: 'Y', Х: 'X', І: 'I', В: 'B',
+  Н: 'H', К: 'K', М: 'M', Т: 'T', Ѕ: 'S', Ј: 'J',
+  α: 'a', ο: 'o', ρ: 'p', ε: 'e', ν: 'v', κ: 'k', Α: 'A', Β: 'B', Ε: 'E',
+  Ζ: 'Z', Η: 'H', Ι: 'I', Κ: 'K', Μ: 'M', Ν: 'N', Ο: 'O', Ρ: 'P', Τ: 'T',
+  Υ: 'Y', Χ: 'X',
+};
+const LATIN_RE = /[a-z]/i;
+const CONFUSABLE_RE = /[Ѐ-ӿͰ-Ͽ]/; // Cyrillic or Greek block
+
+/**
+ * Strip invisible characters and fold homoglyphs in Latin-majority words so a
+ * homoglyph/zero-width evasion can't hide AI markers from the token metrics.
+ * Real Cyrillic/Greek text (whole words in those scripts) is left as-is.
+ * @param {string} text
+ */
+function normalizeForDetection(text) {
+  if (!text) return text;
+  let t = text.replace(INVISIBLES, '');
+  if (!CONFUSABLE_RE.test(t)) return t; // fast path: no mixed-script risk
+  return t.replace(/[^\s]+/g, (word) => {
+    if (!LATIN_RE.test(word)) return word; // no Latin → genuine other-script word
+    let latin = 0; let confusable = 0;
+    for (const ch of word) {
+      if (/[a-z]/i.test(ch)) latin++;
+      else if (CONFUSABLE_TO_LATIN[ch]) confusable++;
+    }
+    // Only fold when the word is genuinely Latin with a few confusables mixed in.
+    if (!confusable || latin < confusable) return word;
+    let out = '';
+    for (const ch of word) out += CONFUSABLE_TO_LATIN[ch] || ch;
+    return out;
+  });
+}
+
 // ── Unicode-aware regex construction ──────────────────────────
 // Python's `\b` / `\w` are Unicode-aware; JS's are ASCII-only. Convert
 // `\b` → full Unicode word boundary, `\w` → [\p{L}\p{N}_] (needs /u).
@@ -630,6 +677,37 @@ const ACTIVE_MARKER_PATTERNS = [
   uniRe(String.raw`\b(?:yo|nosotros|tú|usted|él|ella|ellos)\s+\w+`, 'giu'),
 ];
 
+// ── Structural scaffolding of instruction-tuned output ──
+// These survive paraphrase (a paraphraser keeps the skeleton) and persist across
+// model generations, unlike the lexicon. See research/text-signals-2026.md.
+
+// Sequential enumeration openers ("First,/Second,/Finally", "во-первых", …).
+const ENUMERATION_MARKERS = [
+  uniRe(String.raw`(?:^|[.!?…]["»']?\s+)(?:first|second|third|fourth|fifth|firstly|secondly|thirdly|finally|lastly|next|then|moreover|furthermore)\s*,`, 'gimu'),
+  uniRe(String.raw`(?:^|[.!?…]\s+)(?:во-первых|во-вторых|в-третьих|в-четвёртых|наконец|далее|затем)\b`, 'gimu'),
+  uniRe(String.raw`(?:^|[.!?…]\s+)(?:по-перше|по-друге|по-третє|нарешті|далі|потім)\b`, 'gimu'),
+  uniRe(String.raw`(?:^|[.!?…]\s+)(?:erstens|zweitens|drittens|schließlich|außerdem)\b`, 'gimu'),
+  uniRe(String.raw`(?:^|[.!?…]\s+)(?:primero|segundo|tercero|finalmente|por último|además)\b`, 'gimu'),
+  uniRe(String.raw`(?:^|\n)\s*(?:\d{1,2}[.)]\s|[-*•]\s)`, 'gmu'), // numbered / bulleted list line
+];
+// List-introducing colon: "…the key components:", "…the following:".
+const LIST_INTRO = [
+  uniRe(String.raw`\b(?:following|these|key|main|several|important|below|steps|components|reasons|benefits|factors|ways|points|aspects|elements)\s*:`, 'giu'),
+  uniRe(String.raw`\b(?:следующ\w+|ключев\w+|основн\w+|несколько|важн\w+|причин\w+|преимуществ\w+|факторов|шаг\w+|компонент\w+)\s*:`, 'giu'),
+];
+// Present-participial appended clauses (", enabling …", ", providing …") — the
+// -ing tail AI reaches for. Curated so it does not fire on ordinary gerunds.
+const PARTICIPIAL_TAILS = [
+  uniRe(String.raw`,\s+(?:enabling|providing|allowing|ensuring|highlighting|making|creating|offering|leveraging|fostering|driving|improving|reducing|increasing|helping|leading|resulting|reflecting|showcasing|emphasizing|underscoring|empowering|streamlining|enhancing|delivering)\b`, 'giu'),
+];
+// Negative parallelism / merism — "not only X but also Y", "it's not X, it's Y".
+const NEGATIVE_PARALLELISM = [
+  uniRe(String.raw`\bnot only\b[^.!?]{3,60}\bbut also\b`, 'giu'),
+  uniRe(String.raw`\bit'?s not (?:just |merely |simply )?[^.!?,]{2,40},?\s+it'?s\b`, 'giu'),
+  uniRe(String.raw`\bне только\b[^.!?]{3,60}\bно и\b`, 'giu'),
+  uniRe(String.raw`\bне просто\b[^.!?]{2,40},?\s+а\b`, 'giu'),
+];
+
 // Grammar metric regexes
 const RE_CONTRACTIONS = uniRe(String.raw`\b\w+'(?:t|s|re|ve|ll|d|m)\b`, 'giu');
 const RE_OXFORD = uniRe(String.raw`,\s+and\b`, 'giu');
@@ -794,23 +872,31 @@ function sniffLang(text) {
 //  Detector
 // ═══════════════════════════════════════════════════════════════
 
-/** Metric weights (zipf/coherence/topic_sentence dropped from the Python set). */
+/**
+ * Metric weights. Rebalanced 2026 against measured per-metric separation
+ * (scripts/bench-detector.mjs): weight moved off metrics that neither separate
+ * nor survive paraphrase (opening/grammar/perplexity/semantic_rep/vocabulary/
+ * readability) onto the ones that measurably do (pattern, burstiness, voice,
+ * stylometry, entity, discourse). `structure` is the new enumeration/scaffold
+ * signal. zipf/coherence/topic_sentence remain unimplemented stubs at 0.
+ */
 const WEIGHTS = {
-  pattern: 0.20,
+  pattern: 0.19,
   burstiness: 0.14,
-  stylometry: 0.09,
-  voice: 0.08,
-  entity: 0.07,
-  opening: 0.06,
-  grammar: 0.05,
+  voice: 0.11,
+  stylometry: 0.10,
+  entity: 0.08,
+  structure: 0.08,
+  discourse: 0.06,
+  rhythm: 0.05,
   entropy: 0.04,
-  discourse: 0.04,
-  vocabulary: 0.04,
-  rhythm: 0.04,
-  perplexity: 0.03,
-  semantic_rep: 0.03,
-  readability: 0.02,
-  punctuation: 0.02,
+  opening: 0.03,
+  grammar: 0.03,
+  vocabulary: 0.02,
+  perplexity: 0.02,
+  semantic_rep: 0.02,
+  readability: 0.005,
+  punctuation: 0.005,
 };
 
 /** Domain-specific weight adjustments (as in Python). */
@@ -851,6 +937,7 @@ export class AIDetector {
    * @returns {DetectionResult}
    */
   detect(text, options = {}) {
+    if (typeof text === 'string') text = normalizeForDetection(text);
     const langPack =
       options.langPack !== undefined ? options.langPack : this._defaultPack;
     let lang = options.lang || this._defaultLang || null;
@@ -906,6 +993,7 @@ export class AIDetector {
       semantic_rep: this._calcSemanticRepetition(text, sentences),
       entity: this._calcEntitySpecificity(text, words),
       voice: this._calcVoice(text, sentences),
+      structure: this._calcStructure(text, sentences, lang),
     };
 
     // ── Domain detection & adaptive weights ──
@@ -1446,31 +1534,20 @@ export class AIDetector {
     const parens = countSub(text, '(');
 
     const k = 1000 / totalChars;
-    const semiRate = semicolons * k;
-    const colonRate = colons * k;
-    const dashRate = emDashes * k;
     const ellipsisRate = ellipsis * k;
     const exclRate = exclamations * k;
 
-    const semiScore = Math.min(semiRate / 3.0, 1.0);
-    const colonScore = Math.min(colonRate / 3.0, 1.0);
-    const dashScore = Math.min(dashRate / 4.0, 1.0);
-    const ellipsisScore = Math.max(0, 1.0 - ellipsisRate / 2.0);
-    const exclScore = Math.max(0, 1.0 - exclRate / 2.0);
-
-    const punctTypes = [
-      semicolons, colons, emDashes, ellipsis, exclamations, questions, parens,
-    ].filter((v) => v > 0).length;
-    const diversityScore = Math.max(0, 1.0 - punctTypes / 5.0);
-
-    return clamp01(
-      semiScore * 0.2
-        + colonScore * 0.15
-        + dashScore * 0.15
-        + ellipsisScore * 0.15
-        + exclScore * 0.1
-        + diversityScore * 0.25,
-    );
+    // Semicolons, colons, em-dashes and « » are marks of careful HUMAN editing,
+    // not AI — scoring them as AI (and penalising punctuation diversity) made
+    // this metric fire on well-edited classic prose, i.e. it ran inverted
+    // (measured human 0.56 > ai 0.48). Em-dash frequency is also epoch-dependent
+    // and now user-tunable, so it is an unreliable, high-false-positive signal.
+    // Keep only the weak, low-FP direction: AI assistant/blog prose rarely uses
+    // exclamations or trailing ellipses. Small on its own (weight is tiny).
+    void semicolons; void colons; void emDashes; void questions; void parens;
+    const calmScore = Math.max(0, 1.0 - (exclRate + ellipsisRate) / 2.0);
+    // Blend gently toward neutral so this never dominates or inverts again.
+    return clamp01(0.42 + calmScore * 0.16);
   }
 
   // ─── 9. Grammar "perfection" ──────────────────────────────
@@ -1942,9 +2019,6 @@ export class AIDetector {
       nominalizationCount += countMatches(textLower, re);
     }
 
-    const passiveRatio = totalClauses > 0 ? passiveCount / totalClauses : 0;
-    const passiveScore = Math.min(passiveRatio / 0.4, 1.0);
-
     const wordCount = tokens(text).length;
     const nomRatio = wordCount > 0 ? nominalizationCount / wordCount : 0;
     const nomScore = Math.min(nomRatio / 0.07, 1.0);
@@ -1956,7 +2030,41 @@ export class AIDetector {
     const activeRatio = totalClauses > 0 ? activeMarkers / totalClauses : 0;
     const activeScore = Math.max(0, 1.0 - activeRatio / 0.3);
 
-    return clamp01(passiveScore * 0.35 + nomScore * 0.35 + activeScore * 0.30);
+    // Nominalization (heavy noun style) is the robust AI tell — ×1.5–2 in
+    // instruction-tuned output (Reinhart, PNAS 2025) — so it carries the metric.
+    // The PASSIVE ratio is deliberately NOT scored as AI here: in English GPT-4o
+    // uses agentless passive at ~half the human rate (so high passive skews
+    // HUMAN), and in RU/UK/DE passive+nominal is ordinary bureaucratic register.
+    // Counting it pushed the metric the wrong way (measured inversion on
+    // edited human prose). `passiveCount` stays computed for reporting only.
+    void passiveCount;
+    return clamp01(nomScore * 0.62 + activeScore * 0.38);
+  }
+
+  /**
+   * Structural scaffolding — the enumeration / list-intro / participial-tail /
+   * negative-parallelism shape of instruction-tuned writing. This is the tell
+   * that survives paraphrase and generation changes, and the one the old metric
+   * set missed entirely (assistant-register text scored ~40% before).
+   * @returns {number} 0..1
+   */
+  _calcStructure(text, sentences, _lang) {
+    const nSent = Math.max(1, sentences.length);
+    const enumHits = ENUMERATION_MARKERS.reduce((a, re) => a + countMatches(text, re), 0);
+    const listHits = LIST_INTRO.reduce((a, re) => a + countMatches(text, re), 0);
+    const partHits = PARTICIPIAL_TAILS.reduce((a, re) => a + countMatches(text, re), 0);
+    const negHits = NEGATIVE_PARALLELISM.reduce((a, re) => a + countMatches(text, re), 0);
+
+    // Densities per sentence, each capped so one device can't max the metric.
+    const enumScore = Math.min(enumHits / nSent / 0.5, 1.0);      // ≥1 enumerator per 2 sentences → max
+    const listScore = Math.min(listHits / nSent / 0.25, 1.0);
+    const partScore = Math.min(partHits / nSent / 0.4, 1.0);
+    const negScore = Math.min(negHits / nSent / 0.2, 1.0);
+
+    // Sequential enumeration is the strongest single scaffold; blend the rest.
+    const raw = enumScore * 0.42 + partScore * 0.28 + listScore * 0.18 + negScore * 0.12;
+    // Absence of any scaffold is mildly human-leaning; presence pushes to AI.
+    return clamp01(0.34 + raw * 0.62);
   }
 
   // ─── Ensemble aggregation ─────────────────────────────────
@@ -1973,8 +2081,8 @@ export class AIDetector {
 
     // 2. Strong signal detector
     const strongMetrics = [
-      'pattern', 'burstiness', 'opening', 'stylometry',
-      'discourse', 'voice', 'grammar',
+      'pattern', 'burstiness', 'stylometry',
+      'discourse', 'voice', 'structure',
     ];
     const strongVals = strongMetrics.map((m) => scores[m] ?? 0.5);
     const strongAvg = mean(strongVals);
@@ -2134,6 +2242,48 @@ export function sentenceScores(text, options = {}) {
   });
 
   return { sentences: scored, overall };
+}
+
+/**
+ * Fast AI-likelihood for an arbitrary text block of ANY length — for hover
+ * badges and page scanning. Uses the full detector when the block is long
+ * enough; otherwise falls back to a marker-density estimate (the full
+ * detector returns 0 for <2 sentences / <50 chars).
+ * @param {string} text
+ * @param {{lang?: string, langPack?: LangPack|null}} [options]
+ * @returns {{ prob: number, verdict: 'ai'|'mixed'|'human', words: number }}
+ */
+export function quickScore(text, options = {}) {
+  const s = String(text || '');
+  const words = (s.match(/\p{L}[\p{L}\p{N}'’-]*/gu) || []);
+  const doc = new AIDetector().detect(s, options);
+  let prob;
+  if (doc.verdict && doc.verdict !== 'unknown') {
+    prob = doc.aiProbability;
+  } else {
+    // Marker-density estimate for short blocks.
+    const langPack = options.langPack || null;
+    const packAi = new Set([
+      ...keysOf(langPack?.ai_connectors).map((w) => String(w).toLowerCase()),
+      ...keysOf(langPack?.bureaucratic).map((w) => String(w).toLowerCase()),
+    ]);
+    const low = s.toLowerCase();
+    const toks = low.match(/\p{L}[\p{L}\p{N}'’-]*/gu) || [];
+    const n = Math.max(6, toks.length);
+    let ai = 0;
+    let human = 0;
+    for (const w of toks) {
+      if (HEATMAP_AI_WORDS.has(w) || packAi.has(w)) ai++;
+      if (HEATMAP_HUMAN_WORDS.has(w)) human++;
+    }
+    if (/\bit is important to note|as an ai|furthermore|in conclusion\b/.test(low)) ai += 2;
+    const aiDensity = ai / n;
+    const humanDensity = human / n;
+    const longWords = toks.filter((w) => w.length >= 9).length / n;
+    prob = Math.max(0, Math.min(1, 0.42 + aiDensity * 1.7 - humanDensity * 1.5 + longWords * 0.4));
+  }
+  const verdict = prob >= 0.6 ? 'ai' : prob >= 0.4 ? 'mixed' : 'human';
+  return { prob, verdict, words: words.length };
 }
 
 export default AIDetector;

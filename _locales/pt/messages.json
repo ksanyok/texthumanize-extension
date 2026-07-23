@@ -1,6 +1,6 @@
 {
  "extName": {
-  "message": "TextHumanize — humanizar texto de IA, verificar e limpar marcas"
+  "message": "TextHumanize — humanizar texto de IA"
  },
  "extDesc": {
   "message": "100% offline: torna o texto mais natural, estima a probabilidade de IA e remove marcas ocultas — em qualquer página. 25 idiomas."
@@ -67,6 +67,9 @@
  },
  "rerollHint": {
   "message": "Gerar outra variante"
+ },
+ "poweredBy": {
+  "message": "Com tecnologia TextHumanize"
  },
  "credit": {
   "message": "Por Alexandr Krikun · Com tecnologia TextHumanize"
@@ -364,6 +367,27 @@
  "optImageHoverDesc": {
   "message": "Passe sobre uma imagem para verificar marcas de IA (requer permissão)"
  },
+ "optSiteBadge": {
+  "message": "Pontuação de IA no ícone"
+ },
+ "optSiteBadgeDesc": {
+  "message": "Mostrar a pontuação “feito com IA?” no ícone (ponto vermelho = detector de blocos desligado aqui)."
+ },
+ "optScanSites": {
+  "message": "Sites com destaque de blocos"
+ },
+ "optScanSitesDesc": {
+  "message": "A detecção de blocos de IA só funciona nos sites ativados. Remova-os aqui."
+ },
+ "siteListEmpty": {
+  "message": "Nenhum site ainda — ative pelo popup em qualquer site."
+ },
+ "siteRemove": {
+  "message": "Remover"
+ },
+ "siteClearAll": {
+  "message": "Limpar tudo"
+ },
  "optEffects": {
   "message": "Efeitos visuais"
  },
@@ -383,7 +407,7 @@
   "message": "Bem-vindo ao TextHumanize"
  },
  "tabText": {
-  "message": "Texto"
+  "message": "Meu texto"
  },
  "tabPage": {
   "message": "Página"
@@ -462,5 +486,301 @@
  },
  "mediaHonest": {
   "message": "Remove apenas metadados/proveniência. Marcas no conteúdo (ex. SynthID) não."
+ },
+ "modulesLabel": {
+  "message": "Módulos"
+ },
+ "customize": {
+  "message": "personalizar ⚙"
+ },
+ "useText": {
+  "message": "Usar"
+ },
+ "actMediaWm": {
+  "message": "Mídia WM"
+ },
+ "actSiteAi": {
+  "message": "Site IA"
+ },
+ "actSentiment": {
+  "message": "Sentimento"
+ },
+ "actHealth": {
+  "message": "Saúde"
+ },
+ "actUniqueness": {
+  "message": "Unicidade"
+ },
+ "actPerplexity": {
+  "message": "Perplexidade"
+ },
+ "actKeywords": {
+  "message": "Palavras-chave"
+ },
+ "actStatistics": {
+  "message": "Estatísticas"
+ },
+ "actSummarize": {
+  "message": "Resumir"
+ },
+ "actFormalize": {
+  "message": "Formalizar"
+ },
+ "actSimplify": {
+  "message": "Simplificar"
+ },
+ "actMediaClean": {
+  "message": "Limpar mídia"
+ },
+ "orbHint": {
+  "message": "Cole ou selecione texto para ver a pontuação de IA"
+ },
+ "descCheck": {
+  "message": "Probabilidade de IA neste texto"
+ },
+ "descReadability": {
+  "message": "Facilidade de leitura (nível)"
+ },
+ "descTone": {
+  "message": "Tom formal ou casual — ajustável"
+ },
+ "descSentiment": {
+  "message": "Tom emocional positivo / negativo"
+ },
+ "descHealth": {
+  "message": "Pontuação geral de qualidade (0–100)"
+ },
+ "descUniqueness": {
+  "message": "Verificação de repetições"
+ },
+ "descPerplexity": {
+  "message": "Previsibilidade e variação — a IA é plana"
+ },
+ "descStylometry": {
+  "message": "Métricas de estilo de escrita"
+ },
+ "descKeywords": {
+  "message": "Termos principais e sua frequência"
+ },
+ "descStatistics": {
+  "message": "Palavras, frases, diversidade, tempo de leitura"
+ },
+ "descHumanize": {
+  "message": "Reescreve o texto de IA para soar humano"
+ },
+ "descParaphrase": {
+  "message": "Reformula mantendo o significado"
+ },
+ "descSummarize": {
+  "message": "Resume às frases-chave"
+ },
+ "descFormalize": {
+  "message": "Torna o tom mais formal"
+ },
+ "descSimplify": {
+  "message": "Simplifica a redação"
+ },
+ "descClean": {
+  "message": "Remove caracteres invisíveis e marcas ocultas"
+ },
+ "descImage": {
+  "message": "Verifica se a imagem é IA e C2PA"
+ },
+ "descMediaClean": {
+  "message": "Remove metadados e marcas d'água de mídia"
+ },
+ "descMediaWm": {
+  "message": "Verifica imagem, áudio ou vídeo — remova num toque"
+ },
+ "descSiteAi": {
+  "message": "Detecta se todo o site foi criado com IA"
+ },
+ "needText": {
+  "message": "Primeiro cole ou selecione texto — esta ferramenta trabalha com texto."
+ },
+ "pageAiTextShort": {
+  "message": "Texto tipo IA"
+ },
+ "siteLikelyAi": {
+  "message": "Provavelmente criado com IA"
+ },
+ "siteSomeAi": {
+  "message": "Talvez IA / criador de sites"
+ },
+ "siteLikelyHuman": {
+  "message": "Parece feito à mão"
+ },
+ "siteHandcoded": {
+  "message": "Sem construtor detectado (à mão)"
+ },
+ "sigAiImages": {
+  "message": "$COUNT$ imagens com marca d'água de IA (C2PA/metadados)",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigAiText": {
+  "message": "$COUNT$ blocos de texto parecem de IA",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sigVibeHost": {
+  "message": "Hospedado em $COUNT$ — plataforma popular entre ferramentas IA/vibe-coding",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "sig_shadcn": {
+  "message": "Stack shadcn/ui + Radix + Lucide — de ferramentas IA (v0/Lovable/Bolt)"
+ },
+ "sig_lucideGeist": {
+  "message": "Ícones Lucide + fonte Geist (estilo v0)"
+ },
+ "sig_shadcnTokens": {
+  "message": "Tokens de design shadcn (bg-background, text-foreground…)"
+ },
+ "sig_aiGradient": {
+  "message": "Paleta gradiente violeta→ciano de startups IA"
+ },
+ "sig_radix": {
+  "message": "Primitivas Radix UI"
+ },
+ "sig_geist": {
+  "message": "Fonte Geist (padrão Vercel / v0)"
+ },
+ "siteFbQ": {
+  "message": "Feito com IA?"
+ },
+ "siteFbAi": {
+  "message": "Sim"
+ },
+ "siteFbHuman": {
+  "message": "Não"
+ },
+ "siteFbThanks": {
+  "message": "Salvo — obrigado!"
+ },
+ "siteFbReset": {
+  "message": "redefinir"
+ },
+ "optFeedback": {
+  "message": "Feedback de detecção"
+ },
+ "optFeedbackDesc": {
+  "message": "Seus 👍/👎 são salvos no dispositivo (sem conteúdo). Exporte para melhorar o modelo."
+ },
+ "optFeedbackCount": {
+  "message": "$COUNT$ rótulos coletados",
+  "placeholders": {
+   "count": {
+    "content": "$1"
+   }
+  }
+ },
+ "optFeedbackCopy": {
+  "message": "Copiar rótulos"
+ },
+ "siteEvidence": {
+  "message": "Evidências do código da página"
+ },
+ "onboardTitle": {
+  "message": "Bem-vindo ao TextHumanize 👋"
+ },
+ "onboardText": {
+  "message": "Três abas: Site (feito com IA?), Meu texto (verificar/humanizar), Mídia. Ponto vermelho no ícone = detecção de blocos desligada — ative por site na aba Site."
+ },
+ "onboardOk": {
+  "message": "Entendi"
+ },
+ "showDiff": {
+  "message": "Alterações"
+ },
+ "showText": {
+  "message": "Texto"
+ },
+ "supportLike": {
+  "message": "Gostou?"
+ },
+ "supportStar": {
+  "message": "Estrela no GitHub"
+ },
+ "supportDonate": {
+  "message": "Doar"
+ },
+ "supportRate": {
+  "message": "Avaliar"
+ },
+ "supportTitle": {
+  "message": "Apoiar o projeto"
+ },
+ "supportText": {
+  "message": "TextHumanize é grátis e offline. Uma estrela ou uma pequena doação ajuda muito — obrigado!"
+ },
+ "tabSite": {
+  "message": "Site"
+ },
+ "orbPctSite": {
+  "message": "IA SITE"
+ },
+ "orbPctText": {
+  "message": "IA TEXTO"
+ },
+ "scanInviteTitle": {
+  "message": "Destacar blocos de IA neste site?"
+ },
+ "scanInviteText": {
+  "message": "Passe o mouse em qualquer bloco para ver a pontuação de IA. Só aqui."
+ },
+ "scanOnTitle": {
+  "message": "Destaque de blocos ativado aqui"
+ },
+ "scanDisable": {
+  "message": "Desativar"
+ },
+ "badgeScanOn": {
+  "message": "varredura ON"
+ },
+ "badgeScanOff": {
+  "message": "varredura off"
+ },
+ "sbInvite": {
+  "message": "Este site parece feito com IA. Destacar os blocos de IA aqui?"
+ },
+ "sbScanEnable": {
+  "message": "Ativar varredura de blocos aqui"
+ },
+ "sbScanOn": {
+  "message": "Escaneando este site ✓"
+ },
+ "scanThisSite": {
+  "message": "Destacar blocos de IA neste site"
+ },
+ "kind_ai_builder": {
+  "message": "criador de sites IA"
+ },
+ "kind_builder": {
+  "message": "criador visual"
+ },
+ "kind_cms": {
+  "message": "CMS"
+ },
+ "kind_ecommerce": {
+  "message": "plataforma e-commerce"
+ },
+ "kind_framework": {
+  "message": "framework (à mão)"
+ },
+ "kind_docs": {
+  "message": "gerador de docs"
+ },
+ "kind_unknown": {
+  "message": "plataforma desconhecida"
  }
 }

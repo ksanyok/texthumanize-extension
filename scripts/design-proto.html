@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TextHumanize — Aura Mono</title>
+<style>
+  :root {
+    --bg0: #070709;
+    --bg1: #101216;
+    --fg: #f3f4f8;
+    --dim: #868b98;
+    --glass: rgba(255,255,255,.045);
+    --glass-line: rgba(255,255,255,.10);
+    --hue: 8;                 /* score color: 120 green → 0 red */
+    --glow: hsla(var(--hue),90%,55%,.5);
+  }
+  * { box-sizing: border-box; margin: 0; -webkit-font-smoothing: antialiased; }
+  body {
+    width: 420px; min-height: 664px; margin: 0 auto; color: var(--fg);
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    background: radial-gradient(140% 100% at 50% -25%, var(--bg1), var(--bg0) 58%);
+    position: relative; overflow: hidden;
+  }
+  /* premium noise grain */
+  body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+  /* single, neutral ambient light that faintly picks up the score hue near the orb */
+  .halo { position: fixed; left:50%; top:46%; width:340px; height:340px; transform:translate(-50%,-50%); z-index:0; pointer-events:none;
+    background: radial-gradient(circle, var(--glow), transparent 62%); filter: blur(50px); opacity:.5; transition:background .5s; }
+
+  .wrap { position: relative; z-index: 1; padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 15px; }
+
+  header { display: flex; align-items: center; gap: 10px; }
+  .mark { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; letter-spacing: .3px; }
+  .mark .dot { width: 21px; height: 21px; border-radius: 7px; background: linear-gradient(145deg,#2a2d36,#0d0e12); border:1px solid rgba(255,255,255,.14); position:relative; }
+  .mark .dot::after{ content:""; position:absolute; inset:5px; border-radius:3px; background:conic-gradient(from 200deg,#e7e9f2,#8b90a0,#e7e9f2); opacity:.85; }
+  .spacer { flex: 1; }
+  .page-chip { display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: var(--dim); background: var(--glass); border: 1px solid var(--glass-line); padding: 5px 11px; border-radius: 20px; }
+  .page-chip b { color: #ff9a7a; font-weight: 700; }
+  .live { width: 6px; height: 6px; border-radius: 50%; background: #ff7a5c; animation: pulse 1.9s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,122,92,.5);} 70%{box-shadow:0 0 0 7px rgba(255,122,92,0);} 100%{box-shadow:0 0 0 0 rgba(255,122,92,0);} }
+
+  .field { background: var(--glass); border: 1px solid var(--glass-line); border-radius: 16px; padding: 13px 15px; font-size: 13px; line-height: 1.55; color: var(--dim); min-height: 64px; }
+
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 4px 0 0; }
+  .orb-wrap { position: relative; width: 182px; height: 182px; display: grid; place-items: center; }
+  .orb { position: absolute; inset: 0; border-radius: 47% 53% 52% 48% / 50% 47% 53% 50%;
+    background: radial-gradient(58% 52% at 36% 30%, hsla(var(--hue),100%,82%,.95), transparent 58%),
+      conic-gradient(from 130deg, hsl(var(--hue),88%,56%), hsl(calc(var(--hue) + 24),82%,50%), hsl(var(--hue),88%,56%));
+    box-shadow: 0 0 66px var(--glow), inset 0 -14px 32px hsla(var(--hue),90%,36%,.55), inset 0 12px 28px hsla(var(--hue),100%,88%,.4);
+    animation: morph 8s ease-in-out infinite, spin 20s linear infinite; }
+  .orb.l2 { inset: 15px; opacity: .5; mix-blend-mode: screen; animation: morph 11s ease-in-out infinite reverse, spin 28s linear infinite reverse; }
+  @keyframes morph { 0%,100%{border-radius:47% 53% 52% 48% / 50% 47% 53% 50%;} 33%{border-radius:58% 42% 44% 56% / 55% 58% 42% 45%;} 66%{border-radius:42% 58% 60% 40% / 44% 46% 54% 56%;} }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .scan { position:absolute; inset:-3px; border-radius:50%; border:1.5px solid rgba(255,255,255,.14); mask:linear-gradient(#000,transparent 40%); animation:spin 4s linear infinite; }
+  .particle { position:absolute; width:3.5px; height:3.5px; border-radius:50%; background:#fff; opacity:.6; animation: float 5s ease-in-out infinite; }
+  .p1{left:22%;top:26%;} .p2{right:20%;top:34%;animation-delay:1.2s;} .p3{left:32%;bottom:24%;animation-delay:2.4s;} .p4{right:28%;bottom:30%;animation-delay:.6s;}
+  @keyframes float { 0%,100%{transform:translateY(0);opacity:.2;} 50%{transform:translateY(-8px);opacity:.75;} }
+  .orb-core { position: relative; z-index: 2; text-align: center; text-shadow: 0 2px 22px rgba(0,0,0,.5); }
+  .orb-core .num { font-size: 54px; font-weight: 800; line-height: 1; letter-spacing: -2px; font-variant-numeric: tabular-nums; }
+  .orb-core .pc { font-size: 11px; font-weight: 700; letter-spacing: 3px; opacity: .8; margin-top: 3px; }
+  .verdict { font-size: 12px; font-weight: 750; letter-spacing: 2px; text-transform: uppercase; }
+  .heat { display: flex; gap: 3px; width: 206px; }
+  .heat span { flex: 1; height: 5px; border-radius: 3px; }
+
+  .demo { display: flex; align-items: center; gap: 10px; font-size: 11px; color: var(--dim); }
+  .demo input { flex: 1; accent-color: #c8ccd8; }
+
+  .dock-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.6px; color: var(--dim); font-weight: 700; margin: 4px 2px -2px; display:flex; }
+  .dock-title a { margin-left:auto; color:#aeb3c4; text-transform:none; letter-spacing:0; font-weight:600; text-decoration:none; }
+  .dock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mod { position: relative; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 12px 4px; background: var(--glass); border: 1px solid var(--glass-line); border-radius: 15px; cursor: pointer; color: #c4c8d6; transition: transform .16s cubic-bezier(.34,1.56,.64,1), border-color .16s, color .16s; overflow: hidden; }
+  .mod::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.08), transparent 45%); opacity:.6; }
+  .mod:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.28); color:#fff; box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+  .mod svg { width: 21px; height: 21px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; position:relative; z-index:1; }
+  .mod .nm { font-size: 10.5px; font-weight: 600; position:relative; z-index:1; }
+
+  /* liquid-metal CTA — no color, chrome only */
+  .cta { margin-top: 6px; border: 1px solid rgba(255,255,255,.16); border-radius: 16px; cursor: pointer; padding: 15px; font-size: 15px; font-weight: 700; letter-spacing:.2px;
+    color:#0a0b0f; background: linear-gradient(180deg,#f6f7fb,#c9cdda); position: relative; overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center; gap:8px; }
+  .cta svg { width:18px; height:18px; stroke:#0a0b0f; fill:none; stroke-width:2; }
+  .cta::after { content:""; position:absolute; inset:0; background:linear-gradient(110deg, transparent 34%, rgba(255,255,255,.7) 50%, transparent 66%); transform:translateX(-120%); animation:sheen 3.8s ease-in-out infinite; }
+  @keyframes sheen { 0%,56%{transform:translateX(-120%);} 100%{transform:translateX(120%);} }
+
+  .foot { text-align: center; font-size: 10px; color: var(--dim); letter-spacing: .4px; }
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important;} }
+</style>
+</head>
+<body>
+  <div class="halo"></div>
+  <div class="wrap">
+    <header>
+      <span class="mark"><span class="dot"></span>TextHumanize</span>
+      <span class="spacer"></span>
+      <span class="page-chip"><span class="live"></span><b>3 AI</b> · 1 img on page</span>
+    </header>
+
+    <div class="field">It is important to note that the comprehensive methodology facilitates significant optimization of the workflow…</div>
+
+    <div class="stage">
+      <div class="orb-wrap">
+        <div class="orb"></div><div class="orb l2"></div><div class="scan"></div>
+        <span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span><span class="particle p4"></span>
+        <div class="orb-core"><div class="num" id="num">73</div><div class="pc">PERCENT AI</div></div>
+      </div>
+      <div class="verdict" id="verdict" style="color:#ff9a7a">Likely AI-generated</div>
+      <div class="heat" id="heat"></div>
+    </div>
+
+    <div class="demo">human <input id="slider" type="range" min="0" max="100" value="73"> AI</div>
+
+    <div class="dock-title">Modules <a href="#">customize ⚙</a></div>
+    <div class="dock" id="dock"></div>
+
+    <button class="cta"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M5 12H2M22 12h-3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="3.2"/></svg> Humanize this text</button>
+    <div class="foot">AURA · 100% OFFLINE · BY ALEXANDR KRIKUN</div>
+  </div>
+
+  <script>
+    const I = {
+      humanize:'<path d="M12 4l1.5 4.3L18 10l-4.5 1.7L12 16l-1.5-4.3L6 10l4.5-1.7z"/>',
+      rephrase:'<path d="M4 7h11l-2.5-2.5M20 17H9l2.5 2.5"/>',
+      tone:'<path d="M4 13c1.5 0 1.5-3 3-3s1.5 6 3 6 1.5-9 3-9 1.5 6 3 6 1.5-3 3-3"/>',
+      readability:'<path d="M4 5.5A2 2 0 016 4h5v15H6a2 2 0 00-2 1.5zM20 5.5A2 2 0 0018 4h-5v15h5a2 2 0 012 1.5z"/>',
+      health:'<path d="M12 20s-7-4.5-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.5-7 9-7 9z"/>',
+      unique:'<path d="M6 9l2-4h8l2 4-6 10z"/><path d="M6 9h12"/>',
+      media:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/><circle cx="8.5" cy="9.5" r="1.3"/>',
+      site:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/>',
+    };
+    const mods = [['humanize','Humanize'],['rephrase','Rephrase'],['tone','Tone'],['readability','Readability'],['health','Health'],['unique','Unique'],['media','Media WM'],['site','Site AI']];
+    document.getElementById('dock').innerHTML = mods.map(([k,n]) =>
+      `<div class="mod"><svg viewBox="0 0 24 24">${I[k]}</svg><span class="nm">${n}</span></div>`).join('');
+
+    const segs=[0.9,0.85,0.2,0.95,0.3,0.88,0.25,0.9];
+    document.getElementById('heat').innerHTML = segs.map(p=>`<span style="background:hsl(${(1-p)*120},72%,52%)"></span>`).join('');
+    const num=document.getElementById('num'), verdict=document.getElementById('verdict'), slider=document.getElementById('slider');
+    window.__apply=v=>{
+      document.documentElement.style.setProperty('--hue', Math.max(2, Math.round(130 - v*1.7)));
+      num.textContent=v;
+      verdict.textContent = v>=60?'Likely AI-generated':v>=40?'Mixed signals':'Likely human';
+      verdict.style.color = v>=60?'#ff9a7a':v>=40?'#ffd27a':'#7ff0b0';
+      slider.value=v;
+    };
+    slider.addEventListener('input',()=>window.__apply(+slider.value));
+    window.__apply(73);
+  </script>
+</body>
+</html>

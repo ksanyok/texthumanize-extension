@@ -7,75 +7,83 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <header class="head">
-    <span class="logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="1" y="1" width="22" height="22" rx="6" fill="url(#thg)"/>
-        <path d="M7 8.2h10M12 8.2V17" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-        <circle cx="17.4" cy="15.8" r="2.6" fill="#fff" opacity=".9"/>
-        <defs><linearGradient id="thg" x1="0" y1="0" x2="24" y2="24">
-          <stop stop-color="#6d5efc"/><stop offset="1" stop-color="#22b8cf"/>
-        </linearGradient></defs>
-      </svg>
-    </span>
-    <h1>TextHumanize</h1>
-    <span class="pill offline" data-i18n="offlineBadge"></span>
-    <span class="grow"></span>
-    <button id="open-workspace" class="icon-btn" data-i18n-title="openWorkspace" title="">⤢</button>
-    <button id="open-options" class="icon-btn" data-i18n-title="settings" title="">⚙</button>
-  </header>
+  <div class="halo"></div>
+  <div class="wrap">
+    <header>
+      <span class="mark"><span class="dot"></span>TextHumanize</span>
+      <span class="grow"></span>
+      <button class="icon-btn" id="open-theme" title="Theme">◑</button>
+      <button class="icon-btn" id="open-workspace" data-i18n-title="openWorkspace" title="">⤢</button>
+      <button class="icon-btn" id="open-options" data-i18n-title="settings" title="">⚙</button>
+    </header>
 
-  <nav class="tabs" id="main-tabs">
-    <button class="tab active" data-tab="text"><span>✍️</span><b data-i18n="tabText"></b></button>
-    <button class="tab" data-tab="page"><span>🌐</span><b data-i18n="tabPage"></b></button>
-    <button class="tab" data-tab="media"><span>🖼️</span><b data-i18n="tabMedia"></b></button>
-  </nav>
+    <div class="themes" id="theme-row" hidden></div>
+    <div class="onboard" id="onboard" hidden></div>
 
-  <!-- ── TEXT ── -->
-  <main class="panel active" data-panel="text">
-    <div class="input-wrap">
-      <textarea id="input" data-i18n-placeholder="inputPlaceholder2" spellcheck="false"></textarea>
-      <div class="input-meta">
-        <span id="lang-badge" class="pill" hidden></span>
-        <span id="count" class="dim"></span>
-        <span class="grow"></span>
-        <button id="paste-btn" class="mini" data-i18n="paste"></button>
-        <button id="clear-btn" class="mini" data-i18n="clear" hidden></button>
+    <!-- ══ HERO ORB — shared: shows the site score by default, text score in text mode ══ -->
+    <div class="stage" id="stage">
+      <div class="orb-wrap orb-empty" id="orb-wrap">
+        <div class="orb"></div><div class="orb l2"></div><div class="orb l3"></div><div class="scan"></div>
+        <span class="particle p1"></span><span class="particle p2"></span><span class="particle p3"></span><span class="particle p4"></span>
+        <div class="orb-core"><div class="num" id="num">–</div><div class="pc" id="pc">AI</div></div>
       </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="stage-hint" id="stage-hint" data-i18n="orbHint"></div>
+      <div class="heat" id="heat"></div>
     </div>
 
-    <button id="humanize-btn" class="cta" data-i18n="humanizeCta"></button>
-    <div class="tool-row" id="tool-row"></div>
+    <!-- view switch -->
+    <div class="switcher" id="switcher">
+      <button class="sw" data-view="site" id="sw-site"><span data-i18n="tabSite"></span></button>
+      <button class="sw" data-view="text" id="sw-text"><span data-i18n="tabText"></span></button>
+      <button class="sw" data-view="media" id="sw-media"><span data-i18n="tabMedia"></span></button>
+    </div>
 
-    <section id="result" class="result" hidden></section>
+    <!-- ══ SITE VIEW (home) ══ -->
+    <div class="view" id="view-site">
+      <div id="site-result"></div>
+    </div>
+
+    <!-- ══ TEXT VIEW (optional) ══ -->
+    <div class="view" id="view-text" hidden>
+      <div class="field-wrap">
+        <textarea id="input" data-i18n-placeholder="inputPlaceholder2" spellcheck="false"></textarea>
+        <div class="field-meta">
+          <span id="lang-badge" class="pill2" hidden></span>
+          <span id="count"></span>
+          <span class="grow"></span>
+          <button id="paste-btn" class="mini" data-i18n="paste"></button>
+          <button id="clear-btn" class="mini" data-i18n="clear" hidden></button>
+        </div>
+      </div>
+      <button class="cta" id="humanize-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M5 12H2M22 12h-3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="3.2"/></svg>
+        <span data-i18n="actHumanize"></span>
+      </button>
+      <section id="result" class="result" hidden></section>
+    </div>
+
+    <!-- ══ MEDIA VIEW ══ -->
+    <div class="view" id="view-media" hidden>
+      <div class="drop" id="drop">
+        <div class="drop-in">
+          <div class="big">🖼️</div>
+          <b data-i18n="dropTitle"></b>
+          <span class="hint" data-i18n="dropHint"></span>
+          <input type="file" id="file-input" accept="image/*,audio/*,video/*" hidden>
+          <button class="mini" id="pick-btn" data-i18n="choose"></button>
+        </div>
+      </div>
+      <div id="media-result"></div>
+    </div>
+
+    <div class="dock-title"><span data-i18n="modulesLabel"></span><a id="customize" data-i18n="customize"></a></div>
+    <div class="dock" id="dock"></div>
+
     <div id="busy" class="busy" hidden><span class="spinner"></span><span data-i18n="processing"></span></div>
-  </main>
-
-  <!-- ── PAGE ── -->
-  <main class="panel" data-panel="page">
-    <p class="lead dim" data-i18n="pageLead"></p>
-    <button id="scan-page-btn" class="cta"><span data-i18n="scanPage"></span></button>
-    <section id="page-result" class="result" hidden></section>
-    <div id="page-busy" class="busy" hidden><span class="spinner"></span><span data-i18n="scanning"></span></div>
-  </main>
-
-  <!-- ── MEDIA ── -->
-  <main class="panel" data-panel="media">
-    <div id="drop" class="drop">
-      <div class="drop-inner">
-        <div class="drop-icon">🖼️</div>
-        <b data-i18n="dropTitle"></b>
-        <span class="dim" data-i18n="dropHint"></span>
-        <input type="file" id="file-input" accept="image/*,audio/*,video/*" hidden>
-        <button id="pick-btn" class="mini" data-i18n="choose"></button>
-      </div>
-    </div>
-    <section id="media-result" class="result" hidden></section>
-  </main>
-
-  <footer class="foot">
-    <a href="https://github.com/ksanyok/texthumanize-extension" target="_blank" rel="noopener" data-i18n="credit"></a>
-  </footer>
+    <div class="support" id="support"></div>
+    <div class="foot"><a href="https://github.com/ksanyok/TextHumanize" target="_blank" rel="noopener" data-i18n="credit"></a><span class="foot-ver" id="foot-ver"></span></div>
+  </div>
 
   <script src="popup.js" type="module"></script>
 </body>
